@@ -21,17 +21,17 @@ public class TagRepositoryImpl implements TagRepository {
         tags = new ArrayList<>();
         Tag tag = new Tag(1, "Glarus English Ale", 4.6);
         tag.setStyle(styleRepository.get(1));
-        tag.setCreatedBy(userRepository.get(1));
+        tag.setCreatedBy(userRepository.getUserById(1));
         tags.add(tag);
 
         tag = new Tag(2, "Rhombus Porter", 5.0);
         tag.setStyle(styleRepository.get(2));
-        tag.setCreatedBy(userRepository.get(1));
+        tag.setCreatedBy(userRepository.getUserById(1));
         tags.add(tag);
 
         tag = new Tag(3, "Opasen Char", 6.6);
         tag.setStyle(styleRepository.get(3));
-        tag.setCreatedBy(userRepository.get(2));
+        tag.setCreatedBy(userRepository.getUserById(2));
         tags.add(tag);
     }
 

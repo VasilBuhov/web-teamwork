@@ -1,32 +1,29 @@
 package com.company.web.springdemo.models;
 
-import java.util.Objects;
-
 public class User {
 
     private int id;
-
-    private String username;
-
-    private String password;
-
     private String firstName;
-
     private String lastName;
-
+    private String username;
     private String email;
-
+    private String password;
     private boolean isAdmin;
 
     public User() {
     }
 
-    public User(int id, String username, String password, boolean isAdmin) {
+    public User(int id, String firstName, String lastName, String username, String email, String password, boolean isAdmin) {
         this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.username = username;
+        this.email = email;
         this.password = password;
         this.isAdmin = isAdmin;
     }
+
+    // Getters and setters
 
     public int getId() {
         return id;
@@ -34,22 +31,6 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getFirstName() {
@@ -68,12 +49,28 @@ public class User {
         this.lastName = lastName;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public boolean isAdmin() {
@@ -84,17 +81,5 @@ public class User {
         isAdmin = admin;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return id == user.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
+    // Other methods like equals, hashCode, toString
 }

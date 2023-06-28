@@ -21,17 +21,17 @@ public class BeerRepositoryImpl implements BeerRepository {
         beers = new ArrayList<>();
         Beer beer = new Beer(1, "Glarus English Ale", 4.6);
         beer.setStyle(styleRepository.get(1));
-        beer.setCreatedBy(userRepository.get(1));
+        beer.setCreatedBy(userRepository.getUserById(1));
         beers.add(beer);
 
         beer = new Beer(2, "Rhombus Porter", 5.0);
         beer.setStyle(styleRepository.get(2));
-        beer.setCreatedBy(userRepository.get(1));
+        beer.setCreatedBy(userRepository.getUserById(1));
         beers.add(beer);
 
         beer = new Beer(3, "Opasen Char", 6.6);
         beer.setStyle(styleRepository.get(3));
-        beer.setCreatedBy(userRepository.get(2));
+        beer.setCreatedBy(userRepository.getUserById(2));
         beers.add(beer);
     }
 
