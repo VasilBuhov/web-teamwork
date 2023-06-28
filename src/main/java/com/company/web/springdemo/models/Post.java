@@ -1,19 +1,22 @@
 package com.company.web.springdemo.models;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Post {
     private final int id;
     private final User creator;
-    private final String title;
+    private String title;
     private String content;
     private int views;
     private final LocalDateTime creationDate;
     private LocalDateTime lastActivity;
     private int likes;
     private int dislikes;
+    private int comments = 0;
 
-    public Post(int id, User creator, String title, String content, int views, LocalDateTime creationDate, LocalDateTime lastActivity, int likes, int dislikes) {
+    public Post(int id, boolean isHeadPost, User creator, String title, String content, int views, LocalDateTime creationDate, LocalDateTime lastActivity, int likes, int dislikes) {
         this.id = id;
         this.creator = creator;
         this.title = title;
@@ -23,6 +26,13 @@ public class Post {
         this.lastActivity = lastActivity;
         this.likes = likes;
         this.dislikes = dislikes;
+        if (isHeadPost) {
+            List<Post> commentsList = new ArrayList<>();
+        }
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public int getId() {
@@ -79,5 +89,13 @@ public class Post {
 
     public void setDislikes(int dislikes) {
         this.dislikes = dislikes;
+    }
+
+    public int getComments() {
+        return comments;
+    }
+
+    public void setComments(int comments) {
+        this.comments = comments;
     }
 }
