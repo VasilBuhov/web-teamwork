@@ -10,7 +10,7 @@ public class Tag {
 
     private String name;
 
-    private double abv;
+    private String content;
 
     private Style style;
 
@@ -20,10 +20,10 @@ public class Tag {
     public Tag() {
     }
 
-    public Tag(int id, String name, double abv) {
+    public Tag(int id, String name, String content) {
         this.id = id;
         this.name = name;
-        this.abv = abv;
+        this.content = content;
     }
 
     public int getId() {
@@ -42,12 +42,12 @@ public class Tag {
         this.name = name;
     }
 
-    public double getAbv() {
-        return abv;
+    public String getContent() {
+        return content;
     }
 
-    public void setAbv(double abv) {
-        this.abv = abv;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public Style getStyle() {

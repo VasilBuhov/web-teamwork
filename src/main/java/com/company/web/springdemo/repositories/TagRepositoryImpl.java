@@ -19,27 +19,27 @@ public class TagRepositoryImpl implements TagRepository {
     @Autowired
     public TagRepositoryImpl(StyleRepository styleRepository, UserRepository userRepository) {
         tags = new ArrayList<>();
-        Tag tag = new Tag(1, "Glarus English Ale", 4.6);
+        Tag tag = new Tag(1, "@Tag", "@Tagged");
         tag.setStyle(styleRepository.get(1));
         tag.setCreatedBy(userRepository.getUserById(1));
         tags.add(tag);
 
-        tag = new Tag(2, "Rhombus Porter", 5.0);
+        tag = new Tag(2, "@Telerik", "@Tagged");
         tag.setStyle(styleRepository.get(2));
         tag.setCreatedBy(userRepository.getUserById(1));
         tags.add(tag);
 
-        tag = new Tag(3, "Opasen Char", 6.6);
+        tag = new Tag(3, "@Pesho", "@Tagged");
         tag.setStyle(styleRepository.get(3));
         tag.setCreatedBy(userRepository.getUserById(2));
         tags.add(tag);
     }
 
     @Override
-    public List<Tag> get(String name, Double minAbv, Double maxAbv, Integer styleId, String sortBy, String sortOrder) {
+    public List<Tag> get(String name, String content, Integer styleId, String sortBy, String sortOrder) {
         List<Tag> result = tags;
         result = filterByName(result, name);
-        result = filterByAbv(result, minAbv, maxAbv);
+        result = filterByAbv(result, content);
         result = filterByStyle(result, styleId);
         result = sortBy(result, sortBy);
         result = order(result, sortOrder);
@@ -73,7 +73,7 @@ public class TagRepositoryImpl implements TagRepository {
     public void update(Tag tag) {
         Tag tagToUpdate = get(tag.getId());
         tagToUpdate.setName(tag.getName());
-        tagToUpdate.setAbv(tag.getAbv());
+        tagToUpdate.setContent(tag.getContent());
         tagToUpdate.setStyle(tag.getStyle());
     }
 
@@ -92,16 +92,10 @@ public class TagRepositoryImpl implements TagRepository {
         return tags;
     }
 
-    private static List<Tag> filterByAbv(List<Tag> tags, Double minAbv, Double maxAbv) {
-        if (minAbv != null) {
+    private static List<Tag> filterByAbv(List<Tag> tags, String content) {
+        if (content != null) {
             tags = tags.stream()
-                    .filter(tag -> tag.getAbv() >= minAbv)
-                    .collect(Collectors.toList());
-        }
-
-        if (maxAbv != null) {
-            tags = tags.stream()
-                    .filter(tag -> tag.getAbv() <= maxAbv)
+                    .filter(tag -> tag.getContent().equals(content))
                     .collect(Collectors.toList());
         }
 
@@ -124,7 +118,7 @@ public class TagRepositoryImpl implements TagRepository {
                     tags.sort(Comparator.comparing(Tag::getName));
                     break;
                 case "abv":
-                    tags.sort(Comparator.comparing(Tag::getAbv));
+                    tags.sort(Comparator.comparing(Tag::getContent));
                 case "style":
                     tags.sort(Comparator.comparing(beer -> beer.getStyle().getName()));
                     break;

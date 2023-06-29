@@ -10,8 +10,9 @@ public class TagDto {
     @Size(min = 3, max = 50, message = "Name should be between 3 and 50 symbols")
     private String name;
 
-    @Positive(message = "ABV should be positive")
-    private double abv;
+    @NotNull(message = "Content can't be empty")
+    @Size(min = 3, max = 50, message = "Content should be between 3 and 50 symbols")
+    private String content;
 
     @Positive(message = "StyleId should be positive")
     private int styleId;
@@ -27,12 +28,12 @@ public class TagDto {
         this.name = name;
     }
 
-    public double getAbv() {
-        return abv;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public void setAbv(double abv) {
-        this.abv = abv;
+    public String getContent() {
+        return content;
     }
 
     public int getStyleId() {

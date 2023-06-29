@@ -32,7 +32,7 @@ public class TagMapper {
     public Tag fromDto(TagDto dto) {
         Tag tag = new Tag();
         tag.setName(dto.getName());
-        tag.setAbv(dto.getAbv());
+        tag.setContent(dto.getContent());
         tag.setStyle(styleService.get(dto.getStyleId()));
         return tag;
     }
