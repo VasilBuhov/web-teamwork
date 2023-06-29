@@ -1,6 +1,7 @@
 package com.company.web.springdemo.services;
 
 import com.company.web.springdemo.models.Post;
+import com.company.web.springdemo.models.User;
 import com.company.web.springdemo.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,17 +25,17 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public void update(Post post) {
+    public void update(Post post, User user) {
     repository.update(post);
     }
 
     @Override
-    public void create(Post post) {
+    public void create(Post post, User user) {
     repository.create(post);
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(int id, User user) {
     repository.delete(id);
     }
 }

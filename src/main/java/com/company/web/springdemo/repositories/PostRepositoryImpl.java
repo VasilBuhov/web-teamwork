@@ -19,13 +19,13 @@ public class PostRepositoryImpl implements PostRepository{
         posts = new ArrayList<>();
 
         User user1 = new User();
-        Post post1 = new Post(1, true, user1, "Proba 1", "Proba 1 beshe uspeshna.", 5, LocalDateTime.of(2023, 1, 5, 10, 10, 10), LocalDateTime.of(2023, 1, 5, 10, 10, 15), 10, 5);
+        Post post1 = new Post(1, 2, true, user1, "Proba 1", "Proba 1 beshe uspeshna.", 5, LocalDateTime.of(2023, 1, 5, 10, 10, 10), LocalDateTime.of(2023, 1, 5, 10, 10, 15), 10, 5);
 
         User user2 = new User();
-        Post post2 = new Post(2, false, user2, "Proba 2", "Proba 2 beshe uspeshna.", 6, LocalDateTime.of(2023, 1, 6, 10, 10, 10), LocalDateTime.of(2023, 1, 5, 11, 10, 15), 15, 10);
+        Post post2 = new Post(2, 2, false, user2, "Proba 2", "Proba 2 beshe uspeshna.", 6, LocalDateTime.of(2023, 1, 6, 10, 10, 10), LocalDateTime.of(2023, 1, 5, 11, 10, 15), 15, 10);
 
         User user3 = new User();
-        Post post3 = new Post(3, false, user3, "Proba 3", "Proba 3 beshe uspeshna.", 7, LocalDateTime.of(2023, 1, 7, 10, 10, 10), LocalDateTime.of(2023, 1, 5, 12, 10, 15), 20, 15);
+        Post post3 = new Post(3, 3, false, user3, "Proba 3", "Proba 3 beshe uspeshna.", 7, LocalDateTime.of(2023, 1, 7, 10, 10, 10), LocalDateTime.of(2023, 1, 5, 12, 10, 15), 20, 15);
 
         posts.add(post1);
         posts.add(post2);
@@ -44,7 +44,6 @@ public class PostRepositoryImpl implements PostRepository{
                 .findFirst()
                 .orElseThrow(() -> new EntityNotFoundException("Post", id));
     }
-
     @Override
     public void create(Post post) {
         posts.add(post);
@@ -72,7 +71,7 @@ public class PostRepositoryImpl implements PostRepository{
                 case "comments":
                     posts.sort(Comparator.comparing(Post::getComments));
                     break;
-                case "abv":
+                case "creation date":
                     posts.sort(Comparator.comparing(Post::getCreationDate));
                 break;
             }

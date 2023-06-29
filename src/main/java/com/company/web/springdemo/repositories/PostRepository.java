@@ -1,6 +1,7 @@
 package com.company.web.springdemo.repositories;
 
 import com.company.web.springdemo.models.Post;
+import com.company.web.springdemo.models.User;
 
 import java.util.List;
 

@@ -5,19 +5,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Post {
-    private final int id;
-    private final User creator;
+    private  int id;
+    private int theme;
+    private  User creator;
     private String title;
     private String content;
     private int views;
-    private final LocalDateTime creationDate;
+    private  LocalDateTime creationDate;
     private LocalDateTime lastActivity;
     private int likes;
     private int dislikes;
     private int comments = 0;
 
-    public Post(int id, boolean isHeadPost, User creator, String title, String content, int views, LocalDateTime creationDate, LocalDateTime lastActivity, int likes, int dislikes) {
+    public Post() {};
+    public Post(int id, int theme, boolean isHeadPost, User creator, String title, String content, int views, LocalDateTime creationDate, LocalDateTime lastActivity, int likes, int dislikes) {
         this.id = id;
+        this.theme = theme;
         this.creator = creator;
         this.title = title;
         this.content = content;
@@ -26,7 +29,7 @@ public class Post {
         this.lastActivity = lastActivity;
         this.likes = likes;
         this.dislikes = dislikes;
-        if (isHeadPost) {
+        if (id == 1) {
             List<Post> commentsList = new ArrayList<>();
         }
     }
@@ -97,5 +100,25 @@ public class Post {
 
     public void setComments(int comments) {
         this.comments = comments;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setCreator(User creator) {
+        this.creator = creator;
+    }
+
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public int getTheme() {
+        return theme;
+    }
+
+    public void setTheme(int theme) {
+        this.theme = theme;
     }
 }
