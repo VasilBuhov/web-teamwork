@@ -1,14 +1,12 @@
 package com.company.web.springdemo.repositories;
 
 import com.company.web.springdemo.exceptions.EntityNotFoundException;
-import com.company.web.springdemo.models.Beer;
 import com.company.web.springdemo.models.Post;
 import com.company.web.springdemo.models.User;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 

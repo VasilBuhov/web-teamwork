@@ -24,8 +24,8 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public List<Tag> get(String name, Double minAbv, Double maxAbv, Integer styleId, String sortBy, String sortOrder) {
-        return repository.get(name, minAbv, maxAbv, styleId, sortBy, sortOrder);
+    public List<Tag> get(String name, String content, Integer styleId, String sortBy, String sortOrder) {
+        return repository.get(name, content, styleId, sortBy, sortOrder);
     }
 
     @Override

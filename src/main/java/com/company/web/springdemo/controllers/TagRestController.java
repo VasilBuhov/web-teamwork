@@ -36,12 +36,11 @@ public class TagRestController {
     @GetMapping
     public List<Tag> get(
             @RequestParam(required = false) String name,
-            @RequestParam(required = false) Double minAbv,
-            @RequestParam(required = false) Double maxAbv,
+            @RequestParam(required = false) String content,
             @RequestParam(required = false) Integer styleId,
             @RequestParam(required = false) String sortBy,
             @RequestParam(required = false) String sortOrder) {
-        return service.get(name, minAbv, maxAbv, styleId, sortBy, sortOrder);
+        return service.get(name, content, styleId, sortBy, sortOrder);
     }
 
     @GetMapping("/{id}")
