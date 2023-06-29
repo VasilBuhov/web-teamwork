@@ -3,7 +3,9 @@ package com.company.web.springdemo.controllers;
 import com.company.web.springdemo.exceptions.AuthorizationException;
 import com.company.web.springdemo.exceptions.EntityNotFoundException;
 import com.company.web.springdemo.helpers.AuthenticationHelper;
+import com.company.web.springdemo.helpers.UserMapper;
 import com.company.web.springdemo.models.User;
+import com.company.web.springdemo.models.UserDto;
 import com.company.web.springdemo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -19,46 +21,52 @@ import java.util.List;
 public class UserRestController {
 
     private final UserService userService;
+    private final UserMapper userMapper;
     private final AuthenticationHelper authenticationHelper;
 
     @Autowired
-    public UserRestController(UserService userService, AuthenticationHelper authenticationHelper) {
+    public UserRestController(UserService userService, UserMapper userMapper, AuthenticationHelper authenticationHelper) {
         this.userService = userService;
+        this.userMapper = userMapper;
         this.authenticationHelper = authenticationHelper;
     }
 
     @GetMapping
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
+    public List<UserDto> getAllUsers() {
+        List<User> users = userService.getAllUsers();
+        return userMapper.toDtoList(users);
     }
 
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable int id) {
+    public UserDto getUserById(@PathVariable int id) {
         try {
-            return userService.getUserById(id);
+            User user = userService.getUserById(id);
+            return userMapper.toDto(user);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
 
     @PostMapping
-    public User createUser(@RequestHeader HttpHeaders headers, @Valid @RequestBody User user) {
+    public UserDto createUser(@RequestHeader HttpHeaders headers, @Valid @RequestBody UserDto userDto) {
         try {
             authenticationHelper.tryGetUser(headers);
+            User user = userMapper.fromDto(userDto);
             userService.createUser(user);
-            return user;
+            return userMapper.toDto(user);
         } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
 
     @PutMapping("/{id}")
-    public User updateUser(@RequestHeader HttpHeaders headers, @PathVariable int id, @Valid @RequestBody User user) {
+    public UserDto updateUser(@RequestHeader HttpHeaders headers, @PathVariable int id, @Valid @RequestBody UserDto userDto) {
         try {
             authenticationHelper.tryGetUser(headers);
+            User user = userMapper.fromDto(userDto);
             user.setId(id);
             userService.updateUser(user);
-            return user;
+            return userMapper.toDto(user);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (AuthorizationException e) {
