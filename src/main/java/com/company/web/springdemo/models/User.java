@@ -23,7 +23,7 @@ public class User {
         this.isAdmin = isAdmin;
     }
 
-    // Getters and setters
+
 
     public int getId() {
         return id;
@@ -81,5 +81,5 @@ public class User {
         isAdmin = admin;
     }
 
-    // Other methods like equals, hashCode, toString
+
 }
