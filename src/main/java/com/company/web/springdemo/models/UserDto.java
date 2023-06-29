@@ -6,8 +6,6 @@ import javax.validation.constraints.Size;
 
 public class UserDto {
 
-    private int id;
-
     @NotEmpty(message = "Username is required")
     @Size(min = 4, max = 20, message = "Username must be between 4 and 20 characters")
     private String username;
@@ -17,14 +15,6 @@ public class UserDto {
     private String email;
 
 
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getUsername() {
         return username;
