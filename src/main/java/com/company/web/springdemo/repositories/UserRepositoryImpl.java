@@ -15,8 +15,8 @@ public class UserRepositoryImpl implements UserRepository {
 
     public UserRepositoryImpl() {
         users = new ArrayList<>();
-        users.add(new User(1, "John", "Doe","Vaso", "john.doe@example.com", "password123", true));
-        users.add(new User(2, "Jane", "Smith","Niko", "jane.smith@example.com", "password456", false));
+        users.add(new User(1, "John", "Doe","Johnny", "john.doe@example.com", "password123", true));
+        users.add(new User(2, "Jane", "Smith","Janny", "jane.smith@example.com", "password456", false));
     }
 
     @Override
