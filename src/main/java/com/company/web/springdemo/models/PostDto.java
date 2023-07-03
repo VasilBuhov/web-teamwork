@@ -2,6 +2,7 @@ package com.company.web.springdemo.models;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 public class PostDto {
@@ -11,9 +12,10 @@ public class PostDto {
     private String title;
     @Size (min = 32, max = 8192, message = "Content should be between 32 and 8192 symbols.")
     private String content;
+    @Positive
     @NotNull
     @NotEmpty
-    private User creator;
+    private int creator;
 
     public PostDto() {};
 
@@ -33,11 +35,11 @@ public class PostDto {
         this.content = content;
     }
 
-    public User getCreator() {
+    public int getCreator() {
         return creator;
     }
 
-    public void setCreator(User creator) {
+    public void setCreator(int creator) {
         this.creator = creator;
     }
 }
