@@ -6,7 +6,7 @@ plugins {
 
 group = 'com.company.web'
 version = '0.0.1-SNAPSHOT'
-0sourceCompatibility = '11'
+sourceCompatibility = '11'
 
 repositories {
     mavenCentral()

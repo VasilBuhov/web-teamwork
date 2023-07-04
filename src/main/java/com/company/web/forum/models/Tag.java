@@ -1,29 +1,38 @@
 package com.company.web.forum.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
+@Table(name = "tags")
 public class Tag {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
 
+    @Column(name = "name")
     private String name;
 
     private String content;
 
-    private Style style;
+    @Column(name = "belongs_to")
+    private int belongs_to;
 
-    @JsonIgnore
-    private User createdBy;
+
+    @Column(name = "created_by")
+    private int createdBy;
 
     public Tag() {
     }
 
-    public Tag(int id, String name, String content) {
+    public Tag(int id, String name, String content, int belongs_to, int createdBy) {
         this.id = id;
         this.name = name;
         this.content = content;
+        this.belongs_to = belongs_to;
+        this.createdBy = createdBy;
     }
 
     public int getId() {
@@ -50,19 +59,19 @@ public class Tag {
         this.content = content;
     }
 
-    public Style getStyle() {
-        return style;
+    public int getBelongs_to() {
+        return belongs_to;
     }
 
-    public void setStyle(Style style) {
-        this.style = style;
+    public void setBelongs_to(int belongs_to) {
+        this.belongs_to = belongs_to;
     }
 
-    public User getCreatedBy() {
+    public int getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(User createdBy) {
+    public void setCreatedBy(int createdBy) {
         this.createdBy = createdBy;
     }
 

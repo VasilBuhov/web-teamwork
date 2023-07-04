@@ -2,10 +2,12 @@ package com.company.web.forum.repositories;
 
 import com.company.web.forum.exceptions.EntityNotFoundException;
 import com.company.web.forum.models.Tag;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -13,74 +15,79 @@ import java.util.stream.Collectors;
 
 @Repository
 public class TagRepositoryImpl implements TagRepository {
-
-    private final List<Tag> tags;
+    private final SessionFactory sessionFactory;
 
     @Autowired
-    public TagRepositoryImpl(StyleRepository styleRepository, UserRepository userRepository) {
-        tags = new ArrayList<>();
-        Tag tag = new Tag(1, "@Tag", "@Tagged");
-        tag.setStyle(styleRepository.get(1));
-        tag.setCreatedBy(userRepository.getUserById(1));
-        tags.add(tag);
-
-        tag = new Tag(2, "@Telerik", "@Tagged");
-        tag.setStyle(styleRepository.get(2));
-        tag.setCreatedBy(userRepository.getUserById(1));
-        tags.add(tag);
-
-        tag = new Tag(3, "@Pesho", "@Tagged");
-        tag.setStyle(styleRepository.get(3));
-        tag.setCreatedBy(userRepository.getUserById(2));
-        tags.add(tag);
+    public TagRepositoryImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     @Override
-    public List<Tag> get(String name, String content, Integer styleId, String sortBy, String sortOrder) {
-        List<Tag> result = tags;
-        result = filterByName(result, name);
-        result = filterByAbv(result, content);
-        result = filterByStyle(result, styleId);
-        result = sortBy(result, sortBy);
-        result = order(result, sortOrder);
-        return result;
+    public List<Tag> get(String name, int belongs_to, String sortBy) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Tag> query = session.createQuery("from Tag", Tag.class);
+            List<Tag> tags = query.list();
+            return filter(tags, name, belongs_to);
+        }
+    }
+
+    public List<Tag> filter(List<Tag> tags, String name, int belongs_to) {
+        tags = filterByName(tags, name);
+        tags = filterByBelonging(tags, String.valueOf(belongs_to));
+        tags = sortBy(tags, String.valueOf(belongs_to));
+        tags = order(tags, String.valueOf(belongs_to));
+        return tags;
     }
 
     @Override
     public Tag get(int id) {
-        return tags.stream()
-                .filter(beer -> beer.getId() == id)
-                .findFirst()
-                .orElseThrow(() -> new EntityNotFoundException("Tag", id));
+        try (Session session = sessionFactory.openSession()) {
+            Tag tag = session.get(Tag.class, id);
+            if (tag == null) {
+                throw new EntityNotFoundException("Tag", id);
+            }
+            return tag;
+        }
     }
 
     @Override
     public Tag get(String name) {
-        return tags.stream()
-                .filter(beer -> beer.getName().equals(name))
-                .findFirst()
-                .orElseThrow(() -> new EntityNotFoundException("Tag", "name", name));
+        try (Session session = sessionFactory.openSession()) {
+            Query<Tag> query = session.createQuery("from Tag where name = :name", Tag.class);
+            query.setParameter("name", name);
+
+            List<Tag> result = query.list();
+            if (result.size() == 0) {
+                throw new EntityNotFoundException("Tag", "name", name);
+            }
+            return result.get(0);
+        }
     }
 
     @Override
     public void create(Tag tag) {
-        int nextId = tags.size() + 1;
-        tag.setId(nextId);
-        tags.add(tag);
+        try (Session session = sessionFactory.openSession()) {
+            session.save(tag);
+        }
     }
 
     @Override
     public void update(Tag tag) {
-        Tag tagToUpdate = get(tag.getId());
-        tagToUpdate.setName(tag.getName());
-        tagToUpdate.setContent(tag.getContent());
-        tagToUpdate.setStyle(tag.getStyle());
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.update(tag);
+            session.getTransaction().commit();
+        }
     }
 
     @Override
     public void delete(int id) {
         Tag tagToDelete = get(id);
-        tags.remove(tagToDelete);
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.delete(tagToDelete);
+            session.getTransaction().commit();
+        }
     }
 
     private static List<Tag> filterByName(List<Tag> tags, String name) {
@@ -92,22 +99,13 @@ public class TagRepositoryImpl implements TagRepository {
         return tags;
     }
 
-    private static List<Tag> filterByAbv(List<Tag> tags, String content) {
+    private static List<Tag> filterByBelonging(List<Tag> tags, String content) {
         if (content != null) {
             tags = tags.stream()
                     .filter(tag -> tag.getContent().equals(content))
                     .collect(Collectors.toList());
         }
 
-        return tags;
-    }
-
-    private static List<Tag> filterByStyle(List<Tag> tags, Integer styleId) {
-        if (styleId != null) {
-            tags = tags.stream()
-                    .filter(tag -> tag.getStyle().getId() == styleId)
-                    .collect(Collectors.toList());
-        }
         return tags;
     }
 
@@ -119,8 +117,6 @@ public class TagRepositoryImpl implements TagRepository {
                     break;
                 case "abv":
                     tags.sort(Comparator.comparing(Tag::getContent));
-                case "style":
-                    tags.sort(Comparator.comparing(beer -> beer.getStyle().getName()));
                     break;
             }
         }
