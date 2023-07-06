@@ -2,79 +2,127 @@ package com.company.web.forum.repositories;
 
 import com.company.web.forum.exceptions.EntityNotFoundException;
 import com.company.web.forum.models.User;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
 
-    private final List<User> users;
+    private final SessionFactory sessionFactory;
 
-    public UserRepositoryImpl() {
-        users = new ArrayList<>();
-        users.add(new User(1, "John", "Doe","Johnny", "john.doe@example.com", "password123", true));
-        users.add(new User(2, "Jane", "Smith","Janny", "jane.smith@example.com", "password456", false));
+    @Autowired
+    public UserRepositoryImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     @Override
     public List<User> getAllUsers() {
-        return users;
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<User> cq = cb.createQuery(User.class);
+            Root<User> root = cq.from(User.class);
+            cq.select(root);
+            return session.createQuery(cq).list();
+        } catch (Exception e) {
+            // Handle exceptions  // I should think a bit more here
+            return new ArrayList<>();
+        }
     }
 
     @Override
-    public User getUserById(int id) {
-        return users.stream()
-                .filter(user -> user.getId() == id)
-                .findFirst()
-                .orElseThrow(() -> new EntityNotFoundException("User", id));
+    public User getUserById(int id) throws EntityNotFoundException {
+        try (Session session = sessionFactory.openSession()) {
+            User user = session.get(User.class, id);
+            if (user == null) {
+                throw new EntityNotFoundException("User not found",id);
+            }
+            return user;
+        } catch (EntityNotFoundException e) {
+            throw e;
+        } catch (Exception e) {
+            // Handle exceptions
+            return null;
+        }
     }
 
     @Override
-    public User getUserByEmail(String email) {
-        return users.stream()
-                .filter(user -> user.getEmail().equals(email))
-                .findFirst()
-                .orElseThrow(() -> new EntityNotFoundException("User", "email", email));
+    public User getUserByEmail(String email) throws EntityNotFoundException {
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<User> cq = cb.createQuery(User.class);
+            Root<User> root = cq.from(User.class);
+            cq.select(root).where(cb.equal(root.get("email"), email));
+            return session.createQuery(cq).uniqueResultOptional()
+                    .orElseThrow(() -> new EntityNotFoundException("User not found",1));
+        } catch (EntityNotFoundException e) {
+            throw e;
+        } catch (Exception e) {
+            // Handle exceptions
+            return null;
+        }
     }
 
     @Override
-    public List<User> getAdminUsers() {
-        return users.stream()
-                .filter(User::isAdmin)
-                .collect(Collectors.toList());
+    public User getUserByUsername(String username) throws EntityNotFoundException {
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<User> cq = cb.createQuery(User.class);
+            Root<User> root = cq.from(User.class);
+            cq.select(root).where(cb.equal(root.get("username"), username));
+            return session.createQuery(cq).uniqueResultOptional()
+                    .orElseThrow(() -> new EntityNotFoundException("User not found",1));
+        } catch (EntityNotFoundException e) {
+            throw e;
+        } catch (Exception e) {
+            // Handle exceptions
+            return null;
+        }
     }
 
     @Override
     public void createUser(User user) {
-        int nextId = users.size() + 1;
-        user.setId(nextId);
-        users.add(user);
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.save(user);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            // Handle exceptions
+        }
     }
 
     @Override
     public void updateUser(User user) {
-        User userToUpdate = getUserById(user.getId());
-        userToUpdate.setFirstName(user.getFirstName());
-        userToUpdate.setLastName(user.getLastName());
-        userToUpdate.setEmail(user.getEmail());
-        userToUpdate.setPassword(user.getPassword());
-        userToUpdate.setAdmin(user.isAdmin());
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.update(user);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            // Handle exceptions
+        }
     }
 
     @Override
-    public void deleteUser(int id) {
-        User userToDelete = getUserById(id);
-        users.remove(userToDelete);
-    }
-    @Override
-    public User getUserByUsername(String username) {
-        return users.stream()
-                .filter(user -> user.getUsername().equals(username))
-                .findFirst()
-                .orElseThrow(() -> new EntityNotFoundException("User", "username", username));
+    public void deleteUser(int id) throws EntityNotFoundException {
+        try (Session session = sessionFactory.openSession()) {
+            User user = session.get(User.class, id);
+            if (user == null) {
+                throw new EntityNotFoundException("User not found",id);
+            }
+            session.beginTransaction();
+            session.delete(user);
+            session.getTransaction().commit();
+        } catch (EntityNotFoundException e) {
+            throw e;
+        } catch (Exception e) {
+            // Handle exceptions
+        }
     }
 }
-

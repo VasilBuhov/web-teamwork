@@ -4,8 +4,8 @@ import com.company.web.forum.models.User;
 import com.company.web.forum.models.UserDto;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class UserMapper {
@@ -18,12 +18,11 @@ public class UserMapper {
         return userDto;
     }
 
+
     public List<UserDto> toDtoList(List<User> users) {
-        List<UserDto> userDtos = new ArrayList<>();
-        for (User user : users) {
-            userDtos.add(toDto(user));
-        }
-        return userDtos;
+        return users.stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
     }
 
     public User fromDto(UserDto userDto) {

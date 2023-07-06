@@ -1,14 +1,35 @@
 package com.company.web.forum.models;
 
+import javax.persistence.*;
+
+@Entity
+
+@Table(name = "users")
 public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(name = "first_name")
     private String firstName;
+
+    @Column(name = "last_name")
     private String lastName;
+
+
+    @Column(name = "username")
     private String username;
+
+    @Column(name = "email")
     private String email;
+    @Column(name = "password")
     private String password;
+
+    @Column(name = "is_admin")
     private boolean isAdmin;
+
+
 
     public User() {
     }
@@ -23,7 +44,7 @@ public class User {
         this.isAdmin = isAdmin;
     }
 
-
+    // Getters and Setters
 
     public int getId() {
         return id;
@@ -80,6 +101,4 @@ public class User {
     public void setAdmin(boolean admin) {
         isAdmin = admin;
     }
-
-
 }
