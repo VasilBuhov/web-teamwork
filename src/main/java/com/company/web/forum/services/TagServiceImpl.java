@@ -1,6 +1,5 @@
 package com.company.web.forum.services;
 
-import com.company.web.forum.exceptions.AuthorizationException;
 import com.company.web.forum.exceptions.EntityDuplicateException;
 import com.company.web.forum.exceptions.EntityNotFoundException;
 import com.company.web.forum.models.Tag;
@@ -24,8 +23,8 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public List<Tag> get(String name, String content, Integer styleId, String sortBy, String sortOrder) {
-        return repository.get(name, content, styleId, sortBy, sortOrder);
+    public List<Tag> get(String name, int belongs_to, String sortBy) {
+        return repository.get(name, belongs_to, sortBy);
     }
 
     @Override
@@ -34,7 +33,7 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public void create(Tag tag, User user) {
+    public void create(Tag tag, int user) {
         boolean duplicateExists = true;
         try {
             repository.get(tag.getName());
@@ -79,9 +78,10 @@ public class TagServiceImpl implements TagService {
 
     private void checkModifyPermissions(int tagId, User user) {
         Tag tag = repository.get(tagId);
-        if (!(user.isAdmin() || tag.getCreatedBy().equals(user))) {
-            throw new AuthorizationException(MODIFY_TAGS_ERROR_MESSAGE);
-        }
+//        TODO: fix check permissions
+//        if (!(user.isAdmin() || tag.getCreatedBy().equals(user))) {
+//            throw new AuthorizationException(MODIFY_TAGS_ERROR_MESSAGE);
+//        }
     }
 
 }

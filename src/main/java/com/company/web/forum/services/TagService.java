@@ -7,11 +7,12 @@ import java.util.List;
 
 public interface TagService {
 
-     List<Tag> get(String name, String content, Integer styleId, String sortBy, String sortOrder);
+    List<Tag> get(String name, int belongs_to, String sortBy);
 
     Tag get(int id);
 
-    void create(Tag tag, User user);
+
+    void create(Tag tag, int user);
 
     void update(Tag tag, User user);
 

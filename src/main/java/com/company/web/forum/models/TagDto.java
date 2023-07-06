@@ -14,8 +14,8 @@ public class TagDto {
     @Size(min = 3, max = 50, message = "Content should be between 3 and 50 symbols")
     private String content;
 
-    @Positive(message = "StyleId should be positive")
-    private int styleId;
+    @Positive(message = "User id must be positive")
+    private int belongs_to;
 
     public TagDto() {
     }
@@ -36,12 +36,12 @@ public class TagDto {
         return content;
     }
 
-    public int getStyleId() {
-        return styleId;
+    public int getBelongs_to() {
+        return belongs_to;
     }
 
-    public void setStyleId(int styleId) {
-        this.styleId = styleId;
+    public void setBelongs_to(int belongs_to) {
+        this.belongs_to = belongs_to;
     }
 
 }
