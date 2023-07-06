@@ -1,5 +1,6 @@
 package com.company.web.forum.services;
 
+import com.company.web.forum.exceptions.AuthorizationException;
 import com.company.web.forum.exceptions.EntityDuplicateException;
 import com.company.web.forum.exceptions.EntityNotFoundException;
 import com.company.web.forum.models.Tag;
@@ -23,8 +24,8 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public List<Tag> get(String name, int belongs_to, String sortBy) {
-        return repository.get(name, belongs_to, sortBy);
+    public List<Tag> get(String name, User belongs_to) {
+        return repository.get(name, belongs_to.getId());
     }
 
     @Override
@@ -33,7 +34,7 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public void create(Tag tag, int user) {
+    public void create(Tag tag, User user) {
         boolean duplicateExists = true;
         try {
             repository.get(tag.getName());
@@ -45,7 +46,7 @@ public class TagServiceImpl implements TagService {
             throw new EntityDuplicateException("Tag", "name", tag.getName());
         }
 
-        tag.setCreatedBy(user);
+        tag.setBelongs_to(user);
         repository.create(tag);
     }
 
@@ -78,10 +79,9 @@ public class TagServiceImpl implements TagService {
 
     private void checkModifyPermissions(int tagId, User user) {
         Tag tag = repository.get(tagId);
-//        TODO: fix check permissions
-//        if (!(user.isAdmin() || tag.getCreatedBy().equals(user))) {
-//            throw new AuthorizationException(MODIFY_TAGS_ERROR_MESSAGE);
-//        }
+        if (!(user.isAdmin() || tag.getBelongs_to().equals(user))) {
+            throw new AuthorizationException(MODIFY_TAGS_ERROR_MESSAGE);
+        }
     }
 
 }

@@ -1,7 +1,6 @@
 package com.company.web.forum.models;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 public class TagDto {
@@ -10,12 +9,8 @@ public class TagDto {
     @Size(min = 3, max = 50, message = "Name should be between 3 and 50 symbols")
     private String name;
 
-    @NotNull(message = "Content can't be empty")
-    @Size(min = 3, max = 50, message = "Content should be between 3 and 50 symbols")
-    private String content;
-
-    @Positive(message = "User id must be positive")
-    private int belongs_to;
+    @NotNull(message = "User id must be positive")
+    private User belongs_to;
 
     public TagDto() {
     }
@@ -28,19 +23,11 @@ public class TagDto {
         this.name = name;
     }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public int getBelongs_to() {
+    public User getBelongs_to() {
         return belongs_to;
     }
 
-    public void setBelongs_to(int belongs_to) {
+    public void setBelongs_to(User belongs_to) {
         this.belongs_to = belongs_to;
     }
 

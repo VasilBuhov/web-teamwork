@@ -28,7 +28,6 @@ public class TagMapper {
     public Tag fromDto(TagDto dto) {
         Tag tag = new Tag();
         tag.setName(dto.getName());
-        tag.setContent(dto.getContent());
         tag.setBelongs_to(dto.getBelongs_to());
         return tag;
     }
