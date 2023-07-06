@@ -1,6 +1,4 @@
 package com.company.web.forum.controllers;
-
-
 import com.company.web.forum.exceptions.AuthorizationException;
 import com.company.web.forum.exceptions.EntityDuplicateException;
 import com.company.web.forum.exceptions.EntityNotFoundException;
@@ -36,9 +34,8 @@ public class TagRestController {
     @GetMapping
     public List<Tag> get(
             @RequestParam(required = false) String name,
-            @RequestParam(required = false) int belongs_to,
-            @RequestParam(required = false) String sortBy) {
-        return service.get(name, belongs_to, sortBy);
+            @RequestParam(required = false) User belongs_to) {
+        return service.get(name, belongs_to);
     }
 
     @GetMapping("/{id}")
@@ -54,9 +51,8 @@ public class TagRestController {
     public Tag create(@RequestHeader HttpHeaders headers, @Valid @RequestBody TagDto tagDto) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
-            int user_id = user.getId();
             Tag tag = tagMapper.fromDto(tagDto);
-            service.create(tag, user_id);
+            service.create(tag, user);
             return tag;
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());

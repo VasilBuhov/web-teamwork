@@ -23,7 +23,7 @@ public class TagRepositoryImpl implements TagRepository {
     }
 
     @Override
-    public List<Tag> get(String name, int belongs_to, String sortBy) {
+    public List<Tag> get(String name, int belongs_to) {
         try (Session session = sessionFactory.openSession()) {
             Query<Tag> query = session.createQuery("from Tag", Tag.class);
             List<Tag> tags = query.list();
@@ -33,7 +33,6 @@ public class TagRepositoryImpl implements TagRepository {
 
     public List<Tag> filter(List<Tag> tags, String name, int belongs_to) {
         tags = filterByName(tags, name);
-        tags = filterByBelonging(tags, String.valueOf(belongs_to));
         tags = sortBy(tags, String.valueOf(belongs_to));
         tags = order(tags, String.valueOf(belongs_to));
         return tags;
@@ -99,25 +98,15 @@ public class TagRepositoryImpl implements TagRepository {
         return tags;
     }
 
-    private static List<Tag> filterByBelonging(List<Tag> tags, String content) {
-        if (content != null) {
-            tags = tags.stream()
-                    .filter(tag -> tag.getContent().equals(content))
-                    .collect(Collectors.toList());
-        }
-
-        return tags;
-    }
-
     private static List<Tag> sortBy(List<Tag> tags, String sortBy) {
         if (sortBy != null && !sortBy.isEmpty()) {
             switch (sortBy.toLowerCase()) {
                 case "name":
                     tags.sort(Comparator.comparing(Tag::getName));
                     break;
-                case "abv":
-                    tags.sort(Comparator.comparing(Tag::getContent));
-                    break;
+//                case "belongs_to":
+//                    tags.sort(Comparator.comparing(Tag::getBelongs_to));
+//                    break;
             }
         }
         return tags;

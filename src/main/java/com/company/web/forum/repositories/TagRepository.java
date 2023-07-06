@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface TagRepository {
 
-    List<Tag> get(String name, int belongs_to, String sortBy);
+    List<Tag> get(String name, int belongs_to);
 
     Tag get(int id);
 
