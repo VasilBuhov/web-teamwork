@@ -7,25 +7,15 @@ import javax.validation.constraints.Size;
 
 public class PostDto {
 
-    @NotNull(message = "Title can't be empty.")
-    @Size (min = 16, max = 64, message = "Name should be between 16 and 64 symbols.")
-    private String title;
-    @Size (min = 32, max = 8192, message = "Content should be between 32 and 8192 symbols.")
+    @Size(min = 32, max = 8192, message = "Content should be between 32 and 8192 symbols.")
     private String content;
-    @Positive
     @NotNull
     @NotEmpty
-    private int creator;
+    private User creator;
 
-    public PostDto() {};
-
-    public String getTitle() {
-        return title;
+    public PostDto() {
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
 
     public String getContent() {
         return content;
@@ -35,11 +25,11 @@ public class PostDto {
         this.content = content;
     }
 
-    public int getCreator() {
+    public User getCreator() {
         return creator;
     }
 
-    public void setCreator(int creator) {
+    public void setCreator(User creator) {
         this.creator = creator;
     }
 }

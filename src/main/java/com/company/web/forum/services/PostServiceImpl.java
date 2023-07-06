@@ -1,5 +1,8 @@
 package com.company.web.forum.services;
 
+import com.company.web.forum.exceptions.AuthorizationException;
+import com.company.web.forum.exceptions.EntityDuplicateException;
+import com.company.web.forum.exceptions.EntityNotFoundException;
 import com.company.web.forum.models.Post;
 import com.company.web.forum.models.User;
 import com.company.web.forum.repositories.PostRepository;
@@ -9,33 +12,54 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class PostServiceImpl implements PostService{
+public class PostServiceImpl implements PostService {
+    private static final String MODIFY_POST_ERROR_MESSAGE = "Only admin or post creator can modify a post.";
     private final PostRepository repository;
-@Autowired
+
+    @Autowired
     public PostServiceImpl(PostRepository postRepository) {
         this.repository = postRepository;
     }
 
     public List<Post> get() {
-    return repository.get();
+        return repository.get();
     }
+
     @Override
     public Post get(int id) {
         return repository.get(id);
     }
 
-    @Override
-    public void update(Post post, User user) {
-    repository.update(post);
+    public Post get(User creator) {
+        return repository.get(creator);
     }
 
     @Override
     public void create(Post post, User user) {
-    repository.create(post);
+        post.setCreator(user);
+        repository.create(post);
+    }
+
+    public void update(Post post, User user) {
+        checkModifyPermissions(post.getId(), user);
+        if (repository.get().contains(post)) {
+            repository.update(post);
+        } else {
+            throw new EntityNotFoundException("Post", "ID", String.valueOf(post.getId()));
+        }
     }
 
     @Override
     public void delete(int id, User user) {
-    repository.delete(id);
+        checkModifyPermissions(id, user);
+        repository.get(id);
+        repository.delete(id);
+    }
+
+    private void checkModifyPermissions(int postId, User user) {
+        Post post = repository.get(postId);
+        if (!(user.isAdmin() || post.getCreator().equals(user))) {
+            throw new AuthorizationException(MODIFY_POST_ERROR_MESSAGE);
+        }
     }
 }

@@ -1,58 +1,54 @@
 package com.company.web.forum.models;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Objects;
+@Entity
+@Table(name = "posts")
 public class Post {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "post_id")
     private int id;
+    @Column(name = "topic")
     private int topic;
-    private int creator;
-    private String title;
+    @Column(name = "creator")
+    private User creator;
+    @Column(name = "content")
     private String content;
+    @Column(name = "views")
     private int views;
+    @Column(name = "creation_date")
     private LocalDateTime creationDate;
-    private LocalDateTime lastActivity;
+    @Column(name = "likes")
     private int likes;
+    @Column(name = "dislikes")
     private int dislikes;
-    private int comments = 0;
 
     public Post() {
     }
 
-    ;
-
-    public Post(int id, int topic, int creator, String title, String content, int views, LocalDateTime creationDate, LocalDateTime lastActivity, int likes, int dislikes) {
+    public Post(int id, int topic, User creator, String content, int views, LocalDateTime creationDate, int likes, int dislikes) {
         this.id = id;
         this.topic = topic;
         this.creator = creator;
-        this.title = title;
         this.content = content;
         this.views = views;
         this.creationDate = creationDate;
-        this.lastActivity = lastActivity;
         this.likes = likes;
         this.dislikes = dislikes;
-        if (id == 1) {
-            List<Post> commentsList = new ArrayList<>();
-        }
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public int getId() {
         return id;
     }
 
-    public int getCreator() {
+    public User getCreator() {
         return creator;
     }
 
-    public String getTitle() {
-        return title;
-    }
 
     public String getContent() {
         return content;
@@ -98,19 +94,11 @@ public class Post {
         this.dislikes = dislikes;
     }
 
-    public int getComments() {
-        return comments;
-    }
-
-    public void setComments(int comments) {
-        this.comments = comments;
-    }
-
     public void setId(int id) {
         this.id = id;
     }
 
-    public void setCreator(int creator) {
+    public void setCreator(User creator) {
         this.creator = creator;
     }
 
@@ -125,4 +113,16 @@ public class Post {
     public void setTopic(int topic) {
         this.topic = topic;
     }
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Post post = (Post) o;
+        return id == post.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
 }

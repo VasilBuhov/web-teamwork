@@ -9,6 +9,7 @@ public interface PostService {
     List<Post> get();
 
     Post get(int id);
+    Post get(User creator);
 
      void update(Post post, User user);
 
