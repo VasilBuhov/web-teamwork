@@ -39,7 +39,7 @@ create table posts
     creation_date datetime     not null,
     last_activity datetime     not null,
     comment_count int,
-    commet_list   int,
+    comment_list   int,
     topic         int
         constraint posts_topic_id_fk
             references topic
