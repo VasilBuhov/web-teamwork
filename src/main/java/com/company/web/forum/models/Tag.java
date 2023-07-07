@@ -1,6 +1,5 @@
 package com.company.web.forum.models;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;

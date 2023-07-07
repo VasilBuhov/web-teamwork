@@ -8,6 +8,10 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -60,6 +64,20 @@ public class TagRepositoryImpl implements TagRepository {
                 throw new EntityNotFoundException("Tag", "name", name);
             }
             return result.get(0);
+        }
+    }
+
+    @Override
+    public List<Tag> getAllTags() {
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<Tag> cq = cb.createQuery(Tag.class);
+            Root<Tag> tagRoot = cq.from(Tag.class);
+            cq.select(tagRoot);
+            return session.createQuery(cq).list();
+        } catch (Exception e) {
+            // Handle exceptions  // I should think a bit more here
+            return new ArrayList<>();
         }
     }
 

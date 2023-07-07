@@ -9,8 +9,9 @@ public interface TagService {
 
     List<Tag> get(String name, User belongs_to);
 
-    Tag get(int id);
+    Tag getTagById(int id);
 
+    List<Tag> getAllTags();
 
     void create(Tag tag, User user);
 

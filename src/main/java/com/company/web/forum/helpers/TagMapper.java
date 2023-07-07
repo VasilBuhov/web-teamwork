@@ -6,6 +6,9 @@ import com.company.web.forum.services.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 public class TagMapper {
 
@@ -16,11 +19,18 @@ public class TagMapper {
         this.tagService = tagService;
     }
 
+    public TagDto toDto(Tag tag) {
+        TagDto tagDto = new TagDto();
+        tagDto.setName(tag.getName());
+        tagDto.setBelongs_to(tag.getBelongs_to());
+        return tagDto;
+    }
+
 
     public Tag fromDto(int id, TagDto dto) {
         Tag tag = fromDto(dto);
         tag.setId(id);
-        Tag repositoryTag = tagService.get(id);
+        Tag repositoryTag = tagService.getTagById(id);
         tag.setBelongs_to(repositoryTag.getBelongs_to());
         return tag;
     }
@@ -30,6 +40,12 @@ public class TagMapper {
         tag.setName(dto.getName());
         tag.setBelongs_to(dto.getBelongs_to());
         return tag;
+    }
+
+    public List<TagDto> toDtoList(List<Tag> tags) {
+        return tags.stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
     }
 
 }

@@ -16,28 +16,33 @@ public class TagServiceImpl implements TagService {
 
     private static final String MODIFY_TAGS_ERROR_MESSAGE = "Only admin or tag creator can modify a beer.";
 
-    private final TagRepository repository;
+    private final TagRepository tagRepository;
 
     @Autowired
-    public TagServiceImpl(TagRepository repository) {
-        this.repository = repository;
+    public TagServiceImpl(TagRepository tagRepository) {
+        this.tagRepository = tagRepository;
     }
 
     @Override
     public List<Tag> get(String name, User belongs_to) {
-        return repository.get(name, belongs_to.getId());
+        return tagRepository.get(name, belongs_to.getId());
     }
 
     @Override
-    public Tag get(int id) {
-        return repository.get(id);
+    public Tag getTagById(int id) {
+        return tagRepository.get(id);
+    }
+
+    @Override
+    public List<Tag> getAllTags() {
+        return tagRepository.getAllTags();
     }
 
     @Override
     public void create(Tag tag, User user) {
         boolean duplicateExists = true;
         try {
-            repository.get(tag.getName());
+            tagRepository.get(tag.getName());
         } catch (EntityNotFoundException e) {
             duplicateExists = false;
         }
@@ -47,7 +52,7 @@ public class TagServiceImpl implements TagService {
         }
 
         tag.setBelongs_to(user);
-        repository.create(tag);
+        tagRepository.create(tag);
     }
 
     @Override
@@ -56,7 +61,7 @@ public class TagServiceImpl implements TagService {
 
         boolean duplicateExists = true;
         try {
-            Tag existingTag = repository.get(tag.getName());
+            Tag existingTag = tagRepository.get(tag.getName());
             if (existingTag.getId() == tag.getId()) {
                 duplicateExists = false;
             }
@@ -68,17 +73,17 @@ public class TagServiceImpl implements TagService {
             throw new EntityDuplicateException("Tag", "name", tag.getName());
         }
 
-        repository.update(tag);
+        tagRepository.update(tag);
     }
 
     @Override
     public void delete(int id, User user) {
         checkModifyPermissions(id, user);
-        repository.delete(id);
+        tagRepository.delete(id);
     }
 
     private void checkModifyPermissions(int tagId, User user) {
-        Tag tag = repository.get(tagId);
+        Tag tag = tagRepository.get(tagId);
         if (!(user.isAdmin() || tag.getBelongs_to().equals(user))) {
             throw new AuthorizationException(MODIFY_TAGS_ERROR_MESSAGE);
         }

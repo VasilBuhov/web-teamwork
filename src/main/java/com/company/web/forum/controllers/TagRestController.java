@@ -20,28 +20,28 @@ import java.util.List;
 @RequestMapping("/api/tags")
 public class TagRestController {
 
-    private final TagService service;
+    private final TagService tagService;
     private final TagMapper tagMapper;
     private final AuthenticationHelper authenticationHelper;
 
     @Autowired
-    public TagRestController(TagService service, TagMapper tagMapper, AuthenticationHelper authenticationHelper) {
-        this.service = service;
+    public TagRestController(TagService tagService, TagMapper tagMapper, AuthenticationHelper authenticationHelper) {
+        this.tagService = tagService;
         this.tagMapper = tagMapper;
         this.authenticationHelper = authenticationHelper;
     }
 
     @GetMapping
-    public List<Tag> get(
-            @RequestParam(required = false) String name,
-            @RequestParam(required = false) User belongs_to) {
-        return service.get(name, belongs_to);
+    public List<TagDto> getAllTags() {
+        List<Tag> tags = tagService.getAllTags();
+        return tagMapper.toDtoList(tags);
     }
 
     @GetMapping("/{id}")
-    public Tag get(@PathVariable int id) {
+    public TagDto getTagById(@PathVariable int id) {
         try {
-            return service.get(id);
+            Tag tag = tagService.getTagById(id);
+            return tagMapper.toDto(tag);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
@@ -52,7 +52,7 @@ public class TagRestController {
         try {
             User user = authenticationHelper.tryGetUser(headers);
             Tag tag = tagMapper.fromDto(tagDto);
-            service.create(tag, user);
+            tagService.create(tag, user);
             return tag;
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
@@ -68,7 +68,7 @@ public class TagRestController {
         try {
             User user = authenticationHelper.tryGetUser(headers);
             Tag tag = tagMapper.fromDto(id, tagDto);
-            service.update(tag, user);
+            tagService.update(tag, user);
             return tag;
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
@@ -83,7 +83,7 @@ public class TagRestController {
     public void delete(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
-            service.delete(id, user);
+            tagService.delete(id, user);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (AuthorizationException e) {

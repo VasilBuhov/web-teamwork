@@ -12,6 +12,8 @@ public interface TagRepository {
 
     Tag get(String name);
 
+    List<Tag> getAllTags();
+
     void create(Tag tag);
 
     void update(Tag tag);
