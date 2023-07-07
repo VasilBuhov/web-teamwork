@@ -42,17 +42,12 @@ public class PostServiceImpl implements PostService {
 
     public void update(Post post, User user) {
         checkModifyPermissions(post.getId(), user);
-        if (repository.get().contains(post)) {
-            repository.update(post);
-        } else {
-            throw new EntityNotFoundException("Post", "ID", String.valueOf(post.getId()));
-        }
+        repository.update(post);
     }
 
     @Override
     public void delete(int id, User user) {
         checkModifyPermissions(id, user);
-        repository.get(id);
         repository.delete(id);
     }
 
