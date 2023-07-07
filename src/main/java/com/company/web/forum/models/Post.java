@@ -14,7 +14,8 @@ public class Post {
     private int id;
     @Column(name = "topic")
     private int topic;
-    @Column(name = "creator")
+    @ManyToOne
+    @JoinColumn(name = "creator")
     private User creator;
     @Column(name = "content")
     private String content;
@@ -68,14 +69,6 @@ public class Post {
 
     public LocalDateTime getCreationDate() {
         return creationDate;
-    }
-
-    public LocalDateTime getLastActivity() {
-        return lastActivity;
-    }
-
-    public void setLastActivity(LocalDateTime lastActivity) {
-        this.lastActivity = lastActivity;
     }
 
     public int getLikes() {

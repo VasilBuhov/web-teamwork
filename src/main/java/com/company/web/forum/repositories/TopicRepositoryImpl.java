@@ -54,7 +54,7 @@ public class TopicRepositoryImpl implements TopicRepository{
         topics.add(topic);
     }
     @Override
-    public void update(Topic topic, User user) {
+    public void update(Topic topic) {
         Topic topicToUpdate = get(topic.getId());
         topicToUpdate.setContent(topic.getContent());
         topicToUpdate.setDislikes(topic.getDislikes());
@@ -65,7 +65,7 @@ public class TopicRepositoryImpl implements TopicRepository{
         topicToUpdate.setPosts(topic.getPosts());
     }
     @Override
-    public void delete(int id, User user) {
+    public void delete(int id) {
         Topic topicToDelete = get(id);
         topics.remove(topicToDelete);
     }

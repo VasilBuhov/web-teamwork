@@ -17,6 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -33,8 +34,10 @@ public class PostRestController {
     }
 
     @GetMapping
-    public List<Post> get() {
-        return service.get();
+    public List<Post> get(
+            @RequestParam(required = false) int topic,
+            @RequestParam(required = false) User creator) {
+        return service.get(topic, creator);
     }
 
     @GetMapping("/{id}")

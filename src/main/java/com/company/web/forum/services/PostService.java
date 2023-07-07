@@ -6,7 +6,7 @@ import com.company.web.forum.models.User;
 import java.util.List;
 
 public interface PostService {
-    List<Post> get();
+    List<Post> get(int topic, User creator);
 
     Post get(int id);
     Post get(User creator);

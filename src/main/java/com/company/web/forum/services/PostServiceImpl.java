@@ -21,8 +21,8 @@ public class PostServiceImpl implements PostService {
         this.repository = postRepository;
     }
 
-    public List<Post> get() {
-        return repository.get();
+    public List<Post> get(int topic, User creator) {
+        return repository.get(topic, creator);
     }
 
     @Override

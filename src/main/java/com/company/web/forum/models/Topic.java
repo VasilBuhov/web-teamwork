@@ -9,11 +9,12 @@ import java.util.List;
 public class Topic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "post_id")
+    @Column(name = "id")
     private int id;
-    @Column(name = "creator")
+    @ManyToOne
+    @JoinColumn(name = "creator")
     private User creator;
-    @Column(name = "creator")
+    @Column(name = "title")
     private String title;
     @Column(name = "content")
     private String content;
@@ -25,7 +26,12 @@ public class Topic {
     private int dislikes;
     @Column(name = "creation_date")
     private LocalDateTime creationDate;
-    @Column(name = "posts")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinTable(
+            name = "topic_posts",
+            joinColumns = @JoinColumn(name = "topic_id"),
+            inverseJoinColumns = @JoinColumn(name = "post_id")
+    )
     private List<Post> posts;
     public Topic(){
     }
