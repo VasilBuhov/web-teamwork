@@ -39,6 +39,8 @@ public class TagMapper {
         Tag tag = new Tag();
         tag.setName(dto.getName());
         tag.setBelongs_to(dto.getBelongs_to());
+        tag.setOccurrenceIn(dto.getOccurrenceIn());
+        tag.setBelongs_to(dto.getBelongs_to());
         return tag;
     }
 

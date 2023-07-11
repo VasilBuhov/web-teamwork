@@ -49,6 +49,7 @@ public class TagRepositoryImpl implements TagRepository {
             if (tag == null) {
                 throw new EntityNotFoundException("Tag", id);
             }
+            if (tag.getIsDeleted()==1) throw new EntityNotFoundException("Tag", id);//maybe return hard-coded object of default tag?
             return tag;
         }
     }
@@ -76,7 +77,7 @@ public class TagRepositoryImpl implements TagRepository {
             cq.select(tagRoot);
             return session.createQuery(cq).list();
         } catch (Exception e) {
-            // Handle exceptions  // I should think a bit more here
+            // Handle exceptions
             return new ArrayList<>();
         }
     }
@@ -84,7 +85,9 @@ public class TagRepositoryImpl implements TagRepository {
     @Override
     public void create(Tag tag) {
         try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
             session.save(tag);
+            session.getTransaction().commit();
         }
     }
 
@@ -99,10 +102,11 @@ public class TagRepositoryImpl implements TagRepository {
 
     @Override
     public void delete(int id) {
-        Tag tagToDelete = get(id);
+        Tag tagToDelete = get(id);//get the tag
+        tagToDelete.setIsDeleted(1);//prep soft delete here
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            session.delete(tagToDelete);
+            session.update(tagToDelete);//actual soft delete
             session.getTransaction().commit();
         }
     }

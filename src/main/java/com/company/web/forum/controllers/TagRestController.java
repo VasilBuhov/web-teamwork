@@ -31,13 +31,13 @@ public class TagRestController {
         this.authenticationHelper = authenticationHelper;
     }
 
-    @GetMapping
+    @GetMapping("/getAllTags")
     public List<TagDto> getAllTags() {
         List<Tag> tags = tagService.getAllTags();
         return tagMapper.toDtoList(tags);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public TagDto getTagById(@PathVariable int id) {
         try {
             Tag tag = tagService.getTagById(id);
@@ -47,13 +47,14 @@ public class TagRestController {
         }
     }
 
-    @PostMapping
+    @PostMapping("/addTag")
     public Tag create(@RequestHeader HttpHeaders headers, @Valid @RequestBody TagDto tagDto) {
         try {
-            User user = authenticationHelper.tryGetUser(headers);
-            Tag tag = tagMapper.fromDto(tagDto);
-            tagService.create(tag, user);
-            return tag;
+            User belongsToUser = authenticationHelper.tryGetUser(headers);
+            String tagName = tagMapper.fromDto(tagDto).getName();
+            Topic occurrenceIn = tagMapper.fromDto(tagDto).getOccurrenceIn();
+            tagService.create(tagName, belongsToUser, occurrenceIn);
+            return tagService.getTagById(tagMapper.fromDto(tagDto).getId());
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (EntityDuplicateException e) {
@@ -63,7 +64,7 @@ public class TagRestController {
         }
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/id/{id}")
     public Tag update(@RequestHeader HttpHeaders headers, @PathVariable int id, @Valid @RequestBody TagDto tagDto) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
@@ -79,7 +80,7 @@ public class TagRestController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public void delete(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         try {
             User user = authenticationHelper.tryGetUser(headers);

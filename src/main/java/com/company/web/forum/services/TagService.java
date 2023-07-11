@@ -1,6 +1,7 @@
 package com.company.web.forum.services;
 
 import com.company.web.forum.models.Tag;
+import com.company.web.forum.models.Topic;
 import com.company.web.forum.models.User;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public interface TagService {
 
     List<Tag> getAllTags();
 
-    void create(Tag tag, User user);
+    void create(String tagName, User belongsToUser, Topic occurrenceIn);
 
     void update(Tag tag, User user);
 

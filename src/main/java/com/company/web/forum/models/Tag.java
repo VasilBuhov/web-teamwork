@@ -19,16 +19,24 @@ public class Tag {
     @JsonIgnore
     @OneToOne
     @JoinColumn(name = "belongs_to")
-    private User belongs_to;
+    private User belongsTo;
+    @JsonIgnore
+    @OneToOne
+    @JoinColumn(name = "occurence_in")
+    private Topic occurrenceIn;
 
+    @Column(name = "status_deleted")
+    private int isDeleted;
 
     public Tag() {
     }
 
-    public Tag(int id, String name, User belongs_to) {
+    public Tag(int id, String name, User belongsTo, Topic occurrenceIn, int isDeleted) {
         this.id = id;
         this.name = name;
-        this.belongs_to = belongs_to;
+        this.belongsTo = belongsTo;
+        this.occurrenceIn = occurrenceIn;
+        this.isDeleted = isDeleted;
     }
 
     public int getId() {
@@ -48,11 +56,27 @@ public class Tag {
     }
 
     public User getBelongs_to() {
-        return belongs_to;
+        return belongsTo;
     }
 
-    public void setBelongs_to(User belongs_to) {
-        this.belongs_to = belongs_to;
+    public void setBelongs_to(User belongsTo) {
+        this.belongsTo = belongsTo;
+    }
+
+    public int getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(int isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
+    public Topic getOccurrenceIn() {
+        return occurrenceIn;
+    }
+
+    public void setOccurrenceIn(Topic occurrenceIn) {
+        this.occurrenceIn = occurrenceIn;
     }
 
     @Override

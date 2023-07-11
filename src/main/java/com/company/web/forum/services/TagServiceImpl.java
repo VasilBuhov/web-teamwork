@@ -4,6 +4,7 @@ import com.company.web.forum.exceptions.AuthorizationException;
 import com.company.web.forum.exceptions.EntityDuplicateException;
 import com.company.web.forum.exceptions.EntityNotFoundException;
 import com.company.web.forum.models.Tag;
+import com.company.web.forum.models.Topic;
 import com.company.web.forum.models.User;
 import com.company.web.forum.repositories.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import java.util.List;
 @Service
 public class TagServiceImpl implements TagService {
 
-    private static final String MODIFY_TAGS_ERROR_MESSAGE = "Only admin or tag creator can modify a beer.";
+    private static final String MODIFY_TAGS_ERROR_MESSAGE = "Only admin or tag creator can modify a tag.";
 
     private final TagRepository tagRepository;
 
@@ -39,19 +40,20 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public void create(Tag tag, User user) {
+    public void create(String tagName, User belongsToUser, Topic occurrenceIn) {
         boolean duplicateExists = true;
+        Tag tag = new Tag();
+        tag.setName(tagName);
+        tag.setIsDeleted(0);
+        tag.setBelongs_to(belongsToUser);
+        tag.setOccurrenceIn(occurrenceIn);
         try {
-            tagRepository.get(tag.getName());
+            tagRepository.get(tagName);
         } catch (EntityNotFoundException e) {
             duplicateExists = false;
         }
 
-        if (duplicateExists) {
-            throw new EntityDuplicateException("Tag", "name", tag.getName());
-        }
-
-        tag.setBelongs_to(user);
+        if (duplicateExists) throw new EntityDuplicateException("Tag", "name", tag.getName());
         tagRepository.create(tag);
     }
 
@@ -79,6 +81,7 @@ public class TagServiceImpl implements TagService {
     @Override
     public void delete(int id, User user) {
         checkModifyPermissions(id, user);
+        //check if tag already deleted?
         tagRepository.delete(id);
     }
 
