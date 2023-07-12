@@ -43,7 +43,18 @@ public class TagRestController {
             Tag tag = tagService.getTagById(id);
             return tagMapper.toDto(tag);
         } catch (EntityNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+            throw new EntityNotFoundException("REST: Tag", "id", String.valueOf(id));
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException("ID cannot be converted into string");
+        }
+    }
+
+    @GetMapping("/name/{name}")
+    public List<Tag> getTagByName(@PathVariable String name) {
+        try {
+            return tagService.getTagByName(name);
+        } catch (EntityNotFoundException e) {
+            throw new EntityNotFoundException("REST: Tag", "name", name);
         }
     }
 

@@ -23,6 +23,7 @@ public class TagMapper {
         TagDto tagDto = new TagDto();
         tagDto.setName(tag.getName());
         tagDto.setBelongs_to(tag.getBelongs_to());
+        tagDto.setOccurrenceIn(tag.getOccurrenceIn());
         return tagDto;
     }
 
@@ -49,5 +50,11 @@ public class TagMapper {
                 .map(this::toDto)
                 .collect(Collectors.toList());
     }
+
+//    public List<Tag> toDtoTagList(List<Tag> tags) {
+//        return tags.stream()
+//                .map(this::toDto)
+//                .collect(Collectors.toList());
+//    }
 
 }

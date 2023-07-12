@@ -22,9 +22,9 @@ public class Tag {
     private User belongsTo;
     @JsonIgnore
     @OneToOne
-    @JoinColumn(name = "occurence_in")
+    @JoinColumn(name = "occurrence_in")
     private Topic occurrenceIn;
-
+    @JsonIgnore
     @Column(name = "status_deleted")
     private int isDeleted;
 

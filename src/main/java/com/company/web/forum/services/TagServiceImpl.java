@@ -35,6 +35,11 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
+    public List<Tag> getTagByName(String name) {
+        return tagRepository.getByName(name);
+    }
+
+    @Override
     public List<Tag> getAllTags() {
         return tagRepository.getAllTags();
     }
@@ -42,18 +47,20 @@ public class TagServiceImpl implements TagService {
     @Override
     public void create(String tagName, User belongsToUser, Topic occurrenceIn) {
         boolean duplicateExists = true;
-        Tag tag = new Tag();
-        tag.setName(tagName);
-        tag.setIsDeleted(0);
-        tag.setBelongs_to(belongsToUser);
-        tag.setOccurrenceIn(occurrenceIn);
+
         try {
             tagRepository.get(tagName);
         } catch (EntityNotFoundException e) {
             duplicateExists = false;
         }
+        Tag tag = new Tag();
+        tag.setName(tagName);
 
         if (duplicateExists) throw new EntityDuplicateException("Tag", "name", tag.getName());
+
+        tag.setIsDeleted(0);
+        tag.setBelongs_to(belongsToUser);
+        tag.setOccurrenceIn(occurrenceIn);
         tagRepository.create(tag);
     }
 
