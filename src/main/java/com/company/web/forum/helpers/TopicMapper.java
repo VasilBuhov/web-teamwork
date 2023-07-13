@@ -24,6 +24,7 @@ public class TopicMapper {
         topic.setPosts(repositoryTopic.getPosts());
         return topic;
     }
+
     public Topic fromDto(TopicDto dto) {
     Topic topic = new Topic();
     topic.setTitle(dto.getTitle());

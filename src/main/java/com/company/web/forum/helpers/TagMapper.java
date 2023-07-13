@@ -27,7 +27,6 @@ public class TagMapper {
         return tagDto;
     }
 
-
     public Tag fromDto(int id, TagDto dto) {
         Tag tag = fromDto(dto);
         tag.setId(id);

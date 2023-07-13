@@ -26,12 +26,7 @@ public class Topic {
     private int dislikes;
     @Column(name = "creation_date")
     private LocalDateTime creationDate;
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-//    @JoinTable(
-//            name = "topic_posts",
-//            joinColumns = @JoinColumn(name = "id"),
-//            inverseJoinColumns = @JoinColumn(name = "post_id")
-//    )
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "id")
     private List<Post> posts;
     public Topic(){
