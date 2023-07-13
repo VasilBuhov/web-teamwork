@@ -39,4 +39,54 @@ class TagServiceImplTest {
                 () -> service.delete(1, mockUser));
     }
 
+    @Test
+    void delete_Should_CallRepository_When_UserIsAdmin() {
+        // Arrange
+        User mockUserAdmin = createMockAdmin();
+        Tag mockTag = createMockTag();
+
+        Mockito.when(mockRepository.get(Mockito.anyInt()))
+                .thenReturn(mockTag);
+
+        // Act
+        service.delete(1, mockUserAdmin);
+
+        // Assert
+        Mockito.verify(mockRepository, Mockito.times(1))
+                .delete(1);
+    }
+    @Test
+    void delete_Should_CallRepository_When_UserIsCreator() {
+        // Arrange
+        Tag mockTag = createMockTag();
+        User mockUserCreator = mockTag.getBelongs_to();
+
+        Mockito.when(mockRepository.get(Mockito.anyInt()))
+                .thenReturn(mockTag);
+
+        // Act
+        service.delete(1, mockUserCreator);
+
+        // Assert
+        Mockito.verify(mockRepository, Mockito.times(1))
+                .delete(1);
+    }
+
+
+    @Test
+    public void get_Should_ReturnBeer_When_MatchByIdExist() {
+        // Arrange
+        Tag mockTag = createMockTag();
+
+        Mockito.when(mockRepository.get(Mockito.anyInt()))
+                .thenReturn(mockTag);
+
+        // Act
+        Tag result = service.getTagById(mockTag.getId());
+
+        // Assert
+        Assertions.assertEquals(mockTag, result);
+    }
+
+
 }
