@@ -1,4 +1,5 @@
 package com.company.web.forum.controllers;
+
 import com.company.web.forum.exceptions.AuthorizationException;
 import com.company.web.forum.exceptions.EntityDuplicateException;
 import com.company.web.forum.exceptions.EntityNotFoundException;
@@ -31,13 +32,13 @@ public class TagRestController {
         this.authenticationHelper = authenticationHelper;
     }
 
-    @GetMapping("/getAllTags")
+    @GetMapping
     public List<TagDto> getAllTags() {
         List<Tag> tags = tagService.getAllTags();
         return tagMapper.toDtoList(tags);
     }
 
-    @GetMapping("/id/{id}")
+    @GetMapping("/{id}")
     public TagDto getTagById(@PathVariable int id) {
         try {
             Tag tag = tagService.getTagById(id);
@@ -49,7 +50,7 @@ public class TagRestController {
         }
     }
 
-    @GetMapping("/name/{name}")
+    @GetMapping("/{name}")
     public List<Tag> getTagByName(@PathVariable String name) {
         try {
             return tagService.getTagByName(name);
@@ -75,7 +76,7 @@ public class TagRestController {
         }
     }
 
-    @PutMapping("/id/{id}")
+    @PutMapping("/{id}")
     public Tag update(@RequestHeader HttpHeaders headers, @PathVariable int id, @Valid @RequestBody TagDto tagDto) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
@@ -91,7 +92,7 @@ public class TagRestController {
         }
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public void delete(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
