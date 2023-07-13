@@ -3,6 +3,7 @@ package com.company.web.forum.repositories;
 import com.company.web.forum.exceptions.EntityNotFoundException;
 import com.company.web.forum.models.Post;
 import com.company.web.forum.models.Tag;
+import com.company.web.forum.models.Topic;
 import com.company.web.forum.models.User;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -27,7 +28,7 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     @Override
-    public List<Post> get(int topic, User creator) {
+    public List<Post> get(Topic topic, User creator) {
 
         try (Session session = sessionFactory.openSession()) {
             Query<Post> query = session.createQuery("from Post", Post.class);
@@ -35,7 +36,7 @@ public class PostRepositoryImpl implements PostRepository {
             return filter(posts, topic, creator);
         }
     }
-    public List<Post> filter(List<Post> posts, int topic, User creator) {
+    public List<Post> filter(List<Post> posts, Topic topic, User creator) {
         posts = filterByTopic(posts, topic);
         posts = filterByCreator(posts, creator);
         return posts;
@@ -91,10 +92,10 @@ public class PostRepositoryImpl implements PostRepository {
         }
     }
 
- private static List<Post> filterByTopic(List<Post> posts, int topic) {
-        if (topic >= 0) {
+ private static List<Post> filterByTopic(List<Post> posts, Topic topic) {
+        if (!topic.equals(null)) {
             posts = posts.stream()
-                    .filter(post -> post.getTopic() == topic)
+                    .filter(post -> post.getTopic().getTitle().equals(topic))
                     .collect(Collectors.toList());
         }
         return posts;

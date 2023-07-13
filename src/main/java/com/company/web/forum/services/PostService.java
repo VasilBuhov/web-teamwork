@@ -1,12 +1,13 @@
 package com.company.web.forum.services;
 
 import com.company.web.forum.models.Post;
+import com.company.web.forum.models.Topic;
 import com.company.web.forum.models.User;
 
 import java.util.List;
 
 public interface PostService {
-    List<Post> get(int topic, User creator);
+    List<Post> get(Topic topic, User creator);
 
     Post get(int id);
     Post get(User creator);

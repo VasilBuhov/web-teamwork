@@ -2,6 +2,7 @@ package com.company.web.forum.controllers;
 
 import com.company.web.forum.exceptions.AuthorizationException;
 import com.company.web.forum.exceptions.EntityNotFoundException;
+import com.company.web.forum.models.Topic;
 import org.springframework.http.HttpHeaders;
 import com.company.web.forum.helpers.AuthenticationHelper;
 
@@ -35,7 +36,7 @@ public class PostRestController {
 
     @GetMapping
     public List<Post> get(
-            @RequestParam(required = false) int topic,
+            @RequestParam(required = false) Topic topic,
             @RequestParam(required = false) User creator) {
         return service.get(topic, creator);
     }
@@ -60,7 +61,7 @@ public class PostRestController {
     public void update(@PathVariable int id, @RequestHeader HttpHeaders httpheaders, @Valid @RequestBody PostDto postDto) {
         try {
             User user = authenticationHelper.tryGetUser(httpheaders);
-            Post post = postMapper.fromDto(postDto);
+            Post post = postMapper.fromDto(id, postDto);
             service.update(post, user);
         } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
