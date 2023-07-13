@@ -1,9 +1,11 @@
 package com.company.web.forum.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
-
 @Table(name = "users")
 public class User {
 
@@ -17,31 +19,29 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
 
-
     @Column(name = "username")
     private String username;
 
     @Column(name = "email")
     private String email;
+
     @Column(name = "password")
     private String password;
 
     @Column(name = "user_level")
-    private boolean isAdmin;
-
-
+    private int isAdmin;
 
     public User() {
     }
 
-    public User(int id, String firstName, String lastName, String username, String email, String password, boolean isAdmin) {
+    public User(int id, String firstName, String lastName, String username, String email, String password, int isAdmin) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.email = email;
         this.password = password;
-        this.isAdmin = isAdmin;
+        setIsAdmin(isAdmin);
     }
 
     // Getters and Setters
@@ -75,6 +75,7 @@ public class User {
     }
 
     public void setUsername(String username) {
+
         this.username = username;
     }
 
@@ -94,11 +95,15 @@ public class User {
         this.password = password;
     }
 
-    public boolean isAdmin() {
+    public int getIsAdmin() {
+
         return isAdmin;
     }
 
-    public void setAdmin(boolean admin) {
-        isAdmin = admin;
+    public void setIsAdmin(int isAdmin) {
+//        if (isAdmin != 0 && isAdmin != 1) {
+//            throw new IllegalArgumentException("Invalid value for isAdmin. Only 0 and 1 are allowed.");
+//        }
+        this.isAdmin = isAdmin;
     }
 }

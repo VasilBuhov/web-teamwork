@@ -4,6 +4,7 @@ import com.company.web.forum.exceptions.EntityNotFoundException;
 import com.company.web.forum.models.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -25,6 +26,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> getAllUsers() {
+
         try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
             CriteriaQuery<User> cq = cb.createQuery(User.class);
@@ -36,6 +38,7 @@ public class UserRepositoryImpl implements UserRepository {
             return new ArrayList<>();
         }
     }
+
 
     @Override
     public User getUserById(int id) throws EntityNotFoundException {
@@ -53,17 +56,17 @@ public class UserRepositoryImpl implements UserRepository {
         }
     }
 
-    @Override
     public User getUserByEmail(String email) throws EntityNotFoundException {
         try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
             CriteriaQuery<User> cq = cb.createQuery(User.class);
             Root<User> root = cq.from(User.class);
             cq.select(root).where(cb.equal(root.get("email"), email));
-            return session.createQuery(cq).uniqueResultOptional()
-                    .orElseThrow(() -> new EntityNotFoundException("User not found",1));
-        } catch (EntityNotFoundException e) {
-            throw e;
+            User user = session.createQuery(cq).uniqueResultOptional().orElse(null);
+            if (user == null) {
+                throw new EntityNotFoundException("User", "email", email);
+            }
+            return user;
         } catch (Exception e) {
             // Handle exceptions
             return null;
@@ -77,24 +80,33 @@ public class UserRepositoryImpl implements UserRepository {
             CriteriaQuery<User> cq = cb.createQuery(User.class);
             Root<User> root = cq.from(User.class);
             cq.select(root).where(cb.equal(root.get("username"), username));
-            return session.createQuery(cq).uniqueResultOptional()
-                    .orElseThrow(() -> new EntityNotFoundException("User not found",1));
-        } catch (EntityNotFoundException e) {
-            throw e;
+            User user = session.createQuery(cq).uniqueResultOptional().orElse(null);
+            if (user == null) {
+                throw new EntityNotFoundException("User", "username", username);
+            }
+            return user;
         } catch (Exception e) {
             // Handle exceptions
             return null;
         }
     }
 
+//    @Override
+//    public void createUser(User user) {
+//        try (Session session = sessionFactory.openSession()) {
+//            session.beginTransaction();
+//            session.save(user);
+//            session.getTransaction().commit();
+//        } catch (Exception e) {
+//            // Handle exceptions
+//        }
+//    }
     @Override
     public void createUser(User user) {
         try (Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
+
             session.save(user);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            // Handle exceptions
+
         }
     }
 

@@ -33,31 +33,45 @@ public class UserRestController {
 
     @GetMapping
     public List<UserDto> getAllUsers() {
+
         List<User> users = userService.getAllUsers();
+
         return userMapper.toDtoList(users);
     }
+
 
     @GetMapping("/{id}")
     public UserDto getUserById(@PathVariable int id) {
         try {
             User user = userService.getUserById(id);
-            return userMapper.toDto(user);
+            return userMapper.toDtoNoPassword(user);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
 
-    @PostMapping
-    public UserDto createUser(@RequestHeader HttpHeaders headers, @Valid @RequestBody UserDto userDto) {
-        try {
-            authenticationHelper.tryGetUser(headers);
-            User user = userMapper.fromDto(userDto);
-            userService.createUser(user);
-            return userMapper.toDto(user);
-        } catch (AuthorizationException e) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
-        }
+//    @PostMapping
+//    public UserDto createUser(@RequestHeader HttpHeaders headers, @Valid @RequestBody UserDto userDto) {
+//        try {
+//            authenticationHelper.tryGetUser(headers);
+//            User user = userMapper.fromDto(userDto);
+//            userService.createUser(user);
+//            return userMapper.toDto(user);
+//        } catch (AuthorizationException e) {
+//            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+//        }
+//    }
+@PostMapping
+public UserDto createUser(@RequestHeader HttpHeaders headers, @Valid @RequestBody UserDto userDto) {
+    try {
+        authenticationHelper.tryGetUser(headers);
+        User user = userMapper.fromDto(userDto);
+        userService.createUser(user);
+        return userMapper.toDto(user);
+    } catch (AuthorizationException e) {
+        throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
     }
+}
 
     @PutMapping("/{id}")
     public UserDto updateUser(@RequestHeader HttpHeaders headers, @PathVariable int id, @Valid @RequestBody UserDto userDto) {
