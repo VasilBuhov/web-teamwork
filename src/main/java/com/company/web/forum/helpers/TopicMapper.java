@@ -28,7 +28,6 @@ public class TopicMapper {
     Topic topic = new Topic();
     topic.setTitle(dto.getTitle());
     topic.setContent(dto.getContent());
-    topic.setCreator(dto.getCreator());
     return topic;
     }
 

@@ -1,6 +1,4 @@
 package com.company.web.forum.models;
-
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -10,9 +8,8 @@ public class TopicDto {
     private String title;
     @Size(min = 32, max = 8192, message = "Content should be between 32 and 8192 symbols.")
     private String content;
-    @NotNull
-    @NotEmpty
-    private User creator;
+//    @NotNull(message = "Tag can't be empty.")
+//    private Tag tag;
 
     public TopicDto() {}
 
@@ -33,11 +30,11 @@ public class TopicDto {
         this.content = content;
     }
 
-    public User getCreator() {
-        return creator;
-    }
-
-    public void setCreator(User creator) {
-        this.creator = creator;
-    }
+//    public Tag getTag() {
+//        return tag;
+//    }
+//
+//    public void setTag(Tag tag) {
+//        this.tag = tag;
+//    }
 }

@@ -6,6 +6,7 @@ import com.company.web.forum.helpers.AuthenticationHelper;
 import com.company.web.forum.helpers.TopicMapper;
 import com.company.web.forum.models.*;
 import com.company.web.forum.services.TopicService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ public class TopicRestController {
     private final TopicService service;
     private final TopicMapper topicMapper;
     private final AuthenticationHelper authenticationHelper;
-
+@Autowired
     public TopicRestController(TopicService service, TopicMapper topicMapper, AuthenticationHelper authenticationHelper) {
         this.service = service;
         this.topicMapper = topicMapper;
@@ -28,8 +29,11 @@ public class TopicRestController {
     }
 
     @GetMapping
-    public List<Topic> get() {
-        return service.get();
+    public List<Topic> get(
+            @RequestParam(required = false) User creator,
+            @RequestParam(required = false) Tag tag) {
+        FilterTopicOptions filterTopicOptions = new FilterTopicOptions(creator, tag);
+        return service.get(filterTopicOptions);
     }
 
     @GetMapping("/{id}")
@@ -52,7 +56,7 @@ public class TopicRestController {
     public void update(@PathVariable int id, @RequestHeader HttpHeaders httpheaders, @Valid @RequestBody TopicDto topicDto) {
         try {
             User user = authenticationHelper.tryGetUser(httpheaders);
-            Topic topic = topicMapper.fromDto(topicDto);
+            Topic topic = topicMapper.fromDto(id, topicDto);
             service.update(topic, user);
         } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
@@ -62,7 +66,7 @@ public class TopicRestController {
     }
     @DeleteMapping("/{id}")
     public void delete(@PathVariable int id, @RequestHeader HttpHeaders httpHeaders) {
-        try{
+        try {
             User user = authenticationHelper.tryGetUser(httpHeaders);
             service.delete(id, user);
         } catch (AuthorizationException e) {
