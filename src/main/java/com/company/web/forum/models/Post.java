@@ -10,12 +10,13 @@ import java.util.Objects;
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "post_id")
+    @Column(name = "id")
     private int id;
-    @Column(name = "topic")
-    private int topic;
     @ManyToOne
-    @JoinColumn(name = "creator")
+    @Column(name = "id")
+    private Topic topic;
+    @ManyToOne
+    @JoinColumn(name = "id")
     private User creator;
     @Column(name = "content")
     private String content;
@@ -31,7 +32,7 @@ public class Post {
     public Post() {
     }
 
-    public Post(int id, int topic, User creator, String content, int views, LocalDateTime creationDate, int likes, int dislikes) {
+    public Post(int id, Topic topic, User creator, String content, int views, LocalDateTime creationDate, int likes, int dislikes) {
         this.id = id;
         this.topic = topic;
         this.creator = creator;
@@ -99,11 +100,11 @@ public class Post {
         this.creationDate = creationDate;
     }
 
-    public int getTopic() {
+    public Topic getTopic() {
         return topic;
     }
 
-    public void setTopic(int topic) {
+    public void setTopic(Topic topic) {
         this.topic = topic;
     }
     public boolean equals(Object o) {

@@ -9,9 +9,6 @@ public class PostDto {
 
     @Size(min = 32, max = 8192, message = "Content should be between 32 and 8192 symbols.")
     private String content;
-    @NotNull
-    @NotEmpty
-    private User creator;
 
     public PostDto() {
     }
@@ -25,11 +22,4 @@ public class PostDto {
         this.content = content;
     }
 
-    public User getCreator() {
-        return creator;
-    }
-
-    public void setCreator(User creator) {
-        this.creator = creator;
-    }
 }

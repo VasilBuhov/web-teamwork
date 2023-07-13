@@ -4,6 +4,7 @@ import com.company.web.forum.exceptions.AuthorizationException;
 import com.company.web.forum.exceptions.EntityDuplicateException;
 import com.company.web.forum.exceptions.EntityNotFoundException;
 import com.company.web.forum.models.Post;
+import com.company.web.forum.models.Topic;
 import com.company.web.forum.models.User;
 import com.company.web.forum.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class PostServiceImpl implements PostService {
         this.repository = postRepository;
     }
 
-    public List<Post> get(int topic, User creator) {
+    public List<Post> get(Topic topic, User creator) {
         return repository.get(topic, creator);
     }
 
@@ -53,7 +54,7 @@ public class PostServiceImpl implements PostService {
 
     private void checkModifyPermissions(int postId, User user) {
         Post post = repository.get(postId);
-        if (!(user.isAdmin() || post.getCreator().equals(user))) {
+        if (!(user.getIsAdmin() == 1 || post.getCreator().equals(user))) {
             throw new AuthorizationException(MODIFY_POST_ERROR_MESSAGE);
         }
     }
