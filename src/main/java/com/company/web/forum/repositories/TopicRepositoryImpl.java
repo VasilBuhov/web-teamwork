@@ -2,71 +2,103 @@ package com.company.web.forum.repositories;
 
 
 import com.company.web.forum.exceptions.EntityNotFoundException;
+import com.company.web.forum.models.FilterTopicOptions;
 import com.company.web.forum.models.Topic;
-import com.company.web.forum.models.User;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 @Repository
-public class TopicRepositoryImpl implements TopicRepository{
-    private List<Topic> topics;
+public class TopicRepositoryImpl implements TopicRepository {
+    private final SessionFactory sessionFactory;
 
-    public TopicRepositoryImpl() {
-        topics = new ArrayList<>();
-
-        Topic topic1 = new Topic();
-        Topic topic2 = new Topic();
-
-        topics.add(topic1);
-        topics.add(topic2);
+    @Autowired
+    public TopicRepositoryImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     @Override
-    public List<Topic> get() {
-        return topics;
+    public List<Topic> get(FilterTopicOptions filterTopicOptions) {
+        try (Session session = sessionFactory.openSession()) {
+
+            List<String> filters = new ArrayList<>();
+            Map<String, Object> params = new HashMap<>();
+
+            filterTopicOptions.getCreator().ifPresent(value -> {
+                filters.add("creator.id = :creatorId");
+                params.put("creatorId", value);
+            });
+            filterTopicOptions.getTag().ifPresent(value -> {
+                filters.add("tag.id = :tagId");
+                params.put("tagId", value);
+            });
+            StringBuilder queryString = new StringBuilder("from Topic");
+            if (!filters.isEmpty()) {
+                queryString
+                        .append(" where ")
+                        .append(String.join(" and ", filters));
+            }
+            Query<Topic> query = session.createQuery(queryString.toString(), Topic.class);
+            query.setProperties(params);
+            return query.list();
+        }
     }
 
     @Override
     public Topic get(int id) {
-        return topics.stream()
-                .filter(topic -> topic.getId() == id)
-                .findFirst()
-                .orElseThrow(() -> new EntityNotFoundException("Topic", id));
+        try (Session session = sessionFactory.openSession()) {
+            Topic topic = session.get(Topic.class, id);
+            if (topic == null) {
+                throw new EntityNotFoundException("Topic", id);
+            }
+            return topic;
+        }
     }
+
     public Topic get(String title) {
-        return topics.stream()
-                .filter(topic -> topic.getTitle().equals(title))
-                .findFirst()
-                .orElseThrow(() -> new EntityNotFoundException("Topic", "name", title));
-    }
-    public Topic get(User creator) {
-        return topics.stream()
-                .filter(topic -> topic.getCreator().equals(creator))
-                .findFirst()
-                .orElseThrow(() -> new EntityNotFoundException("Topic", "creator", creator.getUsername()));
+        try (Session session = sessionFactory.openSession()) {
+            Query<Topic> query = session.createQuery("from Topic where title = :title", Topic.class);
+            query.setParameter("title", title);
+
+            List<Topic> result = query.list();
+            if (result.size() == 0) {
+                throw new EntityNotFoundException("Topic", "title", title);
+            }
+
+            return result.get(0);
+        }
     }
 
     @Override
     public void create(Topic topic) {
-        int nextId = topics.size() + 1;
-        topic.setId(nextId);
-        topics.add(topic);
+        try (Session session = sessionFactory.openSession()) {
+            session.save(topic);
+        }
     }
+
     @Override
     public void update(Topic topic) {
-        Topic topicToUpdate = get(topic.getId());
-        topicToUpdate.setContent(topic.getContent());
-        topicToUpdate.setDislikes(topic.getDislikes());
-        topicToUpdate.setLikes(topic.getLikes());
-        topicToUpdate.setViews(topic.getViews());
-        topicToUpdate.setCreator(topic.getCreator());
-        topicToUpdate.setTitle(topic.getTitle());
-        topicToUpdate.setPosts(topic.getPosts());
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.update(topic);
+            session.getTransaction().commit();
+        }
     }
+
     @Override
     public void delete(int id) {
         Topic topicToDelete = get(id);
-        topics.remove(topicToDelete);
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.delete(topicToDelete);
+            session.getTransaction().commit();
+        }
     }
 }
