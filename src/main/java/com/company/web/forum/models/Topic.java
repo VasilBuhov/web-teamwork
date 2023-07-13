@@ -14,6 +14,9 @@ public class Topic {
     @ManyToOne
     @JoinColumn(name = "creator")
     private User creator;
+    @ManyToOne
+    @JoinColumn(name = "tag")
+    private Tag tag;
     @Column(name = "title")
     private String title;
     @Column(name = "content")
@@ -42,6 +45,22 @@ public class Topic {
         this.dislikes = dislikes;
         this.creationDate = LocalDateTime.now();
         this.posts = new ArrayList<>();
+    }
+
+    public Tag getTag() {
+        return tag;
+    }
+
+    public void setTag(Tag tag) {
+        this.tag = tag;
+    }
+
+    public LocalDateTime getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
     }
 
     public List<Post> getPosts() {

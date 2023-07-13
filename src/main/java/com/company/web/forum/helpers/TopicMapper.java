@@ -10,10 +10,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class TopicMapper {
     private final TopicService topicService;
-@Autowired
+
+    @Autowired
     public TopicMapper(TopicService topicService) {
         this.topicService = topicService;
     }
+
     public Topic fromDto(int id, TopicDto dto) {
         Topic topic = fromDto(dto);
         topic.setId(id);
@@ -26,10 +28,23 @@ public class TopicMapper {
     }
 
     public Topic fromDto(TopicDto dto) {
-    Topic topic = new Topic();
-    topic.setTitle(dto.getTitle());
-    topic.setContent(dto.getContent());
-    return topic;
+        Topic topic = new Topic();
+        topic.setTitle(dto.getTitle());
+        topic.setContent(dto.getContent());
+        return topic;
+    }
+
+    public TopicDto toDto(Topic topic) {
+        TopicDto topicDto = new TopicDto();
+        topicDto.setCreator(topic.getCreator());
+        topicDto.setTitle(topic.getTitle());
+        topicDto.setContent(topic.getContent());
+        topicDto.setTag(topic.getTag());
+        topicDto.setCreationDate(topic.getCreationDate());
+        topicDto.setLikes(topic.getLikes());
+        topicDto.setDislikes(topic.getDislikes());
+        topicDto.setPosts(topic.getPosts());
+        return topicDto;
     }
 
 }

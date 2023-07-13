@@ -37,8 +37,13 @@ public class TopicRestController {
     }
 
     @GetMapping("/{id}")
-    public Topic get(@PathVariable int id) {
-        return service.get(id);
+    public TopicDto get(@PathVariable int id) {
+        try {
+            Topic topic = service.get(id);
+            return topicMapper.toDto(topic);
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
     }
 
     @PostMapping
