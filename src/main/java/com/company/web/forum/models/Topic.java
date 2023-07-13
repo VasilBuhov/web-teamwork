@@ -4,8 +4,6 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-
 @Entity
 @Table(name = "topic")
 public class Topic {
@@ -14,7 +12,7 @@ public class Topic {
     @Column(name = "id")
     private int id;
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "creator")
     private User creator;
     @Column(name = "title")
     private String title;
@@ -28,20 +26,18 @@ public class Topic {
     private int dislikes;
     @Column(name = "creation_date")
     private LocalDateTime creationDate;
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "topic_posts",
-            joinColumns = @JoinColumn(name = "id"),
-            inverseJoinColumns = @JoinColumn(name = "post_id")
-    )
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JoinTable(
+//            name = "topic_posts",
+//            joinColumns = @JoinColumn(name = "id"),
+//            inverseJoinColumns = @JoinColumn(name = "post_id")
+//    )
+    @JoinColumn(name = "id")
     private List<Post> posts;
-    @ManyToOne
-    @JoinColumn(name = "tag_id")
-    private Tag tag;
     public Topic(){
     }
 
-    public Topic(int id, User creator, String title, String content, int views, int likes, int dislikes, Tag tag) {
+    public Topic(int id, User creator, String title, String content, int views, int likes, int dislikes) {
         this.id = id;
         this.creator = creator;
         this.title = title;
@@ -51,7 +47,6 @@ public class Topic {
         this.dislikes = dislikes;
         this.creationDate = LocalDateTime.now();
         this.posts = new ArrayList<>();
-        this.tag = tag;
     }
 
     public List<Post> getPosts() {
@@ -117,25 +112,4 @@ public class Topic {
     public void setDislikes(int dislikes) {
         this.dislikes = dislikes;
     }
-
-    public Tag getTag() {
-        return tag;
-    }
-
-    public void setTag(Tag tag) {
-        this.tag = tag;
-    }
-
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Topic topic = (Topic) o;
-        return id == topic.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
 }
