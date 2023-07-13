@@ -1,8 +1,6 @@
 package com.company.web.forum.services;
 
 import com.company.web.forum.exceptions.AuthorizationException;
-import com.company.web.forum.exceptions.EntityDuplicateException;
-import com.company.web.forum.exceptions.EntityNotFoundException;
 import com.company.web.forum.models.FilterTopicOptions;
 import com.company.web.forum.models.Topic;
 import com.company.web.forum.models.User;
@@ -54,7 +52,7 @@ public class TopicServiceImpl implements TopicService {
 
     private void checkModifyPermissions(int topicId, User user) {
         Topic topic = repository.get(topicId);
-        if (!(user.isAdmin() || topic.getCreator().equals(user))) {
+        if (!(user.getIsAdmin() == 1 || topic.getCreator().equals(user))) {
             throw new AuthorizationException(MODIFY_POST_ERROR_MESSAGE);
         }
     }

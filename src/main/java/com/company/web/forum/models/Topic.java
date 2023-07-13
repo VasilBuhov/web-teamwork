@@ -14,7 +14,7 @@ public class Topic {
     @Column(name = "id")
     private int id;
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "user_id")
     private User creator;
     @Column(name = "title")
     private String title;
@@ -32,11 +32,11 @@ public class Topic {
     @JoinTable(
             name = "topic_posts",
             joinColumns = @JoinColumn(name = "id"),
-            inverseJoinColumns = @JoinColumn(name = "id")
+            inverseJoinColumns = @JoinColumn(name = "post_id")
     )
     private List<Post> posts;
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "tag_id")
     private Tag tag;
     public Topic(){
     }

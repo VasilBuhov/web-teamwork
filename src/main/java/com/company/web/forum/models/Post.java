@@ -13,10 +13,10 @@ public class Post {
     @Column(name = "id")
     private int id;
     @ManyToOne
-    @Column(name = "id")
+    @JoinColumn(name = "topic_id")
     private Topic topic;
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "user_id")
     private User creator;
     @Column(name = "content")
     private String content;

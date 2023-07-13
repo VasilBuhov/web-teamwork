@@ -3,6 +3,7 @@ package com.company.web.forum.controllers;
 import com.company.web.forum.exceptions.AuthorizationException;
 import com.company.web.forum.exceptions.EntityNotFoundException;
 import com.company.web.forum.models.Topic;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import com.company.web.forum.helpers.AuthenticationHelper;
 
@@ -28,6 +29,7 @@ public class PostRestController {
     private final PostMapper postMapper;
     private final AuthenticationHelper authenticationHelper;
 
+    @Autowired
     public PostRestController(PostService service, PostMapper postMapper, AuthenticationHelper authenticationHelper) {
         this.service = service;
         this.postMapper = postMapper;
@@ -69,9 +71,10 @@ public class PostRestController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
+
     @DeleteMapping("/{id}")
     public void delete(@PathVariable int id, @RequestHeader HttpHeaders httpHeaders) {
-        try{
+        try {
             User user = authenticationHelper.tryGetUser(httpHeaders);
             service.delete(id, user);
         } catch (AuthorizationException e) {
