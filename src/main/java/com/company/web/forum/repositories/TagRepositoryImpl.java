@@ -1,8 +1,9 @@
 package com.company.web.forum.repositories;
 
+import com.company.web.forum.exceptions.EntityDeletedException;
 import com.company.web.forum.exceptions.EntityNotFoundException;
 import com.company.web.forum.models.Tag;
-import org.hibernate.Query;
+import org.hibernate.query.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,9 +48,10 @@ public class TagRepositoryImpl implements TagRepository {
         try (Session session = sessionFactory.openSession()) {
             Tag tag = session.get(Tag.class, id);
             if (tag == null) {
-                throw new EntityNotFoundException("Tag", id);
+                throw new EntityNotFoundException("REPO: Tag", id);
+
             }
-            if (tag.getIsDeleted()==1) throw new EntityNotFoundException("Tag", id);//maybe return hard-coded object of default tag?
+            if (tag.getIsDeleted()==1) throw new EntityDeletedException("Tag", "id", String.valueOf(id));//maybe return hard-coded object of default tag?
             return tag;
         }
     }
@@ -65,6 +67,20 @@ public class TagRepositoryImpl implements TagRepository {
                 throw new EntityNotFoundException("Tag", "name", name);
             }
             return result.get(0);
+        }
+    }
+
+    @Override
+    public List<Tag> getByName(String name) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Tag> query = session.createQuery("from Tag where name = :name and isDeleted = 0", Tag.class);
+            query.setParameter("name", name);
+
+            List<Tag> result = query.list();
+            if (result.isEmpty()) {
+                throw new EntityNotFoundException("Tag", "name", name);
+            }
+            return result;
         }
     }
 
@@ -126,9 +142,9 @@ public class TagRepositoryImpl implements TagRepository {
                 case "name":
                     tags.sort(Comparator.comparing(Tag::getName));
                     break;
-//                case "belongs_to":
+                case "belongs_to":
 //                    tags.sort(Comparator.comparing(Tag::getBelongs_to));
-//                    break;
+                    break;
             }
         }
         return tags;

@@ -12,6 +12,8 @@ public interface TagService {
 
     Tag getTagById(int id);
 
+    List<Tag> getTagByName(String name);
+
     List<Tag> getAllTags();
 
     void create(String tagName, User belongsToUser, Topic occurrenceIn);
