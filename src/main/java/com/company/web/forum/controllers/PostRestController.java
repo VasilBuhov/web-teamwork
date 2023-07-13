@@ -44,8 +44,13 @@ public class PostRestController {
     }
 
     @GetMapping("/{id}")
-    public Post get(@PathVariable int id) {
-        return service.get(id);
+    public PostDto get(@PathVariable int id) {
+        try {
+            Post post = service.get(id);
+            return postMapper.toDto(post);
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
     }
 
     @PostMapping

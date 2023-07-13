@@ -3,6 +3,7 @@ package com.company.web.forum.helpers;
 
 import com.company.web.forum.models.Post;
 import com.company.web.forum.models.PostDto;
+import com.company.web.forum.models.UserDto;
 import com.company.web.forum.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -29,8 +30,20 @@ public class PostMapper {
 
     public Post fromDto(PostDto dto) {
         Post post = new Post();
-        post.setContent(dto.getContent());;
+        post.setContent(dto.getContent());
+        ;
         return post;
     }
 
+    public PostDto toDto(Post dto) {
+        PostDto postDto = new PostDto();
+        postDto.setContent(dto.getContent());
+        postDto.setLikes(dto.getLikes());
+        postDto.setViews(dto.getViews());
+        postDto.setCreator(dto.getCreator());
+        postDto.setTopic(dto.getTopic());
+        postDto.setDislikes(dto.getDislikes());
+        postDto.setCreationDate(dto.getCreationDate());
+        return postDto;
+    }
 }

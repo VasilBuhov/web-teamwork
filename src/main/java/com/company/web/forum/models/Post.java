@@ -2,6 +2,8 @@ package com.company.web.forum.models;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 @Entity
 @Table(name = "posts")
@@ -11,10 +13,10 @@ public class Post {
     @Column(name = "id")
     private int id;
     @ManyToOne
-    @JoinColumn(name = "topic")
+    @JoinColumn(name = "topic_id")
     private Topic topic;
     @ManyToOne
-    @JoinColumn(name = "creator")
+    @JoinColumn(name = "user_id")
     private User creator;
     @Column(name = "content")
     private String content;
