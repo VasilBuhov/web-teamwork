@@ -94,7 +94,7 @@ public class TagServiceImpl implements TagService {
 
     private void checkModifyPermissions(int tagId, User user) {
         Tag tag = tagRepository.get(tagId);
-        if (!(user.isAdmin() || tag.getBelongs_to().equals(user))) {
+        if (!(user.getIsAdmin()==1 || tag.getBelongs_to().equals(user))) {
             throw new AuthorizationException(MODIFY_TAGS_ERROR_MESSAGE);
         }
     }
