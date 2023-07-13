@@ -50,13 +50,12 @@ public class TagRestController {
         }
     }
 
-    @GetMapping("/{name}")
-    public List<Tag> getTagByName(@PathVariable String name) {
-        try {
-            return tagService.getTagByName(name);
-        } catch (EntityNotFoundException e) {
-            throw new EntityNotFoundException("REST: Tag", "name", name);
-        }
+    @GetMapping("/filter/{tag}")
+    public List<Tag> get(
+            @RequestParam(required = false) User creator,
+            @RequestParam(required = false) Tag tag) {
+        FilterTagOptions filterTagOptions = new FilterTagOptions(creator, tag);
+        return tagService.get(filterTagOptions);
     }
 
     @PostMapping("/addTag")

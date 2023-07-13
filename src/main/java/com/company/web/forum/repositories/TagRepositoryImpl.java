@@ -2,6 +2,7 @@ package com.company.web.forum.repositories;
 
 import com.company.web.forum.exceptions.EntityDeletedException;
 import com.company.web.forum.exceptions.EntityNotFoundException;
+import com.company.web.forum.models.FilterTagOptions;
 import com.company.web.forum.models.Tag;
 import org.hibernate.query.Query;
 import org.hibernate.Session;
@@ -12,10 +13,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Repository
@@ -28,11 +26,29 @@ public class TagRepositoryImpl implements TagRepository {
     }
 
     @Override
-    public List<Tag> get(String name, int belongs_to) {
+    public List<Tag> get(FilterTagOptions filterTagOptions) {
         try (Session session = sessionFactory.openSession()) {
-            Query<Tag> query = session.createQuery("from Tag", Tag.class);
-            List<Tag> tags = query.list();
-            return filter(tags, name, belongs_to);
+
+            List<String> filters = new ArrayList<>();
+            Map<String, Object> params = new HashMap<>();
+
+            filterTagOptions.getCreator().ifPresent(value -> {
+                filters.add("creator.id = :creatorId");
+                params.put("creatorId", value);
+            });
+            filterTagOptions.getTag().ifPresent(value -> {
+                filters.add("tag.id = :tagId");
+                params.put("tagId", value);
+            });
+            StringBuilder queryString = new StringBuilder("from Topic");
+            if (!filters.isEmpty()) {
+                queryString
+                        .append(" where ")
+                        .append(String.join(" and ", filters));
+            }
+            Query<Tag> query = session.createQuery(queryString.toString(), Tag.class);
+            query.setProperties(params);
+            return query.list();
         }
     }
 

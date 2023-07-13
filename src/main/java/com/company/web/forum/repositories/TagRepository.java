@@ -1,12 +1,14 @@
 package com.company.web.forum.repositories;
 
+import com.company.web.forum.models.FilterTagOptions;
+import com.company.web.forum.models.FilterTopicOptions;
 import com.company.web.forum.models.Tag;
 
 import java.util.List;
 
 public interface TagRepository {
 
-    List<Tag> get(String name, int belongs_to);
+    List<Tag> get(FilterTagOptions filterTopicOptions);
 
     Tag get(int id);
 

@@ -3,9 +3,7 @@ package com.company.web.forum.services;
 import com.company.web.forum.exceptions.AuthorizationException;
 import com.company.web.forum.exceptions.EntityDuplicateException;
 import com.company.web.forum.exceptions.EntityNotFoundException;
-import com.company.web.forum.models.Tag;
-import com.company.web.forum.models.Topic;
-import com.company.web.forum.models.User;
+import com.company.web.forum.models.*;
 import com.company.web.forum.repositories.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,18 +23,13 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public List<Tag> get(String name, User belongs_to) {
-        return tagRepository.get(name, belongs_to.getId());
-    }
-
-    @Override
     public Tag getTagById(int id) {
         return tagRepository.get(id);
     }
 
     @Override
-    public List<Tag> getTagByName(String name) {
-        return tagRepository.getByName(name);
+    public List<Tag> get(FilterTagOptions filterTagOptions) {
+        return tagRepository.get(filterTagOptions);
     }
 
     @Override

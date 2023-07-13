@@ -1,18 +1,14 @@
 package com.company.web.forum.services;
 
-import com.company.web.forum.models.Tag;
-import com.company.web.forum.models.Topic;
-import com.company.web.forum.models.User;
+import com.company.web.forum.models.*;
 
 import java.util.List;
 
 public interface TagService {
 
-    List<Tag> get(String name, User belongs_to);
-
     Tag getTagById(int id);
 
-    List<Tag> getTagByName(String name);
+    List<Tag> get(FilterTagOptions filterTopicOptions);
 
     List<Tag> getAllTags();
 
