@@ -29,8 +29,8 @@ public class PostServiceImpl implements PostService {
         return repository.get(id);
     }
 
-    public Post get(User creator) {
-        return repository.get(creator);
+    public Post get(String creatorUsername) {
+        return repository.get(creatorUsername);
     }
 
     @Override
