@@ -28,6 +28,7 @@ public class Post {
     private int likes;
     @Column(name = "dislikes")
     private int dislikes;
+    private String usersWhoHaveVoted;
 
     public Post() {
     }
@@ -41,6 +42,7 @@ public class Post {
         this.creationDate = creationDate;
         this.likes = likes;
         this.dislikes = dislikes;
+        this.usersWhoHaveVoted = "";
     }
 
     public int getId() {
@@ -107,6 +109,15 @@ public class Post {
     public void setTopic(Topic topic) {
         this.topic = topic;
     }
+
+    public String getUserWhoHaveVoted() {
+        return usersWhoHaveVoted;
+    }
+
+    public void setUserWhoHaveVoted(String userWhoHaveVoted) {
+        this.usersWhoHaveVoted = userWhoHaveVoted;
+    }
+
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

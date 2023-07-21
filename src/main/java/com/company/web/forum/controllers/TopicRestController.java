@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -21,7 +23,8 @@ public class TopicRestController {
     private final TopicService service;
     private final TopicMapper topicMapper;
     private final AuthenticationHelper authenticationHelper;
-@Autowired
+
+    @Autowired
     public TopicRestController(TopicService service, TopicMapper topicMapper, AuthenticationHelper authenticationHelper) {
         this.service = service;
         this.topicMapper = topicMapper;
@@ -30,9 +33,15 @@ public class TopicRestController {
 
     @GetMapping
     public List<Topic> get(
-            @RequestParam(required = false) User creator,
-            @RequestParam(required = false) Tag tag) {
-        FilterTopicOptions filterTopicOptions = new FilterTopicOptions(creator, tag);
+            @RequestParam(required = false) String creatorUsername,
+            @RequestParam(required = false) String tagTitle,
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) LocalDateTime minCreationDate,
+            @RequestParam(required = false) LocalDateTime maxCreationDate,
+            @RequestParam(required = false) String sortBy,
+            @RequestParam(required = false) String sortOrder
+    ) {
+        FilterTopicOptions filterTopicOptions = new FilterTopicOptions(creatorUsername, tagTitle, title, minCreationDate, maxCreationDate, sortBy, sortOrder);
         return service.get(filterTopicOptions);
     }
 
@@ -47,28 +56,31 @@ public class TopicRestController {
     }
 
     @PostMapping
-    public void create(@RequestHeader HttpHeaders httpHeaders, @Valid @RequestBody TopicDto topicDto) {
+    public Topic create(@RequestHeader HttpHeaders httpHeaders, @Valid @RequestBody TopicDto topicDto) {
         try {
             User user = authenticationHelper.tryGetUser(httpHeaders);
             Topic topic = topicMapper.fromDto(topicDto);
             service.create(topic, user);
+            return topic;
         } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
 
     @PutMapping("/{id}")
-    public void update(@PathVariable int id, @RequestHeader HttpHeaders httpheaders, @Valid @RequestBody TopicDto topicDto) {
+    public Topic update(@PathVariable int id, @RequestHeader HttpHeaders httpheaders, @Valid @RequestBody TopicDto topicDto) {
         try {
             User user = authenticationHelper.tryGetUser(httpheaders);
             Topic topic = topicMapper.fromDto(id, topicDto);
             service.update(topic, user);
+            return topic;
         } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
+
     @DeleteMapping("/{id}")
     public void delete(@PathVariable int id, @RequestHeader HttpHeaders httpHeaders) {
         try {

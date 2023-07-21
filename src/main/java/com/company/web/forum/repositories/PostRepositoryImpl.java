@@ -1,10 +1,7 @@
 package com.company.web.forum.repositories;
 
 import com.company.web.forum.exceptions.EntityNotFoundException;
-import com.company.web.forum.models.Post;
-import com.company.web.forum.models.Tag;
-import com.company.web.forum.models.Topic;
-import com.company.web.forum.models.User;
+import com.company.web.forum.models.*;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Repository
@@ -28,18 +23,31 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     @Override
-    public List<Post> get(Topic topic, User creator) {
+    public List<Post> get(FilterPostOptions filterPostOptions) {
 
         try (Session session = sessionFactory.openSession()) {
-            Query<Post> query = session.createQuery("from Post", Post.class);
-            List<Post> posts = query.list();
-            return filter(posts, topic, creator);
+
+            List<String> filters = new ArrayList<>();
+            Map<String, Object> params = new HashMap<>();
+
+            filterPostOptions.getCreatorUsername().ifPresent(value -> {
+                filters.add("creator.username = :creatorUsername");
+                params.put("creatorUsername", value);
+            });
+
+            StringBuilder queryString = new StringBuilder("from Post");
+
+            if (!filters.isEmpty()) {
+                queryString
+                        .append(" where ")
+                        .append(String.join(" and ", filters));
+            }
+            queryString.append(generateOrderBy(filterPostOptions));
+
+            org.hibernate.query.Query<Post> query = session.createQuery(queryString.toString(), Post.class);
+            query.setProperties(params);
+            return query.list();
         }
-    }
-    public List<Post> filter(List<Post> posts, Topic topic, User creator) {
-        posts = filterByTopic(posts, topic);
-        posts = filterByCreator(posts, creator);
-        return posts;
     }
 
     @Override
@@ -53,18 +61,19 @@ public class PostRepositoryImpl implements PostRepository {
         }
     }
 
-    public Post get(User creator) {
+    public Post get(String creatorUsername) {
         try (Session session = sessionFactory.openSession()) {
-            Query<Post> query = session.createQuery("from Post where creator = :creator", Post.class);
-            query.setParameter("creator", creator);
+            Query<Post> query = session.createQuery("from Post where creator.username = :creatorUsername", Post.class);
+            query.setParameter("creatorUsername", creatorUsername);
 
             List<Post> result = query.list();
             if (result.size() == 0) {
-                throw new EntityNotFoundException("Post", "creator", creator.getUsername());
+                throw new EntityNotFoundException("Post", "creator", creatorUsername);
             }
             return result.get(0);
         }
     }
+
 
     @Override
     public void create(Post post) {
@@ -92,20 +101,27 @@ public class PostRepositoryImpl implements PostRepository {
         }
     }
 
- private static List<Post> filterByTopic(List<Post> posts, Topic topic) {
-        if (!topic.equals(null)) {
-            posts = posts.stream()
-                    .filter(post -> post.getTopic().getTitle().equals(topic))
-                    .collect(Collectors.toList());
+    private String generateOrderBy(FilterPostOptions filterPostOptions) {
+        if (filterPostOptions.getSortBy().isEmpty()) {
+            return "";
         }
-        return posts;
-    }
-    private static List<Post> filterByCreator(List<Post> posts, User creator) {
-        if (creator != null) {
-            posts = posts.stream()
-                    .filter(post -> post.getCreator().equals(creator))
-                    .collect(Collectors.toList());
+
+        String orderBy = "";
+        switch (filterPostOptions.getSortBy().get()) {
+            case "creation date":
+                orderBy = "creationDate";
+                break;
+            case "likes":
+                orderBy = "likes";
+                break;
         }
-        return posts;
+
+        orderBy = String.format(" order by %s", orderBy);
+
+        if (filterPostOptions.getSortOrder().isPresent() && filterPostOptions.getSortOrder().get().equalsIgnoreCase("desc")) {
+            orderBy = String.format("%s desc", orderBy);
+        }
+
+        return orderBy;
     }
 }

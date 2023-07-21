@@ -1,5 +1,6 @@
 package com.company.web.forum.services;
 
+import com.company.web.forum.models.FilterPostOptions;
 import com.company.web.forum.models.Post;
 import com.company.web.forum.models.Topic;
 import com.company.web.forum.models.User;
@@ -7,10 +8,10 @@ import com.company.web.forum.models.User;
 import java.util.List;
 
 public interface PostService {
-    List<Post> get(Topic topic, User creator);
+    List<Post> get(FilterPostOptions filterPostOptions);
 
     Post get(int id);
-    Post get(User creator);
+    Post get(String creatorUsername);
 
      void update(Post post, User user);
 

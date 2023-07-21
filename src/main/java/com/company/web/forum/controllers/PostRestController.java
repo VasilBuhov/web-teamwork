@@ -2,15 +2,12 @@ package com.company.web.forum.controllers;
 
 import com.company.web.forum.exceptions.AuthorizationException;
 import com.company.web.forum.exceptions.EntityNotFoundException;
-import com.company.web.forum.models.Topic;
+import com.company.web.forum.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import com.company.web.forum.helpers.AuthenticationHelper;
 
 import com.company.web.forum.helpers.PostMapper;
-import com.company.web.forum.models.Post;
-import com.company.web.forum.models.PostDto;
-import com.company.web.forum.models.User;
 
 import com.company.web.forum.services.PostService;
 import org.springframework.http.HttpStatus;
@@ -38,9 +35,12 @@ public class PostRestController {
 
     @GetMapping
     public List<Post> get(
-            @RequestParam(required = false) Topic topic,
-            @RequestParam(required = false) User creator) {
-        return service.get(topic, creator);
+            @RequestParam(required = false) String creatorUsername,
+            @RequestParam(required = false) String sortBy,
+            @RequestParam(required = false) String sortOrder
+    ) {
+        FilterPostOptions filterPostOptions = new FilterPostOptions(creatorUsername, sortBy, sortOrder);
+        return service.get(filterPostOptions);
     }
 
     @GetMapping("/{id}")
@@ -54,22 +54,24 @@ public class PostRestController {
     }
 
     @PostMapping
-    public void create(@RequestHeader HttpHeaders httpHeaders, @Valid @RequestBody PostDto postDto) {
+    public Post create(@RequestHeader HttpHeaders httpHeaders, @Valid @RequestBody PostDto postDto) {
         try {
             User user = authenticationHelper.tryGetUser(httpHeaders);
             Post post = postMapper.fromDto(postDto);
             service.create(post, user);
+            return post;
         } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
 
     @PutMapping("/{id}")
-    public void update(@PathVariable int id, @RequestHeader HttpHeaders httpheaders, @Valid @RequestBody PostDto postDto) {
+    public Post update(@PathVariable int id, @RequestHeader HttpHeaders httpheaders, @Valid @RequestBody PostDto postDto) {
         try {
             User user = authenticationHelper.tryGetUser(httpheaders);
             Post post = postMapper.fromDto(id, postDto);
             service.update(post, user);
+            return post;
         } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         } catch (EntityNotFoundException e) {

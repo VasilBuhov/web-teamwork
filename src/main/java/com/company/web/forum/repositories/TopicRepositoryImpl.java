@@ -31,20 +31,37 @@ public class TopicRepositoryImpl implements TopicRepository {
             List<String> filters = new ArrayList<>();
             Map<String, Object> params = new HashMap<>();
 
-            filterTopicOptions.getCreator().ifPresent(value -> {
-                filters.add("creator.id = :creatorId");
-                params.put("creatorId", value);
+            filterTopicOptions.getCreatorUsername().ifPresent(value -> {
+                filters.add("creator.username = :creatorUsername");
+                params.put("creatorUsername", value);
             });
-            filterTopicOptions.getTag().ifPresent(value -> {
-                filters.add("tag.id = :tagId");
-                params.put("tagId", value);
+            filterTopicOptions.getTagTitle().ifPresent(value -> {
+                filters.add("tag.title = :tagTitle");
+                params.put("tagTitle", value);
             });
+            filterTopicOptions.getTitle().ifPresent(value -> {
+                filters.add("title like :title");
+                params.put("title", String.format("%%%s%%", value));
+            });
+            filterTopicOptions.getMinCreationDate().ifPresent(value -> {
+                filters.add("creationDate >= :minCreationDate");
+                params.put("minCreationDate", value);
+            });
+
+            filterTopicOptions.getMaxCreationDate().ifPresent(value -> {
+                filters.add("creationDate <= :maxCreationDate");
+                params.put("maxCreationDate", value);
+            });
+
             StringBuilder queryString = new StringBuilder("from Topic");
+
             if (!filters.isEmpty()) {
                 queryString
                         .append(" where ")
                         .append(String.join(" and ", filters));
             }
+            queryString.append(generateOrderBy(filterTopicOptions));
+
             Query<Topic> query = session.createQuery(queryString.toString(), Topic.class);
             query.setProperties(params);
             return query.list();
@@ -100,5 +117,31 @@ public class TopicRepositoryImpl implements TopicRepository {
             session.delete(topicToDelete);
             session.getTransaction().commit();
         }
+    }
+    private String generateOrderBy(FilterTopicOptions filterTopicOptions) {
+        if (filterTopicOptions.getSortBy().isEmpty()) {
+            return "";
+        }
+
+        String orderBy = "";
+        switch (filterTopicOptions.getSortBy().get()) {
+            case "creation date":
+                orderBy = "creationDate";
+                break;
+            case "likes":
+                orderBy = "likes";
+                break;
+            case "title":
+                orderBy = "title";
+                break;
+        }
+
+        orderBy = String.format(" order by %s", orderBy);
+
+        if (filterTopicOptions.getSortOrder().isPresent() && filterTopicOptions.getSortOrder().get().equalsIgnoreCase("desc")) {
+            orderBy = String.format("%s desc", orderBy);
+        }
+
+        return orderBy;
     }
 }

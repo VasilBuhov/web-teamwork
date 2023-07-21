@@ -3,9 +3,7 @@ package com.company.web.forum.services;
 import com.company.web.forum.exceptions.AuthorizationException;
 import com.company.web.forum.exceptions.EntityDuplicateException;
 import com.company.web.forum.exceptions.EntityNotFoundException;
-import com.company.web.forum.models.Post;
-import com.company.web.forum.models.Topic;
-import com.company.web.forum.models.User;
+import com.company.web.forum.models.*;
 import com.company.web.forum.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,8 +20,8 @@ public class PostServiceImpl implements PostService {
         this.repository = postRepository;
     }
 
-    public List<Post> get(Topic topic, User creator) {
-        return repository.get(topic, creator);
+    public List<Post> get(FilterPostOptions filterPostOptions) {
+        return repository.get(filterPostOptions);
     }
 
     @Override
