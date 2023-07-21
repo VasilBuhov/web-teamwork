@@ -1,4 +1,4 @@
-package com.company.web.forum.controllers;
+package com.company.web.forum.controllers.RestController;
 
 import com.company.web.forum.exceptions.AuthorizationException;
 import com.company.web.forum.exceptions.EntityDuplicateException;
@@ -58,7 +58,7 @@ public class TagRestController {
         return tagService.get(filterTagOptions);
     }
 
-    @PostMapping("/addTag")
+    @PostMapping
     public Tag create(@RequestHeader HttpHeaders headers, @Valid @RequestBody TagDto tagDto) {
         try {
             User belongsToUser = authenticationHelper.tryGetUser(headers);

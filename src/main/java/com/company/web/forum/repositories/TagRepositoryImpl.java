@@ -134,11 +134,11 @@ public class TagRepositoryImpl implements TagRepository {
 
     @Override
     public void delete(int id) {
-        Tag tagToDelete = get(id);//get the tag
-        tagToDelete.setIsDeleted(1);//prep soft delete here
+        Tag tagToDelete = get(id);
+        tagToDelete.setIsDeleted(1);
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            session.update(tagToDelete);//actual soft delete
+            session.update(tagToDelete);
             session.getTransaction().commit();
         }
     }

@@ -1,77 +1,79 @@
-package com.company.web.forum.controllers;
+package com.company.web.forum.controllers.RestController;
 
 import com.company.web.forum.exceptions.AuthorizationException;
 import com.company.web.forum.exceptions.EntityNotFoundException;
+import com.company.web.forum.helpers.AuthenticationHelper;
+import com.company.web.forum.helpers.TopicMapper;
 import com.company.web.forum.models.*;
+import com.company.web.forum.services.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import com.company.web.forum.helpers.AuthenticationHelper;
-
-import com.company.web.forum.helpers.PostMapper;
-
-import com.company.web.forum.services.PostService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
-
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/posts")
-public class PostRestController {
-    private final PostService service;
-    private final PostMapper postMapper;
+@RequestMapping("/api/topics")
+public class TopicRestController {
+    private final TopicService service;
+    private final TopicMapper topicMapper;
     private final AuthenticationHelper authenticationHelper;
 
     @Autowired
-    public PostRestController(PostService service, PostMapper postMapper, AuthenticationHelper authenticationHelper) {
+    public TopicRestController(TopicService service, TopicMapper topicMapper, AuthenticationHelper authenticationHelper) {
         this.service = service;
-        this.postMapper = postMapper;
+        this.topicMapper = topicMapper;
         this.authenticationHelper = authenticationHelper;
     }
 
     @GetMapping
-    public List<Post> get(
+    public List<Topic> get(
             @RequestParam(required = false) String creatorUsername,
+            @RequestParam(required = false) String tagTitle,
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) LocalDateTime minCreationDate,
+            @RequestParam(required = false) LocalDateTime maxCreationDate,
             @RequestParam(required = false) String sortBy,
             @RequestParam(required = false) String sortOrder
     ) {
-        FilterPostOptions filterPostOptions = new FilterPostOptions(creatorUsername, sortBy, sortOrder);
-        return service.get(filterPostOptions);
+        FilterTopicOptions filterTopicOptions = new FilterTopicOptions(creatorUsername, tagTitle, title, minCreationDate, maxCreationDate, sortBy, sortOrder);
+        return service.get(filterTopicOptions);
     }
 
     @GetMapping("/{id}")
-    public PostDto get(@PathVariable int id) {
+    public TopicDto get(@PathVariable int id) {
         try {
-            Post post = service.get(id);
-            return postMapper.toDto(post);
+            Topic topic = service.get(id);
+            return topicMapper.toDto(topic);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
 
     @PostMapping
-    public Post create(@RequestHeader HttpHeaders httpHeaders, @Valid @RequestBody PostDto postDto) {
+    public Topic create(@RequestHeader HttpHeaders httpHeaders, @Valid @RequestBody TopicDto topicDto) {
         try {
             User user = authenticationHelper.tryGetUser(httpHeaders);
-            Post post = postMapper.fromDto(postDto);
-            service.create(post, user);
-            return post;
+            Topic topic = topicMapper.fromDto(topicDto);
+            service.create(topic, user);
+            return topic;
         } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
 
     @PutMapping("/{id}")
-    public Post update(@PathVariable int id, @RequestHeader HttpHeaders httpheaders, @Valid @RequestBody PostDto postDto) {
+    public Topic update(@PathVariable int id, @RequestHeader HttpHeaders httpheaders, @Valid @RequestBody TopicDto topicDto) {
         try {
             User user = authenticationHelper.tryGetUser(httpheaders);
-            Post post = postMapper.fromDto(id, postDto);
-            service.update(post, user);
-            return post;
+            Topic topic = topicMapper.fromDto(id, topicDto);
+            service.update(topic, user);
+            return topic;
         } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         } catch (EntityNotFoundException e) {
