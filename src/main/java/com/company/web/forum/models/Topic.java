@@ -2,8 +2,8 @@ package com.company.web.forum.models;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+
 @Entity
 @Table(name = "topic")
 public class Topic {
@@ -32,6 +32,12 @@ public class Topic {
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "id")
     private List<Post> posts;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "topic_likedBy",
+            joinColumns = {@JoinColumn(name = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "id")})
+    private Set<User> likedBy;
     public Topic(){
     }
 
@@ -45,6 +51,7 @@ public class Topic {
         this.dislikes = dislikes;
         this.creationDate = LocalDateTime.now();
         this.posts = new ArrayList<>();
+        this.likedBy = new HashSet<>();
     }
 
     public Tag getTag() {
@@ -125,5 +132,24 @@ public class Topic {
 
     public void setDislikes(int dislikes) {
         this.dislikes = dislikes;
+    }
+
+    public Set<User> getLikedBy() {
+        return likedBy;
+    }
+
+    public void setLikedBy(Set<User> likedBy) {
+        this.likedBy = likedBy;
+    }
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Topic topic = (Topic) o;
+        return id == topic.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

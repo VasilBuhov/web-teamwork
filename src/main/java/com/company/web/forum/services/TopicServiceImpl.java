@@ -2,6 +2,7 @@ package com.company.web.forum.services;
 
 import com.company.web.forum.exceptions.AuthorizationException;
 import com.company.web.forum.models.FilterTopicOptions;
+import com.company.web.forum.models.Post;
 import com.company.web.forum.models.Topic;
 import com.company.web.forum.models.User;
 import com.company.web.forum.repositories.TopicRepository;
@@ -49,7 +50,13 @@ public class TopicServiceImpl implements TopicService {
         checkModifyPermissions(topic.getId(), user);
         repository.update(topic);
     }
-
+    public void updateLike(Topic topic, User user) {
+        if (topic.getLikedBy().contains(user)) {
+            repository.removeLike(topic);
+        } else {
+            repository.addLike(topic);
+        }
+    }
     private void checkModifyPermissions(int topicId, User user) {
         Topic topic = repository.get(topicId);
         if (!(user.getIsAdmin() == 1 || topic.getCreator().equals(user))) {

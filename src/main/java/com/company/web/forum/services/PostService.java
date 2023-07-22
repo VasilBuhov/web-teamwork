@@ -14,6 +14,7 @@ public interface PostService {
     Post get(String creatorUsername);
 
      void update(Post post, User user);
+    void updateLike(Post post, User user);
 
     void create(Post post, User user);
 

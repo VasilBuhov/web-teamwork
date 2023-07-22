@@ -80,6 +80,17 @@ public class TopicRestController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
+    @PutMapping("/{id}")
+    public Topic updateLike(@PathVariable int id, @RequestHeader HttpHeaders httpheaders) {
+        try {
+            User user = authenticationHelper.tryGetUser(httpheaders);
+            Topic topic = service.get(id);
+            service.updateLike(topic, user);
+            return topic;
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable int id, @RequestHeader HttpHeaders httpHeaders) {

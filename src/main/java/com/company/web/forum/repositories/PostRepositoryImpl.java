@@ -100,6 +100,12 @@ public class PostRepositoryImpl implements PostRepository {
             session.getTransaction().commit();
         }
     }
+    public void addLike(Post post){
+     post.setLikes(post.getLikes() + 1);
+    }
+    public void removeLike(Post post){
+        post.setLikes(post.getLikes() - 1);
+    }
 
     private String generateOrderBy(FilterPostOptions filterPostOptions) {
         if (filterPostOptions.getSortBy().isEmpty()) {

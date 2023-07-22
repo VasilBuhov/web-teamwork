@@ -2,9 +2,8 @@ package com.company.web.forum.models;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+
 @Entity
 @Table(name = "posts")
 public class Post {
@@ -28,7 +27,12 @@ public class Post {
     private int likes;
     @Column(name = "dislikes")
     private int dislikes;
-    private String usersWhoHaveVoted;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "post_likedBy",
+            joinColumns = {@JoinColumn(name = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "id")})
+    private Set<User> likedBy;
 
     public Post() {
     }
@@ -42,7 +46,7 @@ public class Post {
         this.creationDate = creationDate;
         this.likes = likes;
         this.dislikes = dislikes;
-        this.usersWhoHaveVoted = "";
+        this.likedBy = new HashSet<>();
     }
 
     public int getId() {
@@ -110,12 +114,12 @@ public class Post {
         this.topic = topic;
     }
 
-    public String getUserWhoHaveVoted() {
-        return usersWhoHaveVoted;
+    public Set<User> getLikedBy() {
+        return likedBy;
     }
 
-    public void setUserWhoHaveVoted(String userWhoHaveVoted) {
-        this.usersWhoHaveVoted = userWhoHaveVoted;
+    public void setLikedBy(Set<User> likedBy) {
+        this.likedBy = likedBy;
     }
 
     public boolean equals(Object o) {

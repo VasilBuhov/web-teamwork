@@ -88,7 +88,7 @@ public class TopicRepositoryImpl implements TopicRepository {
             if (result.size() == 0) {
                 throw new EntityNotFoundException("Topic", "title", title);
             }
-
+            //result.get(0).setViews(result.get(0).getViews() + 1);
             return result.get(0);
         }
     }
@@ -109,6 +109,14 @@ public class TopicRepositoryImpl implements TopicRepository {
         }
     }
 
+    public void addLike(Topic topic) {
+        topic.setLikes(topic.getLikes() + 1);
+    }
+
+    public void removeLike(Topic topic) {
+        topic.setLikes(topic.getLikes() - 1);
+    }
+
     @Override
     public void delete(int id) {
         Topic topicToDelete = get(id);
@@ -118,6 +126,7 @@ public class TopicRepositoryImpl implements TopicRepository {
             session.getTransaction().commit();
         }
     }
+
     private String generateOrderBy(FilterTopicOptions filterTopicOptions) {
         if (filterTopicOptions.getSortBy().isEmpty()) {
             return "";
