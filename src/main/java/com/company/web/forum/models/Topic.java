@@ -35,8 +35,8 @@ public class Topic {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "topic_likedBy",
-            joinColumns = {@JoinColumn(name = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "id")})
+            joinColumns = {@JoinColumn(name = "topic_id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id")})
     private Set<User> likedBy;
     public Topic(){
     }

@@ -78,7 +78,7 @@ public class PostRestController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
-    @PutMapping("/{id}")
+    @PutMapping("/{id}/like")
     public Post updateLike(@PathVariable int id, @RequestHeader HttpHeaders httpheaders) {
         try {
             User user = authenticationHelper.tryGetUser(httpheaders);

@@ -30,8 +30,8 @@ public class Post {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "post_likedBy",
-            joinColumns = {@JoinColumn(name = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "id")})
+            joinColumns = {@JoinColumn(name = "post_id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id")})
     private Set<User> likedBy;
 
     public Post() {
