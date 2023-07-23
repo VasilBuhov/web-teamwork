@@ -52,9 +52,13 @@ public class TopicServiceImpl implements TopicService {
     }
     public void updateLike(Topic topic, User user) {
         if (topic.getLikedBy().contains(user)) {
-            repository.removeLike(topic);
+            topic.setLikes(topic.getLikes() - 1);
+            topic.getLikedBy().remove(user);
+            repository.updateLike(topic);
         } else {
-            repository.addLike(topic);
+            topic.setLikes(topic.getLikes() + 1);
+            topic.getLikedBy().add(user);
+            repository.updateLike(topic);
         }
     }
     private void checkModifyPermissions(int topicId, User user) {

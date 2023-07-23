@@ -47,9 +47,13 @@ public class PostServiceImpl implements PostService {
     @Override
     public void updateLike(Post post, User user) {
         if (post.getLikedBy().contains(user)) {
-            repository.removeLike(post);
+            post.setLikes(post.getLikes() - 1);
+            post.getLikedBy().remove(user);
+            repository.updateLike(post);
         } else {
-            repository.addLike(post);
+            post.setLikes(post.getLikes() + 1);
+            post.getLikedBy().add(user);
+            repository.updateLike(post);
         }
     }
 

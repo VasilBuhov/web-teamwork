@@ -109,12 +109,12 @@ public class TopicRepositoryImpl implements TopicRepository {
         }
     }
 
-    public void addLike(Topic topic) {
-        topic.setLikes(topic.getLikes() + 1);
-    }
-
-    public void removeLike(Topic topic) {
-        topic.setLikes(topic.getLikes() - 1);
+    public void updateLike(Topic topic) {
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.update(topic);
+            session.getTransaction().commit();
+        }
     }
 
     @Override

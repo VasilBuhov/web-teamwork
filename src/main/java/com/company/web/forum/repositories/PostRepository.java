@@ -14,9 +14,7 @@ public interface PostRepository {
 
     void create(Post post);
 
-    void addLike(Post post);
-
-    void removeLike(Post post);
+    void updateLike(Post post);
 
     void delete(int id);
 
