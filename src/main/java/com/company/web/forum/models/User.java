@@ -1,9 +1,7 @@
 package com.company.web.forum.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
@@ -32,10 +30,13 @@ public class User {
     @Column(name = "user_level")
     private int isAdmin;
 
+    @Column(name = "verified")
+    private int verified;
+
     public User() {
     }
 
-    public User(int id, String firstName, String lastName, String username, String email, String password, int isAdmin) {
+    public User(int id, String firstName, String lastName, String username, String email, String password, int isAdmin, int verified) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -43,9 +44,8 @@ public class User {
         this.email = email;
         this.password = password;
         setIsAdmin(isAdmin);
+        this.verified = verified;
     }
-
-    // Getters and Setters
 
     public int getId() {
         return id;
@@ -76,7 +76,6 @@ public class User {
     }
 
     public void setUsername(String username) {
-
         this.username = username;
     }
 
@@ -97,16 +96,21 @@ public class User {
     }
 
     public int getIsAdmin() {
-
         return isAdmin;
     }
 
     public void setIsAdmin(int isAdmin) {
-//        if (isAdmin != 0 && isAdmin != 1) {
-//            throw new IllegalArgumentException("Invalid value for isAdmin. Only 0 and 1 are allowed.");
-//        }
         this.isAdmin = isAdmin;
     }
+
+    public int getVerified() {
+        return verified;
+    }
+
+    public void setVerified(int verified) {
+        this.verified = verified;
+    }
+
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
