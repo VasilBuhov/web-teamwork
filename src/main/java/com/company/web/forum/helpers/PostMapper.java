@@ -23,7 +23,6 @@ public class PostMapper {
         post.setViews(repositoryPost.getViews());
         post.setCreationDate(repositoryPost.getCreationDate());
         post.setLikes(repositoryPost.getLikes());
-        post.setDislikes(repositoryPost.getDislikes());
         return post;
     }
 
@@ -40,7 +39,6 @@ public class PostMapper {
         postDto.setViews(dto.getViews());
         postDto.setCreator(dto.getCreator());
         postDto.setTopic(dto.getTopic());
-        postDto.setDislikes(dto.getDislikes());
         postDto.setCreationDate(dto.getCreationDate());
         return postDto;
     }

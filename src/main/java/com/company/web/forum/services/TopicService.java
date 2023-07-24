@@ -1,6 +1,5 @@
 package com.company.web.forum.services;
 import com.company.web.forum.models.FilterTopicOptions;
-import com.company.web.forum.models.Post;
 import com.company.web.forum.models.Topic;
 import com.company.web.forum.models.User;
 

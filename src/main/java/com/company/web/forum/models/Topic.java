@@ -25,12 +25,10 @@ public class Topic {
     private int views;
     @Column(name = "likes")
     private int likes;
-    @Column(name = "dislikes")
-    private int dislikes;
     @Column(name = "creation_date")
     private LocalDateTime creationDate;
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "posts_list")
     private List<Post> posts;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -41,14 +39,13 @@ public class Topic {
     public Topic(){
     }
 
-    public Topic(int id, User creator, String title, String content, int views, int likes, int dislikes) {
+    public Topic(int id, User creator, String title, String content, int views, int likes) {
         this.id = id;
         this.creator = creator;
         this.title = title;
         this.content = content;
         this.views = views;
         this.likes = likes;
-        this.dislikes = dislikes;
         this.creationDate = LocalDateTime.now();
         this.posts = new ArrayList<>();
         this.likedBy = new HashSet<>();
@@ -124,14 +121,6 @@ public class Topic {
 
     public void setLikes(int likes) {
         this.likes = likes;
-    }
-
-    public int getDislikes() {
-        return dislikes;
-    }
-
-    public void setDislikes(int dislikes) {
-        this.dislikes = dislikes;
     }
 
     public Set<User> getLikedBy() {

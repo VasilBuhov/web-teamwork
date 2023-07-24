@@ -22,7 +22,6 @@ public class TopicMapper {
         Topic repositoryTopic = topicService.get(id);
         topic.setViews(repositoryTopic.getViews());
         topic.setLikes(repositoryTopic.getLikes());
-        topic.setDislikes(repositoryTopic.getDislikes());
         topic.setPosts(repositoryTopic.getPosts());
         return topic;
     }
@@ -42,7 +41,6 @@ public class TopicMapper {
         topicDto.setTag(topic.getTag());
         topicDto.setCreationDate(topic.getCreationDate());
         topicDto.setLikes(topic.getLikes());
-        topicDto.setDislikes(topic.getDislikes());
         topicDto.setPosts(topic.getPosts());
         return topicDto;
     }

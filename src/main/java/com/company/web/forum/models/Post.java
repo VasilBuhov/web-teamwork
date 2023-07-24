@@ -25,8 +25,6 @@ public class Post {
     private LocalDateTime creationDate;
     @Column(name = "likes")
     private int likes;
-    @Column(name = "dislikes")
-    private int dislikes;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "post_likedBy",
@@ -37,7 +35,7 @@ public class Post {
     public Post() {
     }
 
-    public Post(int id, Topic topic, User creator, String content, int views, LocalDateTime creationDate, int likes, int dislikes) {
+    public Post(int id, Topic topic, User creator, String content, int views, LocalDateTime creationDate, int likes) {
         this.id = id;
         this.topic = topic;
         this.creator = creator;
@@ -45,7 +43,6 @@ public class Post {
         this.views = views;
         this.creationDate = creationDate;
         this.likes = likes;
-        this.dislikes = dislikes;
         this.likedBy = new HashSet<>();
     }
 
@@ -84,14 +81,6 @@ public class Post {
 
     public void setLikes(int likes) {
         this.likes = likes;
-    }
-
-    public int getDislikes() {
-        return dislikes;
-    }
-
-    public void setDislikes(int dislikes) {
-        this.dislikes = dislikes;
     }
 
     public void setId(int id) {

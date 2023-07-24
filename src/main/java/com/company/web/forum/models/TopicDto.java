@@ -20,8 +20,6 @@ public class TopicDto {
     private int views;
     @Positive(message = "Likes count can't be negative.")
     private int likes;
-    @Positive(message = "Dislikes count can't be negative.")
-    private int dislikes;
     @NotNull(message = "Topic must have creation date.")
     private LocalDateTime creationDate;
     private List<Post> posts;
@@ -72,14 +70,6 @@ public class TopicDto {
 
     public void setLikes(int likes) {
         this.likes = likes;
-    }
-
-    public int getDislikes() {
-        return dislikes;
-    }
-
-    public void setDislikes(int dislikes) {
-        this.dislikes = dislikes;
     }
 
     public LocalDateTime getCreationDate() {

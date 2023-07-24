@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All Topics</title>
+    <link href="../static/Styles.css" th:href="@{/Styles.css}" rel="stylesheet"/>
+</head>
+
+
+<body>
+<ul>
+    <li><h3><a href="/" th:text="#{navigation.home}">Home</a></h3></li>
+</ul>
+<div th:if="${topics.isEmpty()}">
+    <h2 th:text="#{topics.title.empty}">No Beers</h2>
+</div>
+<div th:unless="${topics.isEmpty()}">
+    <h2 th:text="#{topics.title}">All topics</h2>
+    <div class="table">
+        <div class="header">
+            <div class="cell" th:text="#{topic.title}">Title</div>
+            <div class="cell" th:text="#{topic.creator}">Creator</div>
+            <div class="cell" th:text="#{topic.comments}">Comments</div>
+            <div class="cell" th:text="#{topic.creationDate}">Creation date</div>
+        </div>
+        <div class="row" th:each="topic : ${topics}">
+            <div class="cell">
+                <a href="#" th:href="@{/topics/{id}(id=${topic.getId()})}" th:text="${topic.title}">Topic</a>
+            </div>
+            <div class="cell" th:text="${topic.getCreator.getUsername}">Ivan</div>
+            <div class="cell" th:text="${topic.getPosts}">10</div>
+            <div class="cell" th:text="${topic.getCreationDate}">10.07.2023</div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

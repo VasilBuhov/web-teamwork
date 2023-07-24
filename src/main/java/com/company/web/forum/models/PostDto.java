@@ -24,8 +24,6 @@ public class PostDto {
     private LocalDateTime creationDate;
     private int likes;
 
-    private int dislikes;
-
 
     public PostDto() {
     }
@@ -79,11 +77,4 @@ public class PostDto {
         this.likes = likes;
     }
 
-    public int getDislikes() {
-        return dislikes;
-    }
-
-    public void setDislikes(int dislikes) {
-        this.dislikes = dislikes;
-    }
 }
