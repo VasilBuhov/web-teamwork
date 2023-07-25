@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 public class TopicDto {
-    @NotNull(message = "Title can't be empty.")
+//    @NotNull(message = "Title can't be empty.")
     @Size(min = 16, max = 64, message = "Name should be between 16 and 64 symbols.")
     private String title;
     @Size(min = 32, max = 8192, message = "Content should be between 32 and 8192 symbols.")

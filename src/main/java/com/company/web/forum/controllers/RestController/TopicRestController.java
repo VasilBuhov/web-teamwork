@@ -59,7 +59,7 @@ public class TopicRestController {
     public Topic create(@RequestHeader HttpHeaders httpHeaders, @Valid @RequestBody TopicDto topicDto) {
         try {
             User user = authenticationHelper.tryGetUser(httpHeaders);
-            Topic topic = topicMapper.CreateTopicDto(topicDto);
+            Topic topic = topicMapper.createTopicDto(topicDto);
             service.create(topic, user);
             return topic;
         } catch (AuthorizationException e) {
@@ -67,11 +67,24 @@ public class TopicRestController {
         }
     }
 
-    @PutMapping("/{id}")
-    public Topic update(@PathVariable int id, @RequestHeader HttpHeaders httpheaders, @Valid @RequestBody TopicDto topicDto) {
+    @PutMapping("/{id}/content")
+    public Topic updateContent(@PathVariable int id, @RequestHeader HttpHeaders httpheaders, @Valid @RequestBody TopicDto topicDto) {
         try {
             User user = authenticationHelper.tryGetUser(httpheaders);
-            Topic topic = topicMapper.fromDto(id, topicDto);
+            Topic topic = topicMapper.updateTopicContentDto(id, topicDto);
+            service.update(topic, user);
+            return topic;
+        } catch (AuthorizationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
+    @PutMapping("/{id}/title")
+    public Topic updateTitle(@PathVariable int id, @RequestHeader HttpHeaders httpheaders, @Valid @RequestBody TopicDto topicDto) {
+        try {
+            User user = authenticationHelper.tryGetUser(httpheaders);
+            Topic topic = topicMapper.updateTopicTitleDto(id, topicDto);
             service.update(topic, user);
             return topic;
         } catch (AuthorizationException e) {

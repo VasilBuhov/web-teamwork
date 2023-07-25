@@ -19,17 +19,18 @@ public class TopicMapper {
         this.topicService = topicService;
     }
 
-    public Topic fromDto(int id, TopicDto dto) {
-        Topic topic = CreateTopicDto(dto);
-        topic.setId(id);
-        Topic repositoryTopic = topicService.get(id);
-        topic.setViews(repositoryTopic.getViews());
-        topic.setLikes(repositoryTopic.getLikes());
-        topic.setPosts(repositoryTopic.getPosts());
-        return topic;
+    public Topic updateTopicContentDto(int id, TopicDto dto) {
+        Topic oldTopic = topicService.get(id);
+        oldTopic.setContent(dto.getContent());
+        return oldTopic;
+    }
+    public Topic updateTopicTitleDto(int id, TopicDto dto) {
+        Topic oldTopic = topicService.get(id);
+        oldTopic.setTitle(dto.getTitle());
+        return oldTopic;
     }
 
-    public Topic CreateTopicDto(TopicDto dto) {
+    public Topic createTopicDto(TopicDto dto) {
         Topic topic = new Topic();
         topic.setTitle(dto.getTitle());
         topic.setContent(dto.getContent());
