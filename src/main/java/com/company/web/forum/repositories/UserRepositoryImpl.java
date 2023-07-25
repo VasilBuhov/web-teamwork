@@ -111,8 +111,11 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void updateUser(User user) {
+    public void updateUser(User user, int id ) {
         try (Session session = sessionFactory.openSession()) {
+            if (user == null) {
+                throw new EntityNotFoundException("User not found",id);
+            }
             session.beginTransaction();
             session.update(user);
             session.getTransaction().commit();

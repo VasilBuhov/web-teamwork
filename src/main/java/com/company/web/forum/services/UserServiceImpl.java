@@ -14,9 +14,9 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
     private static final String DELETE_USER_ERROR_MESSAGE =
-            "Only admin and user who own profile can delete it .";
+            "Only admin or user who own profile can delete it .";
     private static final String MODIFY_USER_ERROR_MESSAGE =
-            "Only admin  can modify a user.";
+            "Only admin or user who own profile can modify a user.";
     private final UserRepository userRepository;
 
     @Autowired
@@ -55,17 +55,28 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    public void updateUser(User authenticatedUser,User user) throws EntityNotFoundException {
+    public void updateUser(User authenticatedUser,User user, int id) throws EntityNotFoundException {
         // Check if the user has the permission to modify the user
+        User existingUser = userRepository.getUserByEmail(user.getEmail());
+        if (existingUser != null) {
+            throw new EntityDuplicateException("User", "email", user.getEmail());
+        }
+
+        existingUser = userRepository.getUserByUsername(user.getUsername());
+        if (existingUser != null) {
+            throw new EntityDuplicateException("User", "username", user.getUsername());
+        }
+        userRepository.getUserById(id);
         checkModifyPermissionsForUpdating(authenticatedUser, user);
 
         // Perform the update operation
-        userRepository.updateUser(user);
+        userRepository.updateUser(user,id);
     }
 
     public void deleteUser(User authenticatedUser, int id) throws EntityNotFoundException {
         // Get the user from the repository
         User user = userRepository.getUserById(id);
+
 
         // Check if the authenticated user has the same ID as the user to be deleted
         checkModifyPermissionsForDeleting(authenticatedUser, user);
@@ -86,6 +97,7 @@ public class UserServiceImpl implements UserService {
 
 
     private void checkModifyPermissionsForDeleting(User authenticatedUser, User user) {
+//        userRepository.getUserById(user.getId());
         if (!(authenticatedUser.getIsAdmin() == 1 || authenticatedUser.getId() == user.getId())) {
             throw new AuthorizationException(DELETE_USER_ERROR_MESSAGE);
         }

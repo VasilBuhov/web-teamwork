@@ -13,6 +13,6 @@ public interface UserRepository {
     User getUserByEmail(String email) throws EntityNotFoundException;
     User getUserByUsername(String username) throws EntityNotFoundException;
     void createUser(User user);
-    void updateUser(User user);
+    void updateUser(User user, int id );
     void deleteUser(int id) throws EntityNotFoundException;
 }
