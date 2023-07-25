@@ -12,7 +12,7 @@
     <li><h3><a href="/" th:text="#{navigation.home}">Home</a></h3></li>
 </ul>
 <div th:if="${topics.isEmpty()}">
-    <h2 th:text="#{topics.title.empty}">No Beers</h2>
+    <h2 th:text="#{topics.title.empty}">No Topics</h2>
 </div>
 <div th:unless="${topics.isEmpty()}">
     <h2 th:text="#{topics.title}">All topics</h2>
