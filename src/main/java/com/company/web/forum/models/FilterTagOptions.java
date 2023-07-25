@@ -6,6 +6,10 @@ public class FilterTagOptions {
     private Optional<User> creator;
     private Optional<Tag> tag;
 
+    public FilterTagOptions() {
+        this(null, null);
+    }
+
     public FilterTagOptions(User creator, Tag tag) {
         this.creator = Optional.ofNullable(creator);
         this.tag = Optional.ofNullable(tag);
