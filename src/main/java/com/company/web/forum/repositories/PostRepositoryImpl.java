@@ -81,7 +81,9 @@ public class PostRepositoryImpl implements PostRepository {
             session.save(post);
         }
     }
+    public void addPostToTopic(Post post) {
 
+    }
     @Override
     public void delete(int id) {
         Post postToDelete = get(id);

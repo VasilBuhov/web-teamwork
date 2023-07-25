@@ -31,8 +31,8 @@ CREATE TABLE [dbo].[posts] (
 [creation_date] datetime NOT NULL ,
 [last_activity] datetime NOT NULL ,
 [comment_count] int NULL ,
-[commet_list] int NULL ,
-[topic] int NULL 
+[comment_list] int NULL ,
+[topics] int NULL
 )
 
 

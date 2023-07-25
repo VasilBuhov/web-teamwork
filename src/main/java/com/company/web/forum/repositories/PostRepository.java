@@ -13,6 +13,7 @@ public interface PostRepository {
     Post get(String creatorUsername);
 
     void create(Post post);
+    void addPostToTopic(Post post);
 
     void updateLike(Post post);
 

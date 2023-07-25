@@ -1,7 +1,5 @@
 package com.company.web.forum.models;
 
-import org.apache.tomcat.jni.Local;
-
 import java.time.LocalDateTime;
 import java.util.Optional;
 

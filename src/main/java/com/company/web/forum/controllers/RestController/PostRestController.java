@@ -3,6 +3,7 @@ package com.company.web.forum.controllers.RestController;
 import com.company.web.forum.exceptions.AuthorizationException;
 import com.company.web.forum.exceptions.EntityNotFoundException;
 import com.company.web.forum.models.*;
+import com.company.web.forum.services.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import com.company.web.forum.helpers.AuthenticationHelper;
@@ -25,12 +26,14 @@ public class PostRestController {
     private final PostService service;
     private final PostMapper postMapper;
     private final AuthenticationHelper authenticationHelper;
+    private final TopicService topicService;
 
     @Autowired
-    public PostRestController(PostService service, PostMapper postMapper, AuthenticationHelper authenticationHelper) {
+    public PostRestController(PostService service, PostMapper postMapper, AuthenticationHelper authenticationHelper, TopicService topicService) {
         this.service = service;
         this.postMapper = postMapper;
         this.authenticationHelper = authenticationHelper;
+        this.topicService = topicService;
     }
 
     @GetMapping
@@ -53,12 +56,13 @@ public class PostRestController {
         }
     }
 
-    @PostMapping
-    public Post create(@RequestHeader HttpHeaders httpHeaders, @Valid @RequestBody PostDto postDto) {
+    @PostMapping("/{id}")
+    public Post create(@PathVariable int id, @RequestHeader HttpHeaders httpHeaders, @Valid @RequestBody PostDto postDto) {
         try {
             User user = authenticationHelper.tryGetUser(httpHeaders);
             Post post = postMapper.fromDto(postDto);
-            service.create(post, user);
+            Topic topic = topicService.get(id);
+            service.create(post, user, topic);
             return post;
         } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());

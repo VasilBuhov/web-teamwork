@@ -8,6 +8,7 @@ import com.company.web.forum.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -34,11 +35,13 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void create(Post post, User user) {
+    public void create(Post post, User user, Topic topic) {
         post.setCreator(user);
+        post.setCreationDate(LocalDateTime.now());
+        post.setLikes(0);
+        post.setTopic(topic);
         repository.create(post);
     }
-
     public void update(Post post, User user) {
         checkModifyPermissions(post.getId(), user);
         repository.update(post);
