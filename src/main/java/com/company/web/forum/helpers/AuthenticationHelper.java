@@ -30,7 +30,9 @@ public class AuthenticationHelper {
             String username = getUsername(userInfo);
             String password = getPassword(userInfo);
             User user = userService.getUserByUsername(username);
-
+            if (user == null) {
+                throw new EntityNotFoundException("User", "username", username);
+            }
             if (!user.getPassword().equals(password)) {
                 throw new AuthorizationException(INVALID_AUTHENTICATION_ERROR);
             }
