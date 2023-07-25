@@ -2,6 +2,7 @@ package com.company.web.forum.services;
 
 import com.company.web.forum.exceptions.AuthorizationException;
 import com.company.web.forum.exceptions.EntityDuplicateException;
+import com.company.web.forum.exceptions.EntityNotFoundException;
 import com.company.web.forum.models.User;
 import com.company.web.forum.repositories.UserRepository;
 
@@ -12,6 +13,8 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
+    private static final String DELETE_USER_ERROR_MESSAGE =
+            "Only admin and user who own profile can delete it .";
     private static final String MODIFY_USER_ERROR_MESSAGE =
             "Only admin  can modify a user.";
     private final UserRepository userRepository;
@@ -52,20 +55,20 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    public void updateUser(User user) {
+    public void updateUser(User authenticatedUser,User user) throws EntityNotFoundException {
         // Check if the user has the permission to modify the user
-        checkModifyPermissions(user.getId(), user);
+        checkModifyPermissionsForUpdating(authenticatedUser, user);
 
         // Perform the update operation
         userRepository.updateUser(user);
     }
 
-    public void deleteUser(int id) {
+    public void deleteUser(User authenticatedUser, int id) throws EntityNotFoundException {
         // Get the user from the repository
         User user = userRepository.getUserById(id);
 
-        // Check if the user has the permission to delete the user
-        checkModifyPermissions(id, user);
+        // Check if the authenticated user has the same ID as the user to be deleted
+        checkModifyPermissionsForDeleting(authenticatedUser, user);
 
         // Perform the delete operation
         userRepository.deleteUser(id);
@@ -76,10 +79,15 @@ public class UserServiceImpl implements UserService {
         return userRepository.getUserByUsername(username);
     }
 
-    private void checkModifyPermissions(int userId, User user) {
-        User existingUser = userRepository.getUserById(userId);
-        if (!(user.getIsAdmin()==1 || existingUser.equals(user))) {
+    private void checkModifyPermissionsForUpdating(User authenticatedUser, User user) {
+        if (!(authenticatedUser.getIsAdmin() == 1 || authenticatedUser.getId() == user.getId()))
             throw new AuthorizationException(MODIFY_USER_ERROR_MESSAGE);
+        }
+
+
+    private void checkModifyPermissionsForDeleting(User authenticatedUser, User user) {
+        if (!(authenticatedUser.getIsAdmin() == 1 || authenticatedUser.getId() == user.getId())) {
+            throw new AuthorizationException(DELETE_USER_ERROR_MESSAGE);
         }
     }
 

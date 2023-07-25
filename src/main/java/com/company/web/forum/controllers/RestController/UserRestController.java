@@ -10,6 +10,7 @@ import com.company.web.forum.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -25,19 +26,24 @@ public class UserRestController {
     private final AuthenticationHelper authenticationHelper;
 
     @Autowired
-    public UserRestController(UserService userService, UserMapper userMapper, AuthenticationHelper authenticationHelper) {
+    public UserRestController(UserService userService, UserMapper userMapper,
+                              AuthenticationHelper authenticationHelper) {
         this.userService = userService;
         this.userMapper = userMapper;
         this.authenticationHelper = authenticationHelper;
     }
 
     @GetMapping
-    public List<UserDto> getAllUsers() {
-
-        List<User> users = userService.getAllUsers();
-
-        return userMapper.toDtoList(users);
+    public List<UserDto> getAllUsers(@RequestHeader HttpHeaders httpHeaders) {
+        try {
+            authenticationHelper.tryGetUser(httpHeaders);
+            List<User> users = userService.getAllUsers();
+            return userMapper.toDtoList(users);
+        } catch (AuthorizationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        }
     }
+
 
 
     @GetMapping("/{id}")
@@ -74,13 +80,14 @@ public UserDto createUser(@RequestHeader HttpHeaders headers, @Valid @RequestBod
 }
 
     @PutMapping("/{id}")
-    public UserDto updateUser(@RequestHeader HttpHeaders headers, @PathVariable int id, @Valid @RequestBody UserDto userDto) {
+    public ResponseEntity<String> updateUser(@RequestHeader HttpHeaders headers, @PathVariable int id,
+                                             @Valid @RequestBody UserDto userDto) {
         try {
-            authenticationHelper.tryGetUser(headers);
+            User authenticatedUser= authenticationHelper.tryGetUser(headers);
             User user = userMapper.fromDto(userDto);
             user.setId(id);
-            userService.updateUser(user);
-            return userMapper.toDto(user);
+            userService.updateUser(authenticatedUser, user);
+            return ResponseEntity.ok("User with ID " + id + " has been successfully updated.");
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (AuthorizationException e) {
@@ -89,10 +96,11 @@ public UserDto createUser(@RequestHeader HttpHeaders headers, @Valid @RequestBod
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUser(@RequestHeader HttpHeaders headers, @PathVariable int id) {
+    public  ResponseEntity<String> deleteUser(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         try {
-            authenticationHelper.tryGetUser(headers);
-            userService.deleteUser(id);
+           User user= authenticationHelper.tryGetUser(headers);
+            userService.deleteUser(user,id);
+            return ResponseEntity.ok("User with ID " + id + " has been successfully deleted.");
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (AuthorizationException e) {
