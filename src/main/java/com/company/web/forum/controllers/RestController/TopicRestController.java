@@ -59,7 +59,7 @@ public class TopicRestController {
     public Topic create(@RequestHeader HttpHeaders httpHeaders, @Valid @RequestBody TopicDto topicDto) {
         try {
             User user = authenticationHelper.tryGetUser(httpHeaders);
-            Topic topic = topicMapper.fromDto(topicDto);
+            Topic topic = topicMapper.CreateTopicDto(topicDto);
             service.create(topic, user);
             return topic;
         } catch (AuthorizationException e) {

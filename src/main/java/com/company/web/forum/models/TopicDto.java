@@ -5,6 +5,7 @@ import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 public class TopicDto {
     @NotNull(message = "Title can't be empty.")
@@ -12,17 +13,17 @@ public class TopicDto {
     private String title;
     @Size(min = 32, max = 8192, message = "Content should be between 32 and 8192 symbols.")
     private String content;
-    @NotNull(message = "Tag can't be empty.")
+
     private Tag tag;
-    @NotNull(message = "Topic must have creator.")
+
     private User creator;
-    @Positive(message = "Views count can't be negative.")
+
     private int views;
-    @Positive(message = "Likes count can't be negative.")
+
     private int likes;
-    @NotNull(message = "Topic must have creation date.")
+
     private LocalDateTime creationDate;
-    private List<Post> posts;
+    private Set<Post> postsList;
 
     public TopicDto() {
     }
@@ -80,12 +81,12 @@ public class TopicDto {
         this.creationDate = creationDate;
     }
 
-    public List<Post> getPosts() {
-        return posts;
+    public Set<Post> getPosts() {
+        return postsList;
     }
 
-    public void setPosts(List<Post> posts) {
-        this.posts = posts;
+    public void setPosts(Set<Post> posts) {
+        this.postsList = posts;
     }
 
     public void setTag(Tag tag) {

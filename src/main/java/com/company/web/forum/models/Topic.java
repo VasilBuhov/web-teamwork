@@ -1,5 +1,7 @@
 package com.company.web.forum.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -27,9 +29,9 @@ public class Topic {
     private int likes;
     @Column(name = "creation_date")
     private LocalDateTime creationDate;
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "posts_list")
-    private List<Post> posts;
+    @JsonIgnore
+    @OneToMany(mappedBy = "topic", fetch = FetchType.EAGER)
+    private Set<Post> posts;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "topic_likedBy",
@@ -47,7 +49,7 @@ public class Topic {
         this.views = views;
         this.likes = likes;
         this.creationDate = LocalDateTime.now();
-        this.posts = new ArrayList<>();
+        this.posts = new HashSet<>();
         this.likedBy = new HashSet<>();
     }
 
@@ -67,11 +69,11 @@ public class Topic {
         this.creationDate = creationDate;
     }
 
-    public List<Post> getPosts() {
+    public Set<Post> getPosts() {
         return posts;
     }
 
-    public void setPosts(List<Post> posts) {
+    public void setPosts(Set<Post> posts) {
         this.posts = posts;
     }
 
