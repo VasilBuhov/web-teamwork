@@ -34,11 +34,6 @@ public class TopicMapper {
         Topic topic = new Topic();
         topic.setTitle(dto.getTitle());
         topic.setContent(dto.getContent());
-        topic.setCreationDate(LocalDateTime.now());
-        topic.setPosts(new HashSet<>());
-        topic.setLikedBy(new HashSet<>());
-        topic.setLikes(0);
-        topic.setViews(0);
         return topic;
     }
 
