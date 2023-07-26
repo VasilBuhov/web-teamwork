@@ -63,8 +63,7 @@ public class TagRestController {
         try {
             User belongsToUser = authenticationHelper.tryGetUser(headers);
             String tagName = tagMapper.fromDto(tagDto).getName();
-            Topic occurrenceIn = tagMapper.fromDto(tagDto).getOccurrenceIn();
-            tagService.create(tagName, belongsToUser, occurrenceIn);
+            tagService.create(tagName, belongsToUser);
             return tagService.getTagById(tagMapper.fromDto(tagDto).getId());
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());

@@ -23,7 +23,6 @@ public class TagMapper {
         TagDto tagDto = new TagDto();
         tagDto.setName(tag.getName());
         tagDto.setBelongs_to(tag.getBelongs_to());
-        tagDto.setOccurrenceIn(tag.getOccurrenceIn());
         return tagDto;
     }
 
@@ -39,7 +38,6 @@ public class TagMapper {
         Tag tag = new Tag();
         tag.setName(dto.getName());
         tag.setBelongs_to(dto.getBelongs_to());
-        tag.setOccurrenceIn(dto.getOccurrenceIn());
         tag.setBelongs_to(dto.getBelongs_to());
         return tag;
     }

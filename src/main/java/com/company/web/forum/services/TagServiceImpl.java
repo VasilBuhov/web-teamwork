@@ -38,7 +38,7 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public void create(String tagName, User belongsToUser, Topic occurrenceIn) {
+    public void create(String tagName, User belongsToUser) {
         boolean duplicateExists = true;
 
         try {
@@ -53,7 +53,6 @@ public class TagServiceImpl implements TagService {
 
         tag.setIsDeleted(0);
         tag.setBelongs_to(belongsToUser);
-        tag.setOccurrenceIn(occurrenceIn);
         tagRepository.create(tag);
     }
 

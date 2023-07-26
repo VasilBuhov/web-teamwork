@@ -21,21 +21,16 @@ public class Tag {
     @JoinColumn(name = "belongs_to")
     private User belongsTo;
     @JsonIgnore
-    @OneToOne
-    @JoinColumn(name = "occurrence_in")
-    private Topic occurrenceIn;
-    @JsonIgnore
     @Column(name = "status_deleted")
     private int isDeleted;
 
     public Tag() {
     }
 
-    public Tag(int id, String name, User belongsTo, Topic occurrenceIn, int isDeleted) {
+    public Tag(int id, String name, User belongsTo, int isDeleted) {
         this.id = id;
         this.name = name;
         this.belongsTo = belongsTo;
-        this.occurrenceIn = occurrenceIn;
         this.isDeleted = isDeleted;
     }
 
@@ -69,14 +64,6 @@ public class Tag {
 
     public void setIsDeleted(int isDeleted) {
         this.isDeleted = isDeleted;
-    }
-
-    public Topic getOccurrenceIn() {
-        return occurrenceIn;
-    }
-
-    public void setOccurrenceIn(Topic occurrenceIn) {
-        this.occurrenceIn = occurrenceIn;
     }
 
     @Override

@@ -12,9 +12,6 @@ public class TagDto {
     @NotNull(message = "User id must be positive")
     private User belongs_to;
 
-    @NotNull(message = "User id must be positive")
-    private Topic OccurrenceIn;
-
     public TagDto() {
     }
 
@@ -34,11 +31,4 @@ public class TagDto {
         this.belongs_to = belongs_to;
     }
 
-    public Topic getOccurrenceIn() {
-        return OccurrenceIn;
-    }
-
-    public void setOccurrenceIn(Topic occurrenceIn) {
-        OccurrenceIn = occurrenceIn;
-    }
 }
