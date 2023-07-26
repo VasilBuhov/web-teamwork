@@ -86,7 +86,7 @@ public UserDto createUser(@RequestHeader HttpHeaders headers, @Valid @RequestBod
             User authenticatedUser= authenticationHelper.tryGetUser(headers);
             User user = userMapper.fromDto(userDto);
             user.setId(id);
-            userService.updateUser(authenticatedUser, user,id);
+            userService.updateUser(authenticatedUser, user);
             return ResponseEntity.ok("User with ID " + id + " has been successfully updated.");
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
