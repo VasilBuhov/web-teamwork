@@ -40,6 +40,7 @@ public class PostServiceImpl implements PostService {
         post.setCreationDate(LocalDateTime.now());
         post.setLikes(0);
         post.setTopic(topic);
+        topic.getPosts().add(post);
         repository.create(post);
     }
     public void update(Post post, User user) {
@@ -61,8 +62,9 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void delete(int id, User user) {
+    public void delete(int id, User user, Post post, Topic topic) {
         checkModifyPermissions(id, user);
+        topic.getPosts().remove(post);
         repository.delete(id);
     }
 
