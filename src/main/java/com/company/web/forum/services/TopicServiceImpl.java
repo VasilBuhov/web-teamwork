@@ -30,7 +30,10 @@ public class TopicServiceImpl implements TopicService {
 
     @Override
     public Topic get(int id) {
-        return repository.get(id);
+        Topic topic = repository.get(id);
+        topic.setViews(topic.getViews() + 1);
+        repository.updateViews(topic);
+        return topic;
     }
 
     @Override

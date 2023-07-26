@@ -117,6 +117,14 @@ public class TopicRepositoryImpl implements TopicRepository {
         }
     }
 
+    public void updateViews(Topic topic) {
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.update(topic);
+            session.getTransaction().commit();
+        }
+    }
+
     @Override
     public void delete(int id) {
         Topic topicToDelete = get(id);

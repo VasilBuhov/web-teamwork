@@ -13,6 +13,7 @@ public interface TopicRepository {
     Topic get(String title);
     void create(Topic topic);
     void updateLike(Topic topic);
+    void updateViews(Topic topic);
     void delete(int id);
     void update(Topic topic);
 }
