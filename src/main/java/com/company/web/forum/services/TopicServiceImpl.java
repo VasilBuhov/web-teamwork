@@ -8,6 +8,8 @@ import com.company.web.forum.repositories.TopicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -34,6 +36,11 @@ public class TopicServiceImpl implements TopicService {
     @Override
     public void create(Topic topic, User user) {
         topic.setCreator(user);
+        topic.setCreationDate(LocalDateTime.now());
+        topic.setPosts(new HashSet<>());
+        topic.setLikedBy(new HashSet<>());
+        topic.setLikes(0);
+        topic.setViews(0);
         repository.create(topic);
 
     }
