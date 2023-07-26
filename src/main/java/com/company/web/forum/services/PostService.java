@@ -18,6 +18,6 @@ public interface PostService {
 
     void create(Post post, User user, Topic topic);
 
-    void delete(int id, User user);
+    void delete(int id, User user, Post post, Topic topic);
 
 }

@@ -98,7 +98,9 @@ public class PostRestController {
     public void delete(@PathVariable int id, @RequestHeader HttpHeaders httpHeaders) {
         try {
             User user = authenticationHelper.tryGetUser(httpHeaders);
-            service.delete(id, user);
+            Post postToBeDeleted = service.get(id);
+            Topic topic = postToBeDeleted.getTopic();
+            service.delete(id, user, postToBeDeleted, topic);
         } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         } catch (EntityNotFoundException e) {
