@@ -111,23 +111,16 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void updateUser(User user, int id) {
+    public void updateUser(User user, int id ) {
         try (Session session = sessionFactory.openSession()) {
-            User existingUser = session.get(User.class, id);
-            if (existingUser == null) {
-                throw new EntityNotFoundException("User not found", id);
+            if (user == null) {
+                throw new EntityNotFoundException("User not found",id);
             }
-
-            // Update the user properties
-            existingUser.setFirstName(user.getFirstName());
-            existingUser.setLastName(user.getLastName());
-            // Update other properties as needed
-
             session.beginTransaction();
-            session.update(existingUser);
+            session.update(user);
             session.getTransaction().commit();
         } catch (Exception e) {
-            // Handle exceptions, e.g., log the error
+            // Handle exceptions
         }
     }
 

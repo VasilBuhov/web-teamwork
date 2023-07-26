@@ -55,8 +55,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    public void updateUser(User authenticatedUser,User user, int id) throws
-             EntityDuplicateException {
+    public void updateUser(User authenticatedUser,User user, int id) throws EntityNotFoundException {
         // Check if the user has the permission to modify the user
         User existingUser = userRepository.getUserByEmail(user.getEmail());
         if (existingUser != null) {
