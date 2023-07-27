@@ -1,6 +1,7 @@
 package com.company.web.forum.services;
 
 import com.company.web.forum.exceptions.AuthorizationException;
+import com.company.web.forum.exceptions.EntityDeletedException;
 import com.company.web.forum.exceptions.EntityDuplicateException;
 import com.company.web.forum.exceptions.EntityNotFoundException;
 import com.company.web.forum.models.*;
@@ -38,7 +39,7 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public void create(String tagName, User belongsToUser, Topic occurrenceIn) {
+    public void create(String tagName, User belongsToUser) {
         boolean duplicateExists = true;
 
         try {
@@ -53,7 +54,6 @@ public class TagServiceImpl implements TagService {
 
         tag.setIsDeleted(0);
         tag.setBelongs_to(belongsToUser);
-        tag.setOccurrenceIn(occurrenceIn);
         tagRepository.create(tag);
     }
 
@@ -80,8 +80,11 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public void delete(int id, User user) {
+        Tag tag = tagRepository.get(id);
         checkModifyPermissions(id, user);
-        //check if tag already deleted?
+        if (tag.getIsDeleted() == 1) {
+            throw new EntityDeletedException("Tag", "ID", String.valueOf(id));
+        }
         tagRepository.delete(id);
     }
 

@@ -46,6 +46,7 @@ public class TopicMapper {
         topicDto.setCreationDate(topic.getCreationDate());
         topicDto.setLikes(topic.getLikes());
         topicDto.setPosts(topic.getPosts());
+        topicDto.setViews(topic.getViews());
         return topicDto;
     }
 

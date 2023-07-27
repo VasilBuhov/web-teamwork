@@ -12,7 +12,7 @@ public interface TagService {
 
     List<Tag> getAllTags();
 
-    void create(String tagName, User belongsToUser, Topic occurrenceIn);
+    void create(String tagName, User belongsToUser);
 
     void update(Tag tag, User user);
 
