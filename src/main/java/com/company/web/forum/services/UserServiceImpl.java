@@ -73,6 +73,20 @@ public class UserServiceImpl implements UserService {
         // Perform the delete operation
         userRepository.deleteUser(id);
     }
+    public void blockOrUnblockUser(int userId, boolean block) throws EntityNotFoundException {
+        User user = userRepository.getUserById(userId);
+        if (user == null) {
+            throw new EntityNotFoundException("User not found", userId);
+        }
+
+        if (block) {
+            user.setIsAdmin(2); // Block the user
+        } else {
+            user.setIsAdmin(0); // Unblock the user
+        }
+
+        userRepository.updateUser(user);
+    }
 
 
     public User getUserByUsername(String username) {

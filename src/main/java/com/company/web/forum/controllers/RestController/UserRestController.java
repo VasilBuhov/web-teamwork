@@ -94,6 +94,41 @@ public UserDto createUser(@RequestHeader HttpHeaders headers, @Valid @RequestBod
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
+    @PutMapping("/{id}/block")
+    public ResponseEntity<String> blockUser(@RequestHeader HttpHeaders headers, @PathVariable int id) {
+        try {
+            User authenticatedUser = authenticationHelper.tryGetUser(headers);
+            if (authenticatedUser.getIsAdmin() != 1) {
+                throw new AuthorizationException("Only admin can block/unblock users.");
+            }
+
+            userService.blockOrUnblockUser(id, true); // Block the user
+
+            return ResponseEntity.ok("User with ID " + id + " has been blocked.");
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (AuthorizationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
+    }
+
+    @PutMapping("/{id}/unblock")
+    public ResponseEntity<String> unblockUser(@RequestHeader HttpHeaders headers, @PathVariable int id) {
+        try {
+            User authenticatedUser = authenticationHelper.tryGetUser(headers);
+            if (authenticatedUser.getIsAdmin() != 1) {
+                throw new AuthorizationException("Only admin can block/unblock users.");
+            }
+
+            userService.blockOrUnblockUser(id, false); // Unblock the user
+
+            return ResponseEntity.ok("User with ID " + id + " has been unblocked.");
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (AuthorizationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
+    }
 
     @DeleteMapping("/{id}")
     public  ResponseEntity<String> deleteUser(@RequestHeader HttpHeaders headers, @PathVariable int id) {

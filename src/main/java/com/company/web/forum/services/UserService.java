@@ -20,6 +20,6 @@ public interface UserService {
 
 
     User getUserByUsername(String username);
-
+  void blockOrUnblockUser(int userId, boolean block);
 
 }
