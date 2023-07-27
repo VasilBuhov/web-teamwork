@@ -7,9 +7,14 @@ import com.company.web.forum.exceptions.EntityNotFoundException;
 import com.company.web.forum.models.*;
 import com.company.web.forum.repositories.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -32,6 +37,11 @@ public class TagServiceImpl implements TagService {
     @Override
     public List<Tag> get(FilterTagOptions filterTagOptions) {
         return tagRepository.get(filterTagOptions);
+    }
+
+    @Override
+    public List<Tag> getAllTags(Integer page, Integer size) {
+        return tagRepository.getAllTags(page, size);
     }
 
     @Override
@@ -95,6 +105,24 @@ public class TagServiceImpl implements TagService {
         if (!(user.getIsAdmin()==1 || tag.getBelongs_to().equals(user))) {
             throw new AuthorizationException(MODIFY_TAGS_ERROR_MESSAGE);
         }
+    }
+
+    @Override
+    public Page<Tag> findPaginated(Pageable pageable) {
+        int pageSize = pageable.getPageSize();
+        int currentPage = pageable.getPageNumber();
+        int startItem = currentPage * pageSize;
+        List<Tag> tags = getAllTags();
+        List<Tag> list;
+
+        if (tags.size() < startItem) {
+            list = Collections.emptyList();
+        } else {
+            int toIndex = Math.min(startItem + pageSize, tags.size());
+            list = tags.subList(startItem, toIndex);
+        }
+
+        return new PageImpl<>(list, PageRequest.of(currentPage, pageSize), tags.size());
     }
 
 }

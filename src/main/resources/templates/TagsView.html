@@ -22,6 +22,7 @@
             <div class="cell" th:text="#{tags.id}">Tag id</div>
             <div class="cell" th:text="#{tags.name}">Tag name</div>
             <div class="cell" th:text="#{tags.creator}">Creator</div>
+            <div class="cell" th:text="#{tags.creation_date}">Creation Date</div>
         </div>
         <div class="row" th:each="tag : ${tags}">
             <div class="cell">
@@ -29,6 +30,12 @@
             </div>
             <div class="cell" th:text="${tag.getName()}"> </div>
             <div class="cell" th:text="${tag.getBelongs_to().getUsername()}"> </div>
+            <div class="cell" th:text="${tag.getCreationDate()}"> </div>
+        </div>
+        <div th:if="${totalPages > 0}" class="pagination" th:inline="text" th:each="pageNumber : ${pageNumbers}">
+            <a th:href="@{/tags(size=${pageSize}, page=${pageNumber})}"
+               th:text="#{tags.paged} + ' ' + ${pageNumber}"
+               th:class="${pageNumber == tagPage.number + 1} ? 'active'"> </a>
         </div>
     </div>
 </div>

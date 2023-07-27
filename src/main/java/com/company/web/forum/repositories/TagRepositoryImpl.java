@@ -101,14 +101,34 @@ public class TagRepositoryImpl implements TagRepository {
     }
 
     @Override
+    public List<Tag> getAllTags(Integer page, Integer size) {
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<Tag> cq = cb.createQuery(Tag.class);
+            Root<Tag> tagRoot = cq.from(Tag.class);
+            cq.select(tagRoot);
+
+            return session.createQuery(cq)
+                    .setFirstResult(page*size)
+                    .setMaxResults(page*size + size)
+                    .list();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new javax.persistence.EntityNotFoundException("Not found");
+        }
+    }
+
+    @Override
     public List<Tag> getAllTags() {
         try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
             CriteriaQuery<Tag> cq = cb.createQuery(Tag.class);
             Root<Tag> tagRoot = cq.from(Tag.class);
             cq.select(tagRoot);
-            return session.createQuery(cq).list();
+            return session.createQuery(cq)
+                    .list();
         } catch (Exception e) {
+            e.printStackTrace();
             throw new javax.persistence.EntityNotFoundException("Not found");
         }
     }

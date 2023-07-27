@@ -49,6 +49,7 @@ public class HibConf {
     private Properties hibernateProperties() {
         Properties hibernateProperties = new Properties();
         hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.SQLServerDialect");
+        hibernateProperties.setProperty("hibernate.legacy_limit_handler", "true");
         return hibernateProperties;
 
     }
