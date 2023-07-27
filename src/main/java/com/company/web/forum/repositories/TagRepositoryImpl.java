@@ -107,7 +107,7 @@ public class TagRepositoryImpl implements TagRepository {
             CriteriaQuery<Tag> cq = cb.createQuery(Tag.class);
             Root<Tag> tagRoot = cq.from(Tag.class);
             cq.select(tagRoot);
-
+            page--;
             return session.createQuery(cq)
                     .setFirstResult(page*size)
                     .setMaxResults(page*size + size)
