@@ -109,8 +109,7 @@ public class TagRepositoryImpl implements TagRepository {
             cq.select(tagRoot);
             return session.createQuery(cq).list();
         } catch (Exception e) {
-            // Handle exceptions
-            return new ArrayList<>();
+            throw new javax.persistence.EntityNotFoundException("Not found");
         }
     }
 

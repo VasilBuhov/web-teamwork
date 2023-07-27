@@ -2,6 +2,7 @@ package com.company.web.forum.models;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.OffsetDateTime;
 
 public class TagDto {
 
@@ -11,6 +12,8 @@ public class TagDto {
 
     @NotNull(message = "User id must be positive")
     private User belongs_to;
+
+    private OffsetDateTime creationDate;
 
     public TagDto() {
     }
@@ -29,6 +32,14 @@ public class TagDto {
 
     public void setBelongs_to(User belongs_to) {
         this.belongs_to = belongs_to;
+    }
+
+    public OffsetDateTime getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(OffsetDateTime creationDate) {
+        this.creationDate = creationDate;
     }
 
 }

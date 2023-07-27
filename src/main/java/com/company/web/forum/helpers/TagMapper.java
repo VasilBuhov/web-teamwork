@@ -23,6 +23,7 @@ public class TagMapper {
         TagDto tagDto = new TagDto();
         tagDto.setName(tag.getName());
         tagDto.setBelongs_to(tag.getBelongs_to());
+        tagDto.setCreationDate(tag.getCreationDate());
         return tagDto;
     }
 

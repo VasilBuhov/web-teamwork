@@ -3,6 +3,7 @@ package com.company.web.forum.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.time.OffsetDateTime;
 import java.util.Objects;
 
 @Entity
@@ -24,14 +25,19 @@ public class Tag {
     @Column(name = "status_deleted")
     private int isDeleted;
 
+    @JsonIgnore
+    @Column(name = "creation_date")
+    private OffsetDateTime creationDate;
+
     public Tag() {
     }
 
-    public Tag(int id, String name, User belongsTo, int isDeleted) {
+    public Tag(int id, String name, User belongsTo, int isDeleted, OffsetDateTime creationDate) {
         this.id = id;
         this.name = name;
         this.belongsTo = belongsTo;
         this.isDeleted = isDeleted;
+        this.creationDate = creationDate;
     }
 
     public int getId() {
@@ -64,6 +70,22 @@ public class Tag {
 
     public void setIsDeleted(int isDeleted) {
         this.isDeleted = isDeleted;
+    }
+
+    public User getBelongsTo() {
+        return belongsTo;
+    }
+
+    public void setBelongsTo(User belongsTo) {
+        this.belongsTo = belongsTo;
+    }
+
+    public OffsetDateTime getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(OffsetDateTime creationDate) {
+        this.creationDate = creationDate;
     }
 
     @Override

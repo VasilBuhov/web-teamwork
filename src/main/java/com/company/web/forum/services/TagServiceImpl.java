@@ -9,6 +9,7 @@ import com.company.web.forum.repositories.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Service
@@ -54,6 +55,7 @@ public class TagServiceImpl implements TagService {
 
         tag.setIsDeleted(0);
         tag.setBelongs_to(belongsToUser);
+        tag.setCreationDate(OffsetDateTime.now());
         tagRepository.create(tag);
     }
 
