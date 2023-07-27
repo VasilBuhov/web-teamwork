@@ -1,6 +1,7 @@
 package com.company.web.forum.helpers;
 
 import com.company.web.forum.exceptions.AuthorizationException;
+import com.company.web.forum.exceptions.BlockedUserException;
 import com.company.web.forum.exceptions.EntityNotFoundException;
 import com.company.web.forum.models.User;
 import com.company.web.forum.services.UserService;
@@ -20,7 +21,9 @@ public class AuthenticationHelper {
         this.userService = userService;
     }
 
-    public User tryGetUser(HttpHeaders headers) {
+    public User tryGetUser(HttpHeaders headers) throws BlockedUserException {
+
+
         if (!headers.containsKey(AUTHORIZATION_HEADER_NAME)) {
             throw new AuthorizationException(INVALID_AUTHENTICATION_ERROR);
         }
@@ -30,13 +33,18 @@ public class AuthenticationHelper {
             String username = getUsername(userInfo);
             String password = getPassword(userInfo);
             User user = userService.getUserByUsername(username);
-
+            if (user.getIsAdmin() == 2) {
+                throw new BlockedUserException("Blocked user can not perform any action");
+            }
             if (!user.getPassword().equals(password)) {
                 throw new AuthorizationException(INVALID_AUTHENTICATION_ERROR);
             }
 
             return user;
-        } catch (EntityNotFoundException e) {
+        } catch (BlockedUserException e){
+            throw new BlockedUserException("Blocked user can not perform any action");
+        }
+         catch (EntityNotFoundException e) {
             throw new AuthorizationException(INVALID_AUTHENTICATION_ERROR);
         }
     }

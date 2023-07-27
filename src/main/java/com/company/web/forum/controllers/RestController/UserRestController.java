@@ -1,6 +1,7 @@
 package com.company.web.forum.controllers.RestController;
 
 import com.company.web.forum.exceptions.AuthorizationException;
+import com.company.web.forum.exceptions.BlockedUserException;
 import com.company.web.forum.exceptions.EntityNotFoundException;
 import com.company.web.forum.helpers.AuthenticationHelper;
 import com.company.web.forum.helpers.UserMapper;
@@ -34,12 +35,15 @@ public class UserRestController {
     }
 
     @GetMapping
-    public List<UserDto> getAllUsers(@RequestHeader HttpHeaders httpHeaders) {
+    public List<UserDto> getAllUsers(@RequestHeader HttpHeaders httpHeaders) throws BlockedUserException {
         try {
             authenticationHelper.tryGetUser(httpHeaders);
             List<User> users = userService.getAllUsers();
             return userMapper.toDtoList(users);
-        } catch (AuthorizationException e) {
+        } catch (BlockedUserException e ) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
+        }
+        catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         }
     }
