@@ -91,24 +91,24 @@ public class UserRepositoryImpl implements UserRepository {
         }
     }
 
-//    @Override
-//    public void createUser(User user) {
-//        try (Session session = sessionFactory.openSession()) {
-//            session.beginTransaction();
-//            session.save(user);
-//            session.getTransaction().commit();
-//        } catch (Exception e) {
-//            // Handle exceptions
-//        }
-//    }
     @Override
     public void createUser(User user) {
         try (Session session = sessionFactory.openSession()) {
-
+            session.beginTransaction();
             session.save(user);
-
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            // Handle exceptions
         }
     }
+//    @Override
+//    public void createUser(User user) {
+//        try (Session session = sessionFactory.openSession()) {
+//
+//            session.save(user);
+//
+//        }
+//    }
 
     @Override
     public void updateUser(User user) {
