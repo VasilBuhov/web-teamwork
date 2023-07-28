@@ -1,6 +1,8 @@
 package com.company.web.forum.services;
 
 import com.company.web.forum.models.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -10,6 +12,8 @@ public interface TagService {
 
     List<Tag> get(FilterTagOptions filterTopicOptions);
 
+    List<Tag> getAllTags(Integer  page, Integer  size);
+
     List<Tag> getAllTags();
 
     void create(String tagName, User belongsToUser);
@@ -18,4 +22,5 @@ public interface TagService {
 
     void delete(int id, User user);
 
+    Page<Tag> findPaginated(Pageable pageable);
 }
