@@ -1,6 +1,7 @@
 package com.company.web.forum.helpers;
 
 
+import com.company.web.forum.models.Tag;
 import com.company.web.forum.models.Topic;
 import com.company.web.forum.models.TopicDto;
 import com.company.web.forum.services.TopicService;
@@ -8,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 public class TopicMapper {
@@ -39,10 +43,15 @@ public class TopicMapper {
 
     public TopicDto toDto(Topic topic) {
         TopicDto topicDto = new TopicDto();
-        topicDto.setCreator(topic.getCreator());
+        topicDto.setCreatorUsername(topic.getCreator().getUsername());
         topicDto.setTitle(topic.getTitle());
         topicDto.setContent(topic.getContent());
-        topicDto.setTag(topic.getTag());
+        Set<Tag> tags = topic.getTags();
+        Set<String> tagNames = tags.stream()
+                .map(Tag::getName)
+                .collect(Collectors.toSet());
+
+        topicDto.setTagNames(tagNames);
         topicDto.setCreationDate(topic.getCreationDate());
         topicDto.setLikes(topic.getLikes());
         topicDto.setPosts(topic.getPosts());

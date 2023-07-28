@@ -8,15 +8,13 @@ import java.util.List;
 import java.util.Set;
 
 public class TopicDto {
-//    @NotNull(message = "Title can't be empty.")
     @Size(min = 16, max = 64, message = "Name should be between 16 and 64 symbols.")
     private String title;
     @Size(min = 32, max = 8192, message = "Content should be between 32 and 8192 symbols.")
     private String content;
 
-    private Tag tag;
-
-    private User creator;
+    private Set<String> tagNames;
+    private String creatorUsername;
 
     private int views;
 
@@ -45,17 +43,7 @@ public class TopicDto {
         this.content = content;
     }
 
-    public Tag getTag() {
-        return tag;
-    }
 
-    public User getCreator() {
-        return creator;
-    }
-
-    public void setCreator(User creator) {
-        this.creator = creator;
-    }
 
     public int getViews() {
         return views;
@@ -89,8 +77,28 @@ public class TopicDto {
         this.postsList = posts;
     }
 
-    public void setTag(Tag tag) {
-        this.tag = tag;
 
+    public String getCreatorUsername() {
+        return creatorUsername;
+    }
+
+    public void setCreatorUsername(String creatorUsername) {
+        this.creatorUsername = creatorUsername;
+    }
+
+    public Set<Post> getPostsList() {
+        return postsList;
+    }
+
+    public void setPostsList(Set<Post> postsList) {
+        this.postsList = postsList;
+    }
+
+    public Set<String> getTagNames() {
+        return tagNames;
+    }
+
+    public void setTagNames(Set<String> tagNames) {
+        this.tagNames = tagNames;
     }
 }

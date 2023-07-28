@@ -15,6 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 
@@ -33,8 +34,12 @@ public class TagRestController {
     }
 
     @GetMapping
-    public List<TagDto> getAllTags() {
-        List<Tag> tags = tagService.getAllTags();
+    public List<TagDto> getAllTags(
+            @RequestParam("page") Optional<Integer> page,
+            @RequestParam("size") Optional<Integer> size) {
+        int currentPage = page.orElse(1);
+        int currentSize = size.orElse(10);
+        List<Tag> tags = tagService.getAllTags(currentPage, currentSize);
         return tagMapper.toDtoList(tags);
     }
 

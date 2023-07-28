@@ -10,12 +10,22 @@ public class TagDto {
     @Size(min = 3, max = 50, message = "Name should be between 3 and 50 symbols")
     private String name;
 
-    @NotNull(message = "User id must be positive")
+    //@NotNull(message = "User id must be positive")
     private User belongs_to;
 
     private OffsetDateTime creationDate;
 
+    private String belongsToStringed;
+
     public TagDto() {
+    }
+
+    public String getBelongsToStringed() {
+        return belongsToStringed;
+    }
+
+    public void setBelongsToStringed(String belongsToStringed) {
+        this.belongsToStringed = belongsToStringed;
     }
 
     public String getName() {
