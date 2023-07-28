@@ -15,7 +15,17 @@ public class TagDto {
 
     private OffsetDateTime creationDate;
 
+    private String belongsToStringed;
+
     public TagDto() {
+    }
+
+    public String getBelongsToStringed() {
+        return belongsToStringed;
+    }
+
+    public void setBelongsToStringed(String belongsToStringed) {
+        this.belongsToStringed = belongsToStringed;
     }
 
     public String getName() {

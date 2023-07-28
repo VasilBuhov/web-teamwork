@@ -22,7 +22,7 @@ public class TagMapper {
     public TagDto toDto(Tag tag) {
         TagDto tagDto = new TagDto();
         tagDto.setName(tag.getName());
-        tagDto.setBelongs_to(tag.getBelongs_to());
+        tagDto.setBelongsToStringed(tag.getBelongs_to().getUsername());
         tagDto.setCreationDate(tag.getCreationDate());
         return tagDto;
     }
@@ -38,7 +38,6 @@ public class TagMapper {
     public Tag fromDto(TagDto dto) {
         Tag tag = new Tag();
         tag.setName(dto.getName());
-        tag.setBelongs_to(dto.getBelongs_to());
         tag.setBelongs_to(dto.getBelongs_to());
         return tag;
     }
