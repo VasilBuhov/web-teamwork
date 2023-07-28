@@ -116,6 +116,22 @@ public UserDto createUser(@RequestHeader HttpHeaders headers, @Valid @RequestBod
         }
     }
 
+    @PutMapping("/{id}/createAdmin")
+    public ResponseEntity<String> makeRegularUserAdmin(@RequestHeader HttpHeaders headers,@PathVariable int id){
+        try {
+            User authenticatedUser = authenticationHelper.tryGetUser(headers);
+            if (authenticatedUser.getIsAdmin() != 1) {
+                throw new AuthorizationException("Only admin can make other users admins");
+            }
+            userService.makeRegularUserAdmin(id);
+            return ResponseEntity.ok("User with ID " + id + " is now admin");
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (AuthorizationException e ) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
+    }
+
     @PutMapping("/{id}/unblock")
     public ResponseEntity<String> unblockUser(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         try {

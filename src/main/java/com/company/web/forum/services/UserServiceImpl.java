@@ -88,6 +88,15 @@ public class UserServiceImpl implements UserService {
         userRepository.updateUser(user);
     }
 
+    @Override
+    public void makeRegularUserAdmin(int id) {
+        User user = userRepository.getUserById(id);
+        if (user == null) {
+            throw new EntityNotFoundException("User not found",id);
+        }
+         user.setIsAdmin(1);
+         userRepository.updateUser(user);
+    }
 
     public User getUserByUsername(String username) {
         return userRepository.getUserByUsername(username);
