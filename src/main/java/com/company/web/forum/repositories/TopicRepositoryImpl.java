@@ -88,7 +88,7 @@ public class TopicRepositoryImpl implements TopicRepository {
             if (result.size() == 0) {
                 throw new EntityNotFoundException("Topic", "title", title);
             }
-            //result.get(0).setViews(result.get(0).getViews() + 1);
+            result.get(0).setViews(result.get(0).getViews() + 1);
             return result.get(0);
         }
     }
@@ -150,6 +150,9 @@ public class TopicRepositoryImpl implements TopicRepository {
                 break;
             case "title":
                 orderBy = "title";
+                break;
+            case "views":
+                orderBy = "views";
                 break;
         }
 

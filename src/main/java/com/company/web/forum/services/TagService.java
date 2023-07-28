@@ -17,6 +17,8 @@ public interface TagService {
     List<Tag> getAllTags();
 
     void create(String tagName, User belongsToUser);
+    void createTagForTopic(String tagName, User belongsToUser, Topic topic);
+    void removeTagFromTopic(String tagName, User user, Topic topic);
 
     void update(Tag tag, User user);
 

@@ -14,7 +14,7 @@ import java.util.List;
 
 @Service
 public class TopicServiceImpl implements TopicService {
-    private static final String MODIFY_POST_ERROR_MESSAGE = "Only admin or topic creator can modify a topic.";
+    private static final String MODIFY_TOPIC_ERROR_MESSAGE = "Only admin or topic creator can modify a topic.";
     private final TopicRepository repository;
 
     @Autowired
@@ -73,7 +73,7 @@ public class TopicServiceImpl implements TopicService {
     private void checkModifyPermissions(int topicId, User user) {
         Topic topic = repository.get(topicId);
         if (!(user.getIsAdmin() == 1 || topic.getCreator().equals(user))) {
-            throw new AuthorizationException(MODIFY_POST_ERROR_MESSAGE);
+            throw new AuthorizationException(MODIFY_TOPIC_ERROR_MESSAGE);
         }
     }
 }

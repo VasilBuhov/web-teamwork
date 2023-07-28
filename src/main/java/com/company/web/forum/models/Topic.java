@@ -13,12 +13,17 @@ public class Topic {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "creator")
     private User creator;
-    @ManyToOne
-    @JoinColumn(name = "tag")
-    private Tag tag;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "topics_tags",
+            joinColumns = {@JoinColumn(name = "topic_id")},
+            inverseJoinColumns = {@JoinColumn(name = "tag_id")})
+    private Set<Tag> tags;
     @Column(name = "title")
     private String title;
     @Column(name = "content")
@@ -32,13 +37,15 @@ public class Topic {
     @JsonIgnore
     @OneToMany(mappedBy = "topic", fetch = FetchType.EAGER)
     private Set<Post> posts;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "topic_likedBy",
             joinColumns = {@JoinColumn(name = "topic_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")})
     private Set<User> likedBy;
-    public Topic(){
+
+    public Topic() {
     }
 
     public Topic(int id, User creator, String title, String content, int views, int likes) {
@@ -51,14 +58,15 @@ public class Topic {
         this.creationDate = LocalDateTime.now();
         this.posts = new HashSet<>();
         this.likedBy = new HashSet<>();
+        this.tags = new HashSet<>();
     }
 
-    public Tag getTag() {
-        return tag;
+    public Set<Tag> getTags() {
+        return tags;
     }
 
-    public void setTag(Tag tag) {
-        this.tag = tag;
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
     }
 
     public LocalDateTime getCreationDate() {
@@ -132,6 +140,7 @@ public class Topic {
     public void setLikedBy(Set<User> likedBy) {
         this.likedBy = likedBy;
     }
+
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
