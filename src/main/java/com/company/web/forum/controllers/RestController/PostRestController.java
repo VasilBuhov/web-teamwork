@@ -57,13 +57,13 @@ public class PostRestController {
     }
 
     @PostMapping("/{id}")
-    public Post create(@PathVariable int id, @RequestHeader HttpHeaders httpHeaders, @Valid @RequestBody PostDto postDto) {
+    public PostDto create(@PathVariable int id, @RequestHeader HttpHeaders httpHeaders, @Valid @RequestBody PostDto postDto) {
         try {
             User user = authenticationHelper.tryGetUser(httpHeaders);
-            Post post = postMapper.fromDto(postDto);
+            Post post = postMapper.CreatePostDto(postDto);
             Topic topic = topicService.get(id);
             service.create(post, user, topic);
-            return post;
+            return postMapper.toDto(post);
         } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }

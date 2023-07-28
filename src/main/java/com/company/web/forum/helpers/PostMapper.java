@@ -17,29 +17,26 @@ public class PostMapper {
     }
 
     public Post fromDto(int id, PostDto dto) {
-        Post post = fromDto(dto);
+        Post post = CreatePostDto(dto);
         post.setId(id);
         Post repositoryPost = postService.get(id);
-        post.setViews(repositoryPost.getViews());
         post.setCreationDate(repositoryPost.getCreationDate());
         post.setLikes(repositoryPost.getLikes());
         return post;
     }
 
-    public Post fromDto(PostDto dto) {
+    public Post CreatePostDto(PostDto dto) {
         Post post = new Post();
         post.setContent(dto.getContent());
         return post;
     }
 
-    public PostDto toDto(Post dto) {
+    public PostDto toDto(Post post) {
         PostDto postDto = new PostDto();
-        postDto.setContent(dto.getContent());
-        postDto.setLikes(dto.getLikes());
-        postDto.setViews(dto.getViews());
-        postDto.setCreator(dto.getCreator());
-        postDto.setTopic(dto.getTopic());
-        postDto.setCreationDate(dto.getCreationDate());
+        postDto.setCreatorUsername(post.getCreator().getUsername());
+        postDto.setContent(post.getContent());
+        postDto.setLikes(post.getLikes());
+        postDto.setCreationDate(post.getCreationDate());
         return postDto;
     }
 }

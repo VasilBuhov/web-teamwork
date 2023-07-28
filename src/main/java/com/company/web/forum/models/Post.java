@@ -19,8 +19,6 @@ public class Post {
     private User creator;
     @Column(name = "content")
     private String content;
-    @Column(name = "views")
-    private int views;
     @Column(name = "creation_date")
     private LocalDateTime creationDate;
     @Column(name = "likes")
@@ -35,12 +33,11 @@ public class Post {
     public Post() {
     }
 
-    public Post(int id, Topic topic, User creator, String content, int views, LocalDateTime creationDate, int likes) {
+    public Post(int id, Topic topic, User creator, String content, LocalDateTime creationDate, int likes) {
         this.id = id;
         this.topic = topic;
         this.creator = creator;
         this.content = content;
-        this.views = views;
         this.creationDate = creationDate;
         this.likes = likes;
         this.likedBy = new HashSet<>();
@@ -61,14 +58,6 @@ public class Post {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public int getViews() {
-        return views;
-    }
-
-    public void setViews(int views) {
-        this.views = views;
     }
 
     public LocalDateTime getCreationDate() {
