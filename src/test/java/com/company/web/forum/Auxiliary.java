@@ -30,7 +30,6 @@ public class Auxiliary {
         mockTag.setId(1);
         mockTag.setName("MockBeer");
         mockTag.setBelongs_to(createMockUser());
-        mockTag.setOccurrenceIn(createMockTopic());
         return mockTag;
     }
 
@@ -39,7 +38,6 @@ public class Auxiliary {
         mockTopic.setId(1);
         mockTopic.setCreator(createMockUser());
         mockTopic.setContent("Mock content");
-        mockTopic.setDislikes(0);
         mockTopic.setLikes(13);
 //        mockTopic.setPosts(0);
         mockTopic.setTitle("Put your hands in the air, come on");
@@ -51,7 +49,6 @@ public class Auxiliary {
         TagDto dto = new TagDto();
         dto.setName("Mega Mock TAG");
         dto.setBelongs_to(createMockUser());
-        dto.setOccurrenceIn(createMockTopic());
         return dto;
     }
 
