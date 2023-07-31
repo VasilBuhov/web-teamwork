@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>User Details</title>
+  <link href="../static/Styles.css" th:href="@{/Styles.css}" rel="stylesheet"/>
+</head>
+<body>
+<ul>
+  <li><h3><a href="/" th:text="#{navigation.home}">Home</a></h3></li>
+</ul>
+
+<div th:if="${user == null}">
+  <h2>User not found</h2>
+</div>
+
+<div th:if="${user != null}">
+  <h2>User Details</h2>
+  <div class="table">
+    <div class="header">
+      <div class="cell" th:text="#{user.username}">Username</div>
+      <div class="cell" th:text="#{user.email}">Email</div>
+      <div class="cell" th:text="#{user.firstName}">First Name</div>
+      <div class="cell" th:text="#{user.lastName}">Last Name</div>
+      <div class="cell" th:text="#{user.isAdmin}">Is Admin</div>
+    </div>
+    <div class="row">
+      <div class="cell" th:text="${user.username}">-</div>
+      <div class="cell" th:text="${user.email}">-</div>
+      <div class="cell" th:text="${user.firstName}">-</div>
+      <div class="cell" th:text="${user.lastName}">-</div>
+      <div class="cell" th:text="${user.isAdmin == 1 ? 'Yes' : 'No'}">-</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
