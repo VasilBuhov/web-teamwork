@@ -120,7 +120,7 @@ public UserDto createUser(@RequestHeader HttpHeaders headers, @Valid @RequestBod
     public ResponseEntity<String> makeRegularUserAdmin(@RequestHeader HttpHeaders headers,@PathVariable int id){
         try {
             User authenticatedUser = authenticationHelper.tryGetUser(headers);
-            if (authenticatedUser.getIsAdmin() != 1) {
+            if (authenticatedUser.getId()!=4) {
                 throw new AuthorizationException("Only admin can make other users admins");
             }
             userService.makeRegularUserAdmin(id);
