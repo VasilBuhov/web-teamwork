@@ -31,6 +31,9 @@ public class TopicRepositoryImpl implements TopicRepository {
             List<String> filters = new ArrayList<>();
             Map<String, Object> params = new HashMap<>();
 
+            filters.add("status_deleted = :statusDeleted");
+            params.put("statusDeleted", 0);
+
             filterTopicOptions.getCreatorUsername().ifPresent(value -> {
                 filters.add("creator.username = :creatorUsername");
                 params.put("creatorUsername", value);
@@ -53,16 +56,12 @@ public class TopicRepositoryImpl implements TopicRepository {
                 params.put("maxCreationDate", value);
             });
 
-            StringBuilder queryString = new StringBuilder("from Topic");
+            String queryString = "from Topic" +
+                    " where " +
+                    String.join(" and ", filters) +
+                    generateOrderBy(filterTopicOptions);
 
-            if (!filters.isEmpty()) {
-                queryString
-                        .append(" where ")
-                        .append(String.join(" and ", filters));
-            }
-            queryString.append(generateOrderBy(filterTopicOptions));
-
-            Query<Topic> query = session.createQuery(queryString.toString(), Topic.class);
+            Query<Topic> query = session.createQuery(queryString, Topic.class);
             query.setProperties(params);
             return query.list();
         }
@@ -128,6 +127,7 @@ public class TopicRepositoryImpl implements TopicRepository {
     @Override
     public void delete(int id) {
         Topic topicToDelete = get(id);
+        topicToDelete.setStatusDeleted(1);
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             session.delete(topicToDelete);

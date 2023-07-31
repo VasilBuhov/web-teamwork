@@ -1,6 +1,7 @@
 package com.company.web.forum.services;
 
 import com.company.web.forum.exceptions.AuthorizationException;
+import com.company.web.forum.exceptions.EntityDeletedException;
 import com.company.web.forum.models.FilterTopicOptions;
 import com.company.web.forum.models.Topic;
 import com.company.web.forum.models.User;
@@ -31,6 +32,9 @@ public class TopicServiceImpl implements TopicService {
     @Override
     public Topic get(int id) {
         Topic topic = repository.get(id);
+        if (topic.getStatusDeleted() == 1) {
+            throw new EntityDeletedException("Topic", "ID", String.valueOf(id));
+        }
         topic.setViews(topic.getViews() + 1);
         repository.updateViews(topic);
         return topic;
@@ -44,12 +48,17 @@ public class TopicServiceImpl implements TopicService {
         topic.setLikedBy(new HashSet<>());
         topic.setLikes(0);
         topic.setViews(0);
+        topic.setStatusDeleted(0);
         repository.create(topic);
 
     }
 
     @Override
     public void delete(int id, User user) {
+        Topic topicToBeDeleted = repository.get(id);
+        if (topicToBeDeleted.getStatusDeleted() == 1) {
+            throw new EntityDeletedException("Post", "ID", String.valueOf(id));
+        }
         checkModifyPermissions(id, user);
         repository.delete(id);
     }
@@ -57,9 +66,15 @@ public class TopicServiceImpl implements TopicService {
     @Override
     public void update(Topic topic, User user) {
         checkModifyPermissions(topic.getId(), user);
+        if (topic.getStatusDeleted() == 1) {
+            throw new EntityDeletedException("Post", "ID", String.valueOf(topic.getId()));
+        }
         repository.update(topic);
     }
     public void updateLike(Topic topic, User user) {
+        if (topic.getStatusDeleted() == 1) {
+            throw new EntityDeletedException("Post", "ID", String.valueOf(topic.getId()));
+        }
         if (topic.getLikedBy().contains(user)) {
             topic.setLikes(topic.getLikes() - 1);
             topic.getLikedBy().remove(user);

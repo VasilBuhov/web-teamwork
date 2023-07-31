@@ -2,6 +2,7 @@ package com.company.web.forum.controllers.RestController;
 
 import com.company.web.forum.exceptions.AuthorizationException;
 import com.company.web.forum.exceptions.BlockedUserException;
+import com.company.web.forum.exceptions.EntityDeletedException;
 import com.company.web.forum.exceptions.EntityNotFoundException;
 import com.company.web.forum.helpers.AuthenticationHelper;
 import com.company.web.forum.helpers.TagMapper;
@@ -57,7 +58,7 @@ public class TopicRestController {
         try {
             Topic topic = service.get(id);
             return topicMapper.toDto(topic);
-        } catch (EntityNotFoundException e) {
+        } catch (EntityNotFoundException | EntityDeletedException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
@@ -85,7 +86,7 @@ public class TopicRestController {
             return topicMapper.toDto(topic);
         } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
-        } catch (EntityNotFoundException e) {
+        } catch (EntityNotFoundException | EntityDeletedException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (BlockedUserException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
@@ -100,7 +101,7 @@ public class TopicRestController {
             return topicMapper.toDto(topic);
         } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
-        } catch (EntityNotFoundException e) {
+        } catch (EntityNotFoundException | EntityDeletedException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (BlockedUserException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
@@ -113,7 +114,7 @@ public class TopicRestController {
             Topic topic = service.get(id);
             service.updateLike(topic, user);
             return topicMapper.toDto(topic);
-        } catch (EntityNotFoundException e) {
+        } catch (EntityNotFoundException | EntityDeletedException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
@@ -129,7 +130,7 @@ public class TopicRestController {
             String tagName = tagMapper.fromDto(tagDto).getName();
             tagService.createTagForTopic(tagName, belongsToUser, topic);
             return topicMapper.toDto(topic);
-        } catch (EntityNotFoundException e) {
+        } catch (EntityNotFoundException | EntityDeletedException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
@@ -145,7 +146,7 @@ public class TopicRestController {
             String tagName = tagMapper.fromDto(tagDto).getName();
             tagService.removeTagFromTopic(tagName,user, topic);
             return topicMapper.toDto(topic);
-        } catch (EntityNotFoundException e) {
+        } catch (EntityNotFoundException | EntityDeletedException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
@@ -160,7 +161,7 @@ public class TopicRestController {
             service.delete(id, user);
         } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
-        } catch (EntityNotFoundException e) {
+        } catch (EntityNotFoundException | EntityDeletedException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (BlockedUserException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());

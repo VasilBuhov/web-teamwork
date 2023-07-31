@@ -1,6 +1,7 @@
 package com.company.web.forum.controllers.RestController;
 
 import com.company.web.forum.exceptions.AuthorizationException;
+import com.company.web.forum.exceptions.EntityDeletedException;
 import com.company.web.forum.exceptions.EntityNotFoundException;
 import com.company.web.forum.models.*;
 import com.company.web.forum.services.TopicService;
@@ -51,7 +52,7 @@ public class PostRestController {
         try {
             Post post = service.get(id);
             return postMapper.toDto(post);
-        } catch (EntityNotFoundException e) {
+        } catch (EntityNotFoundException | EntityDeletedException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
@@ -78,7 +79,7 @@ public class PostRestController {
             return post;
         } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
-        } catch (EntityNotFoundException e) {
+        } catch (EntityNotFoundException | EntityDeletedException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
@@ -89,7 +90,7 @@ public class PostRestController {
             Post post = service.get(id);
             service.updateLike(post, user);
             return post;
-        } catch (EntityNotFoundException e) {
+        } catch (EntityNotFoundException | EntityDeletedException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
@@ -103,7 +104,7 @@ public class PostRestController {
             service.delete(id, user, postToBeDeleted, topic);
         } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
-        } catch (EntityNotFoundException e) {
+        } catch (EntityNotFoundException | EntityDeletedException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }

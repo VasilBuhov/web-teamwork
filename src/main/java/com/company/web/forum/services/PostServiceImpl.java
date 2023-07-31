@@ -49,6 +49,7 @@ public class PostServiceImpl implements PostService {
         post.setCreationDate(LocalDateTime.now());
         post.setLikes(0);
         post.setTopic(topic);
+        post.setStatusDeleted(0);
         topic.getPosts().add(post);
         repository.create(post);
     }

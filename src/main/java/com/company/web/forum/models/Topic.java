@@ -44,6 +44,9 @@ public class Topic {
             joinColumns = {@JoinColumn(name = "topic_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")})
     private Set<User> likedBy;
+    @JsonIgnore
+    @Column(name = "status_deleted")
+    private int statusDeleted;
 
     public Topic() {
     }
@@ -59,6 +62,7 @@ public class Topic {
         this.posts = new HashSet<>();
         this.likedBy = new HashSet<>();
         this.tags = new HashSet<>();
+        this.statusDeleted = 0;
     }
 
     public Set<Tag> getTags() {
@@ -139,6 +143,14 @@ public class Topic {
 
     public void setLikedBy(Set<User> likedBy) {
         this.likedBy = likedBy;
+    }
+
+    public int getStatusDeleted() {
+        return statusDeleted;
+    }
+
+    public void setStatusDeleted(int statusDeleted) {
+        this.statusDeleted = statusDeleted;
     }
 
     public boolean equals(Object o) {
