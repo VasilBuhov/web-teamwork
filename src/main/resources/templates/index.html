@@ -1743,23 +1743,15 @@
                 </div>
                 <!--               end of Highest points -->
                 <!--          start tags part-->
-                <div class="tags-part-unique-side-tags">
+                <div class="tags-part2398">
                     <h4>Tags</h4>
                     <ul>
-                        <div th:if="${tags.isEmpty()}">
-                            <h2 th:text="#{tags.name.empty}">No tags present</h2>
-                        </div>
-
-
-                                <li th:each="tag : ${tags}">
-                                        <a href="#" th:href="@{/tags/{id}(id=${tag.getId()})}" th:text="${tag.getName()}">Tag</a>
-
-                                </li>
-
-
-
+                        <li th:each="tag : ${tags}">
+                            <a href="#" th:href="@{/tags/{id}(id=${tag.getId()})}" th:text="${tag.getName()}"></a>
+                        </li>
                     </ul>
                 </div>
+                <hr>
                 <!--          End tags part-->
                 <!--        start recent post  -->
                 <div class="recent-post3290">
