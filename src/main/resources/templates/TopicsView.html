@@ -21,6 +21,7 @@
             <div class="cell" th:text="#{topic.title}">Title</div>
             <div class="cell" th:text="#{topic.creator}">Creator</div>
             <div class="cell" th:text="#{topic.comments}">Comments</div>
+            <div class="cell" th:text="#{topic.views}">Views</div>
             <div class="cell" th:text="#{topic.creationDate}">Creation date</div>
         </div>
         <div class="row" th:each="topic : ${topics}">
@@ -28,7 +29,8 @@
                 <a href="#" th:href="@{/topics/{id}(id=${topic.getId()})}" th:text="${topic.title}">Topic</a>
             </div>
             <div class="cell" th:text="${topic.getCreator.getUsername}">Ivan</div>
-            <div class="cell" th:text="${topic.getPosts}">10</div>
+            <div class="cell" th:text="${topic.getPosts.size()}">10</div>
+            <div class="cell" th:text="${topic.getViews()}">15</div>
             <div class="cell" th:text="${topic.getCreationDate}">10.07.2023</div>
         </div>
     </div>
