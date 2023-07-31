@@ -1,5 +1,7 @@
 package com.company.web.forum.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -29,11 +31,14 @@ public class Post {
             joinColumns = {@JoinColumn(name = "post_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")})
     private Set<User> likedBy;
+    @JsonIgnore
+    @Column(name = "status_deleted")
+    private int statusDeleted;
 
     public Post() {
     }
 
-    public Post(int id, Topic topic, User creator, String content, LocalDateTime creationDate, int likes) {
+    public Post(int id, Topic topic, User creator, String content, LocalDateTime creationDate, int likes, int statusDeleted) {
         this.id = id;
         this.topic = topic;
         this.creator = creator;
@@ -41,6 +46,7 @@ public class Post {
         this.creationDate = creationDate;
         this.likes = likes;
         this.likedBy = new HashSet<>();
+        this.statusDeleted = 0;
     }
 
     public int getId() {
@@ -98,6 +104,14 @@ public class Post {
 
     public void setLikedBy(Set<User> likedBy) {
         this.likedBy = likedBy;
+    }
+
+    public int getStatusDeleted() {
+        return statusDeleted;
+    }
+
+    public void setStatusDeleted(int statusDeleted) {
+        this.statusDeleted = statusDeleted;
     }
 
     public boolean equals(Object o) {

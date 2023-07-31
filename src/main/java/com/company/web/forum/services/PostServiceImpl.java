@@ -1,6 +1,7 @@
 package com.company.web.forum.services;
 
 import com.company.web.forum.exceptions.AuthorizationException;
+import com.company.web.forum.exceptions.EntityDeletedException;
 import com.company.web.forum.exceptions.EntityDuplicateException;
 import com.company.web.forum.exceptions.EntityNotFoundException;
 import com.company.web.forum.models.*;
@@ -27,11 +28,19 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post get(int id) {
-        return repository.get(id);
+        Post post = repository.get(id);
+        if (post.getStatusDeleted() == 1) {
+            throw new EntityDeletedException("Post", "ID", String.valueOf(id));
+        }
+        return post;
     }
 
     public Post get(String creatorUsername) {
-        return repository.get(creatorUsername);
+        Post post = repository.get(creatorUsername);
+        if (post.getStatusDeleted() == 1) {
+            throw new EntityDeletedException("Post", "ID", String.valueOf(post.getId()));
+        }
+        return post;
     }
 
     @Override
@@ -44,12 +53,18 @@ public class PostServiceImpl implements PostService {
         repository.create(post);
     }
     public void update(Post post, User user) {
+        if (post.getStatusDeleted() == 1) {
+            throw new EntityDeletedException("Post", "ID", String.valueOf(post.getId()));
+        }
         checkModifyPermissions(post.getId(), user);
         repository.update(post);
     }
 
     @Override
     public void updateLike(Post post, User user) {
+        if (post.getStatusDeleted() == 1) {
+            throw new EntityDeletedException("Post", "ID", String.valueOf(post.getId()));
+        }
         if (post.getLikedBy().contains(user)) {
             post.setLikes(post.getLikes() - 1);
             post.getLikedBy().remove(user);
@@ -64,6 +79,9 @@ public class PostServiceImpl implements PostService {
     @Override
     public void delete(int id, User user, Post post, Topic topic) {
         checkModifyPermissions(id, user);
+        if (post.getStatusDeleted() == 1) {
+            throw new EntityDeletedException("Post", "ID", String.valueOf(id));
+        }
         topic.getPosts().remove(post);
         repository.delete(id);
     }

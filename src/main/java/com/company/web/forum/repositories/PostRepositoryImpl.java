@@ -30,21 +30,20 @@ public class PostRepositoryImpl implements PostRepository {
             List<String> filters = new ArrayList<>();
             Map<String, Object> params = new HashMap<>();
 
+            filters.add("status_deleted = :statusDeleted");
+            params.put("statusDeleted", 0);
+
             filterPostOptions.getCreatorUsername().ifPresent(value -> {
                 filters.add("creator.username = :creatorUsername");
                 params.put("creatorUsername", value);
             });
 
-            StringBuilder queryString = new StringBuilder("from Post");
+            String queryString = "from Post" +
+                    " where " +
+                    String.join(" and ", filters) +
+                    generateOrderBy(filterPostOptions);
 
-            if (!filters.isEmpty()) {
-                queryString
-                        .append(" where ")
-                        .append(String.join(" and ", filters));
-            }
-            queryString.append(generateOrderBy(filterPostOptions));
-
-            org.hibernate.query.Query<Post> query = session.createQuery(queryString.toString(), Post.class);
+            org.hibernate.query.Query<Post> query = session.createQuery(queryString, Post.class);
             query.setProperties(params);
             return query.list();
         }
@@ -87,9 +86,10 @@ public class PostRepositoryImpl implements PostRepository {
     @Override
     public void delete(int id) {
         Post postToDelete = get(id);
+        postToDelete.setStatusDeleted(1);
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            session.delete(postToDelete);
+            session.update(postToDelete);
             session.getTransaction().commit();
         }
     }
