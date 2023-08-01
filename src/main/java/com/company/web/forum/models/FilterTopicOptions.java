@@ -52,4 +52,32 @@ public class FilterTopicOptions {
     public Optional<LocalDateTime> getMaxCreationDate() {
         return maxCreationDate;
     }
+
+    public void setCreatorUsername(Optional<String> creatorUsername) {
+        this.creatorUsername = creatorUsername;
+    }
+
+    public void setTagTitle(Optional<String> tagTitle) {
+        this.tagTitle = tagTitle;
+    }
+
+    public void setTitle(Optional<String> title) {
+        this.title = title;
+    }
+
+    public void setMinCreationDate(Optional<LocalDateTime> minCreationDate) {
+        this.minCreationDate = minCreationDate;
+    }
+
+    public void setMaxCreationDate(Optional<LocalDateTime> maxCreationDate) {
+        this.maxCreationDate = maxCreationDate;
+    }
+
+    public void setSortBy(Optional<String> sortBy) {
+        this.sortBy = sortBy;
+    }
+
+    public void setSortOrder(Optional<String> sortOrder) {
+        this.sortOrder = sortOrder;
+    }
 }

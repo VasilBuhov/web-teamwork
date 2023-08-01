@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/")
 public class HomeMvcController {
@@ -23,8 +25,11 @@ public class HomeMvcController {
 
     @GetMapping(value = "/")
     public String showHomePage(Model model) {
-        model.addAttribute("topics", topicService.get(new FilterTopicOptions()));
-        model.addAttribute("tags", tagService.getTopTags());//returning top 10 most recent tags by creation date
+        FilterTopicOptions sortOrder = new FilterTopicOptions();
+        Optional<String> order = Optional.of("desc");
+        sortOrder.setSortOrder(order);
+        model.addAttribute("topics", topicService.get(sortOrder));
+        model.addAttribute("tags", tagService.getAllTags(1, 10));
         return "index";
     }
 }

@@ -63,6 +63,9 @@ public class TopicRepositoryImpl implements TopicRepository {
 
             Query<Topic> query = session.createQuery(queryString, Topic.class);
             query.setProperties(params);
+
+            //query.setMaxResults(10);
+
             return query.list();
         }
     }

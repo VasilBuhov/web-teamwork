@@ -45,6 +45,9 @@ public class PostRepositoryImpl implements PostRepository {
 
             org.hibernate.query.Query<Post> query = session.createQuery(queryString, Post.class);
             query.setProperties(params);
+
+            //query.setMaxResults(10);
+
             return query.list();
         }
     }
