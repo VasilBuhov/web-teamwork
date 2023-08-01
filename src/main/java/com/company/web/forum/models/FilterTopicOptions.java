@@ -15,6 +15,7 @@ public class FilterTopicOptions {
     public FilterTopicOptions() {
         this(null, null, null, null, null, null, null);
     }
+
     public FilterTopicOptions(String creatorUsername, String tagTitle, String title, LocalDateTime minCreationDate, LocalDateTime maxCreationDate, String sortBy, String sortOrder) {
         this.creatorUsername = Optional.ofNullable(creatorUsername);
         this.tagTitle = Optional.ofNullable(tagTitle);
@@ -80,4 +81,6 @@ public class FilterTopicOptions {
     public void setSortOrder(Optional<String> sortOrder) {
         this.sortOrder = sortOrder;
     }
+
+
 }

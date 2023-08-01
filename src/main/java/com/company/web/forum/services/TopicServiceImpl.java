@@ -8,7 +8,6 @@ import com.company.web.forum.models.User;
 import com.company.web.forum.repositories.TopicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
@@ -41,14 +40,14 @@ public class TopicServiceImpl implements TopicService {
         return topic;
     }
     @Override
-    public List<Topic> get10recent() {
-        FilterTopicOptions sortOrder = new FilterTopicOptions();
-        Optional<String> order = Optional.of("desc");
-        Optional<String> sortBy = Optional.of("creation date");
-        sortOrder.setSortOrder(order);
-        sortOrder.setSortBy(sortBy);
-        List<Topic> resultList = repository.get(sortOrder);
-        return repository.get10recent(resultList);
+    public List<Topic> get10(String order, String sortBy) {
+        FilterTopicOptions sort = new FilterTopicOptions();
+        Optional<String> orderCriteria = Optional.of(order);
+        Optional<String> sortByCriteria = Optional.of(sortBy);
+        sort.setSortOrder(orderCriteria);
+        sort.setSortBy(sortByCriteria);
+        List<Topic> resultList = repository.get(sort);
+        return repository.get10(resultList);
     }
     @Override
     public void create(Topic topic, User user) {

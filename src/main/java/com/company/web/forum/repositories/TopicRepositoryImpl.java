@@ -71,7 +71,7 @@ public class TopicRepositoryImpl implements TopicRepository {
         }
     }
     @Override
-    public List<Topic> get10recent(List<Topic> resultList) {
+    public List<Topic> get10(List<Topic> resultList) {
         return resultList.stream().limit(10).collect(Collectors.toList());
     }
 
@@ -162,6 +162,8 @@ public class TopicRepositoryImpl implements TopicRepository {
             case "views":
                 orderBy = "views";
                 break;
+            case "posts":
+                orderBy = "posts.size";
         }
 
         orderBy = String.format(" order by %s", orderBy);

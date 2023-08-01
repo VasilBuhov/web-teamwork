@@ -62,20 +62,16 @@ public class TopicRestController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
-//    @GetMapping("/get10")
-//    public List<Topic> get10(
-//            @RequestParam(required = false) String creatorUsername,
-//            @RequestParam(required = false) String tagTitle,
-//            @RequestParam(required = false) String title,
-//            @RequestParam(required = false) LocalDateTime minCreationDate,
-//            @RequestParam(required = false) LocalDateTime maxCreationDate,
-//            @RequestParam(required = false) String sortBy,
-//            @RequestParam(required = false) String sortOrder
-//    ) {
-////        FilterTopicOptions filterTopicOptions = new FilterTopicOptions(creatorUsername, tagTitle, title, minCreationDate, maxCreationDate, sortBy, sortOrder);
-//        return service.get10();
-//    }
 
+    @GetMapping("/recent")
+    public List<Topic> get10recent() {
+        return service.get10("desc", "creation date");
+    }
+
+    @GetMapping("/commented")
+    public List<Topic> get10commented() {
+        return service.get10("desc", "posts");
+    }
 
     @PostMapping
     public TopicDto create(@RequestHeader HttpHeaders httpHeaders, @Valid @RequestBody TopicDto topicDto) {
@@ -106,6 +102,7 @@ public class TopicRestController {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }
     }
+
     @PutMapping("/{id}/title")
     public TopicDto updateTitle(@PathVariable int id, @RequestHeader HttpHeaders httpheaders, @Valid @RequestBody TopicDto topicDto) {
         try {
@@ -121,6 +118,7 @@ public class TopicRestController {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }
     }
+
     @PutMapping("/{id}/like")
     public TopicDto updateLike(@PathVariable int id, @RequestHeader HttpHeaders httpheaders) {
         try {
@@ -136,6 +134,7 @@ public class TopicRestController {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }
     }
+
     @PutMapping("/{id}/addTag")
     public TopicDto addTag(@PathVariable int id, @RequestHeader HttpHeaders httpheaders, @Valid @RequestBody TagDto tagDto) {
         try {
@@ -152,13 +151,14 @@ public class TopicRestController {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }
     }
+
     @PutMapping("/{id}/removeTag")
     public TopicDto removeTag(@PathVariable int id, @RequestHeader HttpHeaders httpheaders, @Valid @RequestBody TagDto tagDto) {
         try {
             User user = authenticationHelper.tryGetUser(httpheaders);
             Topic topic = service.get(id);
             String tagName = tagMapper.fromDto(tagDto).getName();
-            tagService.removeTagFromTopic(tagName,user, topic);
+            tagService.removeTagFromTopic(tagName, user, topic);
             return topicMapper.toDto(topic);
         } catch (EntityNotFoundException | EntityDeletedException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
@@ -168,6 +168,7 @@ public class TopicRestController {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }
     }
+
     @DeleteMapping("/{id}")
     public void delete(@PathVariable int id, @RequestHeader HttpHeaders httpHeaders) {
         try {
