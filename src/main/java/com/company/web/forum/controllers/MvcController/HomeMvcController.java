@@ -1,6 +1,5 @@
 package com.company.web.forum.controllers.MvcController;
 
-import com.company.web.forum.models.FilterTopicOptions;
 import com.company.web.forum.services.TagService;
 import com.company.web.forum.services.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/")
@@ -26,7 +24,7 @@ public class HomeMvcController {
     @GetMapping(value = "/")
     public String showHomePage(Model model) {
         model.addAttribute("topics", topicService.get10recent());
-        model.addAttribute("tags", tagService.getAllTags(1, 10));
+        model.addAttribute("tags", tagService.getTopTags());
         return "index";
     }
 }
