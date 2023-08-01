@@ -1,12 +1,7 @@
 package com.company.web.forum.models;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreType;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class UserDto {
@@ -33,6 +28,8 @@ public class UserDto {
 
     private String password;
     // Getter and Setter for password
+
+    private String avatar;
 
     public String getPassword() {
         return password;
@@ -73,5 +70,13 @@ public class UserDto {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getAvatar() {
+        return email;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

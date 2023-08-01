@@ -56,7 +56,7 @@
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-                <a class="navbar-brand" href="#"><img src="/assets/img/logo.png" alt="Logo"></a>
+                <a class="navbar-brand" href="#"><img src="/assets/img/flogo.png" alt="FLogo"></a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -104,25 +104,6 @@
 <!--======= welcome section on top background=====-->
 <section class="welcome-part-one">
     <div class="container">
-        <div class="welcome-demop102 text-center">
-            <h2>Welcome to sex life & problems forum</h2>
-            <p>How to start your own sex religion?
-                <br> Here you can find out everything you need - from cross and nails, to the bible of sex</p>
-            <div class="button0239-item">
-                <a href="#">
-                    <button type="button" class="aboutus022">About Us</button>
-                </a>
-                <a href="#">
-                    <button type="button" class="join92">Join Now</button>
-                </a>
-            </div>
-            <div class="form-style8292">
-                <div class="input-group"> <span class="input-group-addon"><i class="fa fa-pencil-square" aria-hidden="true"></i></span>
-                    <label>
-                        <input type="text" class="form-control form-control8392" placeholder="Ask any question and you be sure find your answer ?">
-                    </label> <span class="input-group-addon"><a href="#">Ask Now</a></span> </div>
-            </div>
-        </div>
     </div>
 </section>
 
@@ -153,7 +134,7 @@
                             <div class="row">
                                 <div class="col-md-1">
                                     <div class="left-user12923 left-user12923-repeat">
-                                        <a href="#"><img src="/assets/img/images.png" alt="image"> </a> <a href="#"><i class="fa fa-check" aria-hidden="true"></i></a> </div>
+                                        <a href="#"><img th:src="${topic.getCreator().getAvatar()}" alt="User Avatar"> </a> <a href="#"><i class="fa fa-check" aria-hidden="true"></i></a> </div>
                                 </div>
                                 <div class="col-md-9">
                                     <div class="right-description893">
@@ -167,7 +148,7 @@
                                             <i class="fa fa-star" aria-hidden="true" th:text="${topic.getLikes}"> </i>
                                             <i class="fa fa-clock-o" aria-hidden="true" th:text="${topic.getCreationDate()}"> </i>
                                             <a href="#"><i class="fa fa-question-circle-o" aria-hidden="true"> Question</i> </a>
-                                            <a href="#"><i class="fa fa-bug" aria-hidden="true"> Report</i></a>
+                                            <a href="#"><i class="fa fa-bug" aria-hidden="true"> Comment on this topic</i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -252,7 +233,9 @@
                                             <p>Duis dapibus aliquam mi, eget euismod sem scelerisque ut. Vivamus at elit quis urna adipiscing iaculis.Duis dapibus aliquam mi, eget euismod sem scelerisque ut. Vivamus at elit quis urna adipiscing iaculis.</p>
                                         </div>
                                         <hr>
-                                        <div class="ques-icon-info3293"> <a href="#"><i class="fa fa-star" aria-hidden="true"> 5 </i> </a> <a href="#"><i class="fa fa-folder" aria-hidden="true"> wordpress</i></a> <a href="#"><i class="fa fa-clock-o" aria-hidden="true"> 4 min ago</i></a> <a href="#"><i class="fa fa-question-circle-o" aria-hidden="true"> Question</i></a> <a href="#"><i class="fa fa-bug" aria-hidden="true"> Report</i></a> </div>
+                                        <div class="ques-icon-info3293">
+                                            <a href="#"><i class="fa fa-star" aria-hidden="true"> 5 </i> </a> <a href="#"><i class="fa fa-folder" aria-hidden="true"> wordpress</i></a> <a href="#"><i class="fa fa-clock-o" aria-hidden="true"> 4 min ago</i></a> <a href="#">
+                                            <i class="fa fa-question-circle-o" aria-hidden="true"> Comment on this topic</i></a> <a href="#"><i class="fa fa-bug" aria-hidden="true"> Report</i></a> </div>
                                     </div>
                                 </div>
                                 <div class="col-md-2">
@@ -1357,7 +1340,9 @@
             <!--strart col-md-3 (side bar)-->
             <aside class="col-md-3 sidebar97239">
                 <div class="status-part3821">
-                    <h4>stats</h4> <a href="#"><i class="fa fa-question-circle" aria-hidden="true"> Question(20)</i></a> <i class="fa fa-comment" aria-hidden="true"> Answers(50)</i> </div>
+                    <h4>Forum statistics</h4>
+                    <a href="#"><i class="fa fa-question-circle" aria-hidden="true"> Question(20)</i></a>
+                    <i class="fa fa-comment" aria-hidden="true"> Answers(50)</i> </div>
                 <div class="categori-part329">
                     <h4>Category</h4>
                     <ul>

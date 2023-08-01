@@ -33,10 +33,12 @@ public class User {
     @Column(name = "verified")
     private int verified;
 
+    @Column(name = "avatar")
+    private String avatar;
     public User() {
     }
 
-    public User(int id, String firstName, String lastName, String username, String email, String password, int isAdmin, int verified) {
+    public User(int id, String firstName, String lastName, String username, String email, String password, int isAdmin, int verified, String avatar) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -45,6 +47,7 @@ public class User {
         this.password = password;
         setIsAdmin(isAdmin);
         this.verified = verified;
+        this.avatar = avatar;
     }
 
     public int getId() {
@@ -109,6 +112,14 @@ public class User {
 
     public void setVerified(int verified) {
         this.verified = verified;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public boolean equals(Object o) {
