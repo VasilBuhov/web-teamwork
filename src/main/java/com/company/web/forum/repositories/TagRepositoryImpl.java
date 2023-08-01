@@ -79,7 +79,7 @@ public class TagRepositoryImpl implements TagRepository {
             query.setParameter("name", name);
 
             List<Tag> result = query.list();
-            if (result.size() == 0) {
+            if (result.isEmpty()) {
                 throw new EntityNotFoundException("Tag", "name", name);
             }
             return result.get(0);
@@ -113,7 +113,22 @@ public class TagRepositoryImpl implements TagRepository {
                     .setMaxResults(page*size + size)
                     .list();
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new javax.persistence.EntityNotFoundException("Not found");
+        }
+    }
+
+    @Override
+    public List<Tag> getTopTags() {
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<Tag> cq = cb.createQuery(Tag.class);
+            Root<Tag> tagRoot = cq.from(Tag.class);
+            cq.select(tagRoot);
+            cq.orderBy(cb.desc(tagRoot.get("creationDate")));
+            return session.createQuery(cq)
+                    .setMaxResults(10)
+                    .list();
+        } catch (Exception e) {
             throw new javax.persistence.EntityNotFoundException("Not found");
         }
     }
@@ -128,7 +143,6 @@ public class TagRepositoryImpl implements TagRepository {
             return session.createQuery(cq)
                     .list();
         } catch (Exception e) {
-            e.printStackTrace();
             throw new javax.persistence.EntityNotFoundException("Not found");
         }
     }

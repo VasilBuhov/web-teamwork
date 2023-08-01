@@ -12,6 +12,8 @@ public interface TagService {
 
     List<Tag> get(FilterTagOptions filterTopicOptions);
 
+    List<Tag> getTopTags();
+
     List<Tag> getAllTags(Integer  page, Integer  size);
 
     List<Tag> getAllTags();
