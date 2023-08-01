@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TopicServiceImpl implements TopicService {
@@ -39,7 +40,16 @@ public class TopicServiceImpl implements TopicService {
         repository.updateViews(topic);
         return topic;
     }
-
+    @Override
+    public List<Topic> get10recent() {
+        FilterTopicOptions sortOrder = new FilterTopicOptions();
+        Optional<String> order = Optional.of("desc");
+        Optional<String> sortBy = Optional.of("creation date");
+        sortOrder.setSortOrder(order);
+        sortOrder.setSortBy(sortBy);
+        List<Topic> resultList = repository.get(sortOrder);
+        return repository.get10recent(resultList);
+    }
     @Override
     public void create(Topic topic, User user) {
         topic.setCreator(user);

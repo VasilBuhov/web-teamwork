@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Repository
 public class TopicRepositoryImpl implements TopicRepository {
@@ -68,6 +69,10 @@ public class TopicRepositoryImpl implements TopicRepository {
 
             return query.list();
         }
+    }
+    @Override
+    public List<Topic> get10recent(List<Topic> resultList) {
+        return resultList.stream().limit(10).collect(Collectors.toList());
     }
 
     @Override

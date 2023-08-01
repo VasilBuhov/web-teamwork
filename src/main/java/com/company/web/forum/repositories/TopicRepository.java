@@ -2,12 +2,15 @@ package com.company.web.forum.repositories;
 
 import com.company.web.forum.models.FilterTopicOptions;
 import com.company.web.forum.models.Topic;
-import com.company.web.forum.models.User;
+
 
 import java.util.List;
 
 public interface TopicRepository {
     List<Topic> get(FilterTopicOptions filterTopicOptions);
+
+    List<Topic> get10recent(List<Topic> resultList);
+
     Topic get(int id);
     Topic get(String title);
     void create(Topic topic);

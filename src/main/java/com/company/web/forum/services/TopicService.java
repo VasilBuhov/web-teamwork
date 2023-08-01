@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface TopicService {
     List<Topic> get(FilterTopicOptions filterTopicOptions);
+    public List<Topic> get10recent();
     Topic get(int id);
     void create(Topic topic, User user);
     void updateLike(Topic topic, User user);

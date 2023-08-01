@@ -25,10 +25,7 @@ public class HomeMvcController {
 
     @GetMapping(value = "/")
     public String showHomePage(Model model) {
-        FilterTopicOptions sortOrder = new FilterTopicOptions();
-        Optional<String> order = Optional.of("desc");
-        sortOrder.setSortOrder(order);
-        model.addAttribute("topics", topicService.get(sortOrder));
+        model.addAttribute("topics", topicService.get10recent());
         model.addAttribute("tags", tagService.getAllTags(1, 10));
         return "index";
     }
