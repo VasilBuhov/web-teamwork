@@ -38,13 +38,14 @@ public class PostRestController {
     }
 
     @GetMapping
-    public List<Post> get(
+    public List<PostDto> get(
             @RequestParam(required = false) String creatorUsername,
             @RequestParam(required = false) String sortBy,
             @RequestParam(required = false) String sortOrder
     ) {
         FilterPostOptions filterPostOptions = new FilterPostOptions(creatorUsername, sortBy, sortOrder);
-        return service.get(filterPostOptions);
+        List<Post> posts = service.get(filterPostOptions);
+        return postMapper.postDtoList(posts);
     }
 
     @GetMapping("/{id}")

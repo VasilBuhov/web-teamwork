@@ -14,11 +14,8 @@ public class PostDto {
     @Size(min = 32, max = 8192, message = "Content should be between 32 and 8192 symbols.")
     private String content;
 
-    private Topic topic;
-    private String topicTitle;
-    private User creator;
-    private String creatorUsername;
-    private int views;
+    private String topic;
+    private String creator;
 
     private LocalDateTime creationDate;
     private int likes;
@@ -36,29 +33,14 @@ public class PostDto {
         this.content = content;
     }
 
-    public Topic getTopic() {
+    public String getTopic() {
         return topic;
     }
 
-    public void setTopic(Topic topic) {
+    public void setTopic(String topic) {
         this.topic = topic;
     }
 
-    public User getCreator() {
-        return creator;
-    }
-
-    public void setCreator(User creator) {
-        this.creator = creator;
-    }
-
-    public int getViews() {
-        return views;
-    }
-
-    public void setViews(int views) {
-        this.views = views;
-    }
 
     public LocalDateTime getCreationDate() {
         return creationDate;
@@ -76,19 +58,12 @@ public class PostDto {
         this.likes = likes;
     }
 
-    public String getTopicTitle() {
-        return topicTitle;
+
+    public String getCreator() {
+        return creator;
     }
 
-    public void setTopicTitle(String topicTitle) {
-        this.topicTitle = topicTitle;
-    }
-
-    public String getCreatorUsername() {
-        return creatorUsername;
-    }
-
-    public void setCreatorUsername(String creatorUsername) {
-        this.creatorUsername = creatorUsername;
+    public void setCreator(String creator) {
+        this.creator = creator;
     }
 }
