@@ -1,5 +1,6 @@
 package com.company.web.forum.helpers;
 
+import com.company.web.forum.exceptions.AuthenticationFailureException;
 import com.company.web.forum.exceptions.AuthorizationException;
 import com.company.web.forum.exceptions.BlockedUserException;
 import com.company.web.forum.exceptions.EntityNotFoundException;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Component;
 public class AuthenticationHelper {
     private static final String AUTHORIZATION_HEADER_NAME = "Authorization";
     private static final String INVALID_AUTHENTICATION_ERROR = "Invalid authentication.";
+    public static final String AUTHENTIFICATION_FAILURE_MESSAGE = "Wrong username or password.";
 
     private final UserService userService;
 
@@ -67,4 +69,17 @@ public class AuthenticationHelper {
         return userInfo.substring(firstSpace + 1);
     }
 
+    public  User verifyAuthentication(String username, String password){
+        try {
+            User user = userService.getUserByUsername(username);
+
+            if(!user.getPassword().equals(password))
+            {
+                throw new AuthenticationFailureException(AUTHENTIFICATION_FAILURE_MESSAGE);
+            }
+            return user;
+        } catch (EntityNotFoundException e){
+            throw new AuthenticationFailureException(AUTHENTIFICATION_FAILURE_MESSAGE);
+        }
+    }
 }

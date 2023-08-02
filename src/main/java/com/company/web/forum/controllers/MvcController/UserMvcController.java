@@ -1,7 +1,10 @@
 package com.company.web.forum.controllers.MvcController;
 
+import com.company.web.forum.exceptions.AuthenticationFailureException;
+import com.company.web.forum.exceptions.AuthorizationException;
 import com.company.web.forum.exceptions.EntityDuplicateException;
 import com.company.web.forum.exceptions.EntityNotFoundException;
+import com.company.web.forum.helpers.AuthenticationHelper;
 import com.company.web.forum.helpers.UserMapper;
 import com.company.web.forum.models.FilterTopicOptions;
 import com.company.web.forum.models.User;
@@ -17,6 +20,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,11 +31,17 @@ import java.util.stream.IntStream;
 public class UserMvcController {
     private final UserService userService;
     private final UserMapper userMapper;
+    private final AuthenticationController authenticationController;
+    private final AuthenticationHelper authenticationHelper;
 
     @Autowired
-    public UserMvcController(UserService userService, UserMapper userMapper) {
+    public UserMvcController(UserService userService, UserMapper userMapper,AuthenticationController authenticationController,
+                             AuthenticationHelper authenticationHelper) {
         this.userService = userService;
         this.userMapper=userMapper;
+        this.authenticationController=authenticationController;
+
+        this.authenticationHelper = authenticationHelper;
     }
 
     @GetMapping
@@ -71,5 +81,42 @@ public class UserMvcController {
             model.addAttribute("alreadyExists", e.getMessage());
         }
         return "AlreadyExistsView";
+    }
+    @GetMapping("/delete")
+    public String showDeleteUserPage(Model model, HttpSession session) {
+        String username = (String) session.getAttribute("currentUser");
+        if (username != null) {
+            // Assuming that 'userService.getUserByUsername' retrieves the user based on the username
+            User user = userService.getUserByUsername(username);
+            if (user != null) {
+                model.addAttribute("user", user);
+            } else {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+            }
+        } else {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not logged in");
+        }
+
+        return "delete-user";
+    }
+
+    @PostMapping("/delete")
+    public String deleteUser( int id, HttpSession session) {
+        String username = (String) session.getAttribute("currentUser");
+        if (username != null) {
+            try {
+                User authenticatedUser = userService.getUserByUsername(username);
+                userService.deleteUser(authenticatedUser, id);
+                session.invalidate();
+                return "redirect:/index";
+            } catch (EntityNotFoundException e) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+            } catch (AuthenticationFailureException e) {
+                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+            }
+        } else {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not logged in");
+        }
+
     }
 }
