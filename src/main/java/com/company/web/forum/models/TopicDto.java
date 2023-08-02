@@ -86,14 +86,6 @@ public class TopicDto {
         this.creatorUsername = creatorUsername;
     }
 
-    public Set<Post> getPostsList() {
-        return postsList;
-    }
-
-    public void setPostsList(Set<Post> postsList) {
-        this.postsList = postsList;
-    }
-
     public Set<String> getTagNames() {
         return tagNames;
     }
