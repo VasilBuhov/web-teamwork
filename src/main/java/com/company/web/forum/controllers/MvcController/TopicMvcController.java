@@ -32,7 +32,7 @@ public class TopicMvcController {
         try {
             Topic topic = service.get(id);
             model.addAttribute("topic", topic);
-            return "TopicView";
+            return "post_details";
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
             return "NotFoundView";

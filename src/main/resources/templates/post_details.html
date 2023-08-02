@@ -11,11 +11,11 @@
     <meta name="robots" content="index, nofollow">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="language" content="English">
-    <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
-    <link href="css/style.css" rel="stylesheet" type="text/css">
-    <!-- <link href="css/animate.css" rel="stylesheet" type="text/css"> -->
-    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="css/responsive.css" rel="stylesheet" type="text/css">
+    <link href="../static/css/bootstrap.css" rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}">
+    <link href="../static/css/style.css" rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link href="../static/css/animate.css" rel="stylesheet" type="text/css" th:href="@{/css/animate.css}">
+    <link href="../static/css/font-awesome.min.css" rel="stylesheet" type="text/css" th:href="@{/css/font-awesome.min.css}">
+    <link href="../static/css/responsive.css" rel="stylesheet" type="text/css" th:href="@{/css/responsive.css}">
      </head>
 
 <body>
@@ -27,7 +27,7 @@
                         <ul>
                             <li><a href="contact_us.html" target="_blank"><i class="fa fa-envelope-o" aria-hidden="true"></i>Contact</a></li>
                             <li><a href="#" target="_blank"><i class="fa fa-headphones" aria-hidden="true"></i>Support</a></li>
-                            <li><a href="logIn.html" target="_blank"><i class="fa fa-user" aria-hidden="true"></i>Login Area</a></li>
+                            <li><a href="log_in.html" target="_blank"><i class="fa fa-user" aria-hidden="true"></i>Login Area</a></li>
                         </ul>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-                    <a class="navbar-brand" href="#"><img src="image/logo.png" alt="Logo"></a>
+                    <a class="navbar-brand" href="#" th:href="@{/}"><img src="/assets/img/flogo.png" alt="FLogo"></a>
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -77,10 +77,10 @@
                         </li>
                         <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Page <span class="caret"></span></a>
                             <ul class="dropdown-menu animated zoomIn">
-                                <li><a href="logIn.html">Login</a></li>
+                                <li><a href="log_in.html">Login</a></li>
                                 <li><a href="contact_us.html"> Contact Us</a></li>
                                 <li><a href="ask_question.html"> Ask Question </a></li>
-                                <li><a href="post-deatils.html"> Post-Details </a></li>
+                                <li><a href="post_details.html"> Post-Details </a></li>
                                 <li><a href="user.html">All User</a></li>
                                 <li><a href="#"> User Question </a></li>
                                 <li><a href="#"> Category </a></li>
@@ -114,7 +114,7 @@
                             <div class="row">
                                 <div class="col-md-8">
                                     <div class="post-title-left129">
-                                        <h3>This Is My first Question</h3> </div>
+                                        <h3 th:text="${topic.getTitle()}"> </h3> </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="post-que-rep-rihght320"> <a href="#"><i class="fa fa-question-circle" aria-hidden="true"></i> Question</a> <a href="#" class="r-clor10">Report</a> </div>
@@ -122,8 +122,7 @@
                             </div>
                         </div>
                         <div class="post-details-info1982">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi adipiscing gravida odio, sit amet suscipit risus ultrices eu. Fusce viverra neque at purus laoreet consequat. Vivamus vulputate posuere nisl quis consequat. Donec congue commodo mi, sed commodo velit fringilla ac. Fusce placerat venenatis mi. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Cras ornare, dolor a aliquet rutrum, dolor turpis condimentum leo, a semper lacus purus in felis. Quisque blandit posuere turpis, eget auctor felis pharetra eu .</p>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi adipiscing gravida odio, sit amet suscipit risus ultrices eu. Fusce viverra neque at purus laoreet consequat. Vivamus vulputate posuere nisl quis consequat. Donec congue commodo mi, sed commodo velit fringilla ac. Fusce placerat venenatis mi. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Cras ornare, dolor a aliquet rutrum, dolor turpis condimentum leo, a semper lacus purus in felis. Quisque blandit posuere turpis, eget auctor felis pharetra eu .</p>
+                            <p th:text="${topic.getContent()}" />
                             <hr>
                             <div class="post-footer29032">
                                 <div class="l-side2023"> <i class="fa fa-check check2" aria-hidden="true"> solved</i> <a href="#"><i class="fa fa-star star2" aria-hidden="true">  5</i></a> <i class="fa fa-folder folder2" aria-hidden="true"> wordpress</i> <i class="fa fa-clock-o clock2" aria-hidden="true"> 4 min ago</i> <a href="#"><i class="fa fa-commenting commenting2" aria-hidden="true"> 5 answer</i></a> <i class="fa fa-user user2" aria-hidden="true"> 70 views</i> </div>

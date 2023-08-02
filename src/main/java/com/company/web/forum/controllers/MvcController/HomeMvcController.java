@@ -39,7 +39,7 @@ public class HomeMvcController {
     @GetMapping(value = "/login")
     public String showLogIn(Model model) {
         model.addAttribute("tags", tagService.getTagById(9));
-        return "logIn.html";
+        return "log_in";
     }
 }
 
