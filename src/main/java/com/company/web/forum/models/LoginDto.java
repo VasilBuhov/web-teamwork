@@ -1,11 +1,12 @@
 package com.company.web.forum.models;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 public class LoginDto {
-    @NotEmpty
+    @NotNull
     private String username;
-    @NotEmpty
+    @NotNull
     private String password;
 
     public String getUsername() {

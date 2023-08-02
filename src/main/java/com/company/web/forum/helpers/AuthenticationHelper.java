@@ -77,6 +77,9 @@ public class AuthenticationHelper {
             {
                 throw new AuthenticationFailureException(AUTHENTIFICATION_FAILURE_MESSAGE);
             }
+            if (user.getIsAdmin() == 2) {
+                throw new BlockedUserException("Blocked user can not perform any action");
+            }
             return user;
         } catch (EntityNotFoundException e){
             throw new AuthenticationFailureException(AUTHENTIFICATION_FAILURE_MESSAGE);

@@ -2,11 +2,12 @@ package com.company.web.forum.models;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class UserDto {
 
-    @NotEmpty(message = "Username is required")
+    @NotNull(message = "Username is required")
     @Size(min = 4, max = 20, message = "Username must be between 4 and 20 characters")
     private String username;
 

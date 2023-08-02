@@ -39,9 +39,8 @@
         }
         .top-bar{
             position: absolute;
-            left:0;
-            right:0;
-
+            left: 0;
+            right: 0;
             background-color: #ff7361;
             padding: 40px;
             width: 100%;
@@ -67,11 +66,19 @@
             <label th:text="#{user.username}">User</label>
             <br/>
             <input type="text" th:field="*{username}">
+            <!-- Display the validation errors for the username field -->
+            <div th:if="${#fields.hasErrors('username')}" class="alert alert-danger" role="alert">
+                <p th:errors="*{username}"></p>
+            </div>
             <br><br/>
 
             <label th:text="#{user.email}">User</label>
             <br/>
             <input type="text" th:field="*{email}">
+            <!-- Display the validation errors for the email field -->
+            <div th:if="${#fields.hasErrors('email')}" class="alert alert-danger" role="alert">
+                <p th:errors="*{email}"></p>
+            </div>
             <br><br/>
 
             <label th:text="#{user.firstName}">User</label>
@@ -83,10 +90,16 @@
             <br/>
             <input type="text" th:field="*{lastName}">
             <br><br/>
+
             <label th:text="#{user.password}">User</label>
             <br/>
             <input type="text" th:field="*{password}">
             <br><br/>
+
+            <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+                <p th:text="${errorMessage}"></p>
+            </div>
+
             <input type="submit" value="Save" class="btn btn-primary">
         </form>
     </div>
@@ -98,4 +111,3 @@
 <script src="../static/js/bootstrap.min.js" th:href="@{/js/bootstrap.min.js}"></script>
 <script src="../static/js/npm.js" th:href="@{/js/npm.js}"></script>
 </html>
-

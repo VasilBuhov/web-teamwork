@@ -70,9 +70,10 @@ public class UserMvcController {
 
     @PostMapping("/new")
     public String createUser(@Valid @ModelAttribute("user") UserDto userDto, BindingResult errors,Model model) {
-//            if(errors.hasErrors()){
-//                return "user-new";
-//            }
+            if(errors.hasErrors()){
+                model.addAttribute("errorMessage", "Please fill in all required fields.");
+                return "user-new";
+            }
         try {
             User newUser = userMapper.fromDto(userDto);
             userService.createUser(newUser);
@@ -80,6 +81,7 @@ public class UserMvcController {
         } catch (EntityDuplicateException e) {
             model.addAttribute("alreadyExists", e.getMessage());
         }
+
         return "AlreadyExistsView";
     }
     @GetMapping("/delete")

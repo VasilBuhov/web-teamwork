@@ -46,6 +46,8 @@ public class UserServiceImpl implements UserService {
         existingUser = userRepository.getUserByUsername(user.getUsername());
         if (existingUser != null) {
             throw new EntityDuplicateException("User", "username", user.getUsername());
+        } if (user.getUsername()== null){
+            throw new NullPointerException();
         }
 
         user.setFirstName(user.getFirstName()); // Set the first name
