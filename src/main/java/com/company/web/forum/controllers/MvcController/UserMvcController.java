@@ -76,7 +76,7 @@ public class UserMvcController {
         try {
             User newUser = userMapper.fromDto(userDto);
             userService.createUser(newUser);
-            return "redirect:/users";
+            return "redirect:/" ;
         } catch (EntityDuplicateException e) {
             model.addAttribute("alreadyExists", e.getMessage());
         }
@@ -90,25 +90,25 @@ public class UserMvcController {
             User user = userService.getUserByUsername(username);
             if (user != null) {
                 model.addAttribute("user", user);
+                return "delete-user";
             } else {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
             }
         } else {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not logged in");
         }
-
-        return "delete-user";
     }
 
     @PostMapping("/delete")
-    public String deleteUser( int id, HttpSession session) {
+    public String deleteUser(@RequestParam("id") int id, HttpSession session) {
         String username = (String) session.getAttribute("currentUser");
         if (username != null) {
             try {
                 User authenticatedUser = userService.getUserByUsername(username);
                 userService.deleteUser(authenticatedUser, id);
-                session.invalidate();
-                return "redirect:/index";
+
+                // Redirect to the home page after successful deletion
+                return "redirect:/";
             } catch (EntityNotFoundException e) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
             } catch (AuthenticationFailureException e) {
@@ -117,6 +117,5 @@ public class UserMvcController {
         } else {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not logged in");
         }
-
     }
 }

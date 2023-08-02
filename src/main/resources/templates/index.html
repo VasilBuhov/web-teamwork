@@ -28,7 +28,21 @@
                     <ul>
                         <li><a href="mailto:telerikforums@gmail.com"><i class="fa fa-envelope-o" aria-hidden="true"></i>Contact</a></li>
                         <li><a href="#"><i class="fa fa-headphones" aria-hidden="true"></i>Support</a></li>
-                        <li><a href="#" th:href="@{/auth/login}"><i class="fa fa-user" aria-hidden="true"></i>Login Area</a></li>
+                        &nbsp;
+                        <!-- Use Thymeleaf expression to check if the user is logged in -->
+                        <li>
+                            <!-- If the currentUser session attribute is not null, display the logout link -->
+                            <a th:href="@{/auth/logout}" th:if="${session.currentUser} != null">
+                                <i class="fa fa-sign-out" aria-hidden="true"></i>Logout
+                            </a>
+                            &nbsp;
+                            <!-- If the currentUser session attribute is null, display the login link -->
+                            <a th:href="@{/auth/login}" th:if="${session.currentUser} == null">
+                                <i class="fa fa-user" aria-hidden="true"></i>&nbsp;Login Area
+                            </a>
+                            <!-- Display the username if the user is logged in -->
+                            <span th:text="${session.currentUser}" th:if="${session.currentUser} != null"></span>
+                        </li>
                     </ul>
                 </div>
             </div>

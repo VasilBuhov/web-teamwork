@@ -47,4 +47,10 @@ public class AuthenticationController {
             return "loginOld";
         }
     }
+    @GetMapping("/logout")
+    public String handleLogout(HttpSession session)
+    {
+        session.removeAttribute("currentUser");
+        return "redirect:/";
+    }
 }
