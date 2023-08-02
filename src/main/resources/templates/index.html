@@ -26,7 +26,7 @@
             <div class="col-md-6">
                 <div class="navbar-menu-left-side239">
                     <ul>
-                        <li><a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i>Contact</a></li>
+                        <li><a href="mailto:telerikforums@gmail.com"><i class="fa fa-envelope-o" aria-hidden="true"></i>Contact</a></li>
                         <li><a href="#"><i class="fa fa-headphones" aria-hidden="true"></i>Support</a></li>
                         <li><a href="logIn.html"><i class="fa fa-user" aria-hidden="true"></i>Login Area</a></li>
                     </ul>
@@ -134,21 +134,23 @@
                             <div class="row">
                                 <div class="col-md-1">
                                     <div class="left-user12923 left-user12923-repeat">
-                                        <a href="#"><img th:src="${topic.getCreator().getAvatar()}" alt="User Avatar"> </a> <a href="#"><i class="fa fa-check" aria-hidden="true"></i></a> </div>
+                                        <a href="#" th:href="@{/users/{id}(id=${topic.getCreator().getId()})}"><img th:src="${topic.getCreator().getAvatar()}" alt="User Avatar"> </a> <a href="#"><i class="fa fa-check" aria-hidden="true"></i></a> </div>
                                 </div>
                                 <div class="col-md-9">
                                     <div class="right-description893">
                                         <div id="que-headder2983">
                                             <h3><a href="post-deatils.html" th:href="@{/topics/{id}(id=${topic.getId()})}" th:text="${topic.getTitle().length() > 40 ? topic.getTitle().substring(0, 40) + '...' : topic.getTitle()}" > </a></h3> </div>
+                                        <a href="#" th:href="@{/users/{id}(id=${topic.getCreator().getId()})}" th:text="'Author: ' + ${topic.getCreator().getUsername()}"></a>
                                         <div class="ques-details10018">
                                             <p th:text="${topic.getContent().length() > 255 ? topic.getContent().substring(0, 255) + '...' : topic.getContent()}" />
                                         </div>
                                         <hr>
                                         <div class="ques-icon-info3293">
+
                                             <i class="fa fa-star" aria-hidden="true" th:text="${topic.getLikes}"> </i>
                                             <i class="fa fa-clock-o" aria-hidden="true" th:text="${topic.getCreationDate()}"> </i>
-                                            <a href="#"><i class="fa fa-question-circle-o" aria-hidden="true"> Question</i> </a>
-                                            <a href="#"><i class="fa fa-bug" aria-hidden="true"> Comment on this topic</i></a>
+                                            <a href="#"><i class="fa fa-question-circle-o" aria-hidden="true"> Comment on this topic</i> </a>
+                                            <a href="#"><i class="fa fa-bug" aria-hidden="true"> Report problem</i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -1366,12 +1368,12 @@
                         </strong> </a>
                     </li>
                     <li class="facebook-two">
-                        <a href="#" target="_blank"> <strong>
-                            <span>Subscribe</span>
+                        <a href="https://www.facebook.com/profile.php?id=100095611680778" target="_blank"> <strong>
+                            <span>Follow us on</span>
                             <i class="fa fa-facebook" aria-hidden="true"></i>
 
                             <br>
-                            <small>To Facebook Feed</small>
+                            <small>Facebook</small>
 
                         </strong> </a>
                     </li>
@@ -1479,41 +1481,11 @@
                 </div>
                 <hr>
                 <!--          End tags part-->
-                <!--        start recent post  -->
-                <div class="recent-post3290">
-                    <h4>Recent Post</h4>
-                    <div class="post-details021">
-                        <a href="#"><h5>How much do web developers</h5></a>
-                        <p>I am thinking of pursuing web developing as a career & was ...</p> <small style="color: #848991">July 16, 2017</small> </div>
-                    <hr>
-                    <div class="post-details021"> <a href="#"><h5>How much do web developers</h5></a>
-                        <p>I am thinking of pursuing web developing as a career & was ...</p> <small style="color: #848991">July 16, 2017</small> </div>
-                    <hr>
-                    <div class="post-details021"> <a href="#"><h5>How much do web developers</h5></a>
-                        <p>I am thinking of pursuing web developing as a career & was ...</p> <small style="color: #848991">July 16, 2017</small> </div>
-                </div>
-                <!--       end recent post    -->
             </aside>
         </div>
     </div>
 </section>
 <!--    footer -->
-<div class="footer-search">
-    <div class="container">
-        <div class="row">
-            <div id="custom-search-input">
-                <div class="input-group col-md-12"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                    <label>
-                        <input type="text" class="  search-query form-control user-control30" placeholder="Search here...." />
-                    </label> <span class="input-group-btn">
-    <button class="btn btn-danger" type="button">
-        <span class=" glyphicon glyphicon-search"></span> </button>
-                        </span>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 <section class="footer-part">
     <div class="container">
         <div class="row">
@@ -1523,11 +1495,11 @@
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi adipiscing gravida odio, sit amet suscipit risus ultrices eu.</p>
                     <h4>Address :</h4>
                     <p>Ask Me Network, 33 Street, syada
-                        <br> Zeinab, Cairo, Egypt.</p>
+                        <br> Sofia, Bulgaria</p>
                     <h4>Support :</h4>
                     <p>Support Telephone No : (+2)01111011110</p>
                     <p>Support Email Account : </p>
-                    <p>info@example.com</p>
+                    <p>telerikforums@gmail.com</p>
                 </div>
             </div>
             <div class="col-md-3">
@@ -1597,7 +1569,7 @@
                 <p>Copyright 2023 - Sex forums | <strong>Team 10 @ Telerik A48 Java Cohort</strong></p>
             </div>
             <div class="col-md-6">
-                <div class="social-right2389"> <a href="#"><i class="fa fa-twitter-square" aria-hidden="true"></i></a> <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a> <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a> <a href="#"><i class="fa fa-youtube" aria-hidden="true"></i></a> <a href="#"><i class="fa fa-skype" aria-hidden="true"></i></a> <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a> <a href="#"><i class="fa fa-rss" aria-hidden="true"></i></a> </div>
+                <div class="social-right2389"> <a href="#"><i class="fa fa-twitter-square" aria-hidden="true"></i></a> <a href="https://www.facebook.com/profile.php?id=100095611680778"><i class="fa fa-facebook" aria-hidden="true"></i></a> <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a> <a href="#"><i class="fa fa-youtube" aria-hidden="true"></i></a> <a href="#"><i class="fa fa-skype" aria-hidden="true"></i></a> <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a> <a href="#"><i class="fa fa-rss" aria-hidden="true"></i></a> </div>
             </div>
         </div>
     </div>
