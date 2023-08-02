@@ -29,6 +29,18 @@ public class HomeMvcController {
         model.addAttribute("tags", tagService.getTopTags());
         return "index";
     }
+
+    @GetMapping(value = "/contact_us")
+    public String showContactUs(Model model) {
+        model.addAttribute("tags", tagService.getTagById(9));
+        return "contact_us";
+    }
+
+    @GetMapping(value = "/login")
+    public String showLogIn(Model model) {
+        model.addAttribute("tags", tagService.getTagById(9));
+        return "logIn.html";
+    }
 }
 
 
