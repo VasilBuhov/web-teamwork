@@ -13,15 +13,15 @@ public class TopicDto {
     @Size(min = 32, max = 8192, message = "Content should be between 32 and 8192 symbols.")
     private String content;
 
-    private Set<String> tagNames;
-    private String creatorUsername;
+    private Set<String> tags;
+    private String creator;
 
     private int views;
 
     private int likes;
 
     private LocalDateTime creationDate;
-    private Set<Post> postsList;
+    private List<PostDto> postsList;
 
     public TopicDto() {
     }
@@ -69,28 +69,28 @@ public class TopicDto {
         this.creationDate = creationDate;
     }
 
-    public Set<Post> getPosts() {
+    public List<PostDto> getPosts() {
         return postsList;
     }
 
-    public void setPosts(Set<Post> posts) {
+    public void setPosts(List<PostDto> posts) {
         this.postsList = posts;
     }
 
 
-    public String getCreatorUsername() {
-        return creatorUsername;
+    public String getCreator() {
+        return creator;
     }
 
-    public void setCreatorUsername(String creatorUsername) {
-        this.creatorUsername = creatorUsername;
+    public void setCreator(String creator) {
+        this.creator = creator;
     }
 
-    public Set<String> getTagNames() {
-        return tagNames;
+    public Set<String> getTags() {
+        return tags;
     }
 
-    public void setTagNames(Set<String> tagNames) {
-        this.tagNames = tagNames;
+    public void setTags(Set<String> tags) {
+        this.tags = tags;
     }
 }

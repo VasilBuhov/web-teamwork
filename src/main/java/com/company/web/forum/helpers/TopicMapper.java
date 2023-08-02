@@ -1,6 +1,7 @@
 package com.company.web.forum.helpers;
 
 
+import com.company.web.forum.models.PostDto;
 import com.company.web.forum.models.Tag;
 import com.company.web.forum.models.Topic;
 import com.company.web.forum.models.TopicDto;
@@ -8,16 +9,19 @@ import com.company.web.forum.services.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
 public class TopicMapper {
     private final TopicService topicService;
+    private final PostMapper postMapper;
 
     @Autowired
-    public TopicMapper(TopicService topicService) {
+    public TopicMapper(TopicService topicService, PostMapper postMapper) {
         this.topicService = topicService;
+        this.postMapper = postMapper;
     }
 
     public Topic updateTopicContentDto(int id, TopicDto dto) {
@@ -40,7 +44,7 @@ public class TopicMapper {
 
     public TopicDto toDto(Topic topic) {
         TopicDto topicDto = new TopicDto();
-        topicDto.setCreatorUsername(topic.getCreator().getUsername());
+        topicDto.setCreator(topic.getCreator().getUsername());
         topicDto.setTitle(topic.getTitle());
         topicDto.setContent(topic.getContent());
         Set<Tag> tags = topic.getTags();
@@ -48,12 +52,18 @@ public class TopicMapper {
                 .map(Tag::getName)
                 .collect(Collectors.toSet());
 
-        topicDto.setTagNames(tagNames);
+        topicDto.setTags(tagNames);
         topicDto.setCreationDate(topic.getCreationDate());
         topicDto.setLikes(topic.getLikes());
-        topicDto.setPosts(topic.getPosts());
+        List<PostDto> posts = postMapper.postDtoList(topic.getPosts().stream().collect(Collectors.toList()));
+        topicDto.setPosts(posts);
         topicDto.setViews(topic.getViews());
         return topicDto;
+    }
+    public List<TopicDto> topicDtoList (List<Topic> topics) {
+        return topics.stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
     }
 
 }

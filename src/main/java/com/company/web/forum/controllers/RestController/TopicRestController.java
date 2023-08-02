@@ -40,7 +40,7 @@ public class TopicRestController {
     }
 
     @GetMapping
-    public List<Topic> get(
+    public List<TopicDto> get(
             @RequestParam(required = false) String creatorUsername,
             @RequestParam(required = false) String tagTitle,
             @RequestParam(required = false) String title,
@@ -50,7 +50,8 @@ public class TopicRestController {
             @RequestParam(required = false) String sortOrder
     ) {
         FilterTopicOptions filterTopicOptions = new FilterTopicOptions(creatorUsername, tagTitle, title, minCreationDate, maxCreationDate, sortBy, sortOrder);
-        return service.get(filterTopicOptions);
+        List<Topic> topics = service.get(filterTopicOptions);
+        return topicMapper.topicDtoList(topics);
     }
 
     @GetMapping("/{id}")
