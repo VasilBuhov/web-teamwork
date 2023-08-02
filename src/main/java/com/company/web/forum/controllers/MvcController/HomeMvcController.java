@@ -26,6 +26,8 @@ public class HomeMvcController {
     public String showHomePage(Model model) {
         model.addAttribute("topicsByDate", topicService.get10("desc", "creation date"));
         model.addAttribute("topicsByPosts", topicService.get10("desc", "posts"));
+        model.addAttribute("topicsByLikes", topicService.get10("desc", "likes"));
+        model.addAttribute("topicsByViews", topicService.get10("desc", "views"));
         model.addAttribute("tags", tagService.getTopTags());
         return "index";
     }
