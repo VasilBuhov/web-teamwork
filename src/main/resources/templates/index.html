@@ -142,7 +142,7 @@
                                             <h3><a href="post_details.html" th:href="@{/topics/{id}(id=${topic.getId()})}" th:text="${topic.getTitle().length() > 40 ? topic.getTitle().substring(0, 40) + '...' : topic.getTitle()}" > </a></h3> </div>
                                         <a href="#" th:href="@{/users/{id}(id=${topic.getCreator().getId()})}" th:text="'Author: ' + ${topic.getCreator().getUsername()}"></a>
                                         <div class="ques-details10018">
-                                            <p th:text="${topic.getContent().length() > 255 ? topic.getContent().substring(0, 255) + '...' : topic.getContent()}" />
+                                            <p th:utext="${topic.getContent().length() > 255 ? topic.getContent().substring(0, 255) + '...' : topic.getContent()}" />
                                         </div>
                                         <hr>
                                         <div class="ques-icon-info3293">
