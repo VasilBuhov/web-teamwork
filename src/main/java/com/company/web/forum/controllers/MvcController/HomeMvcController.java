@@ -1,6 +1,6 @@
 package com.company.web.forum.controllers.MvcController;
 
-import com.company.web.forum.models.FilterTopicOptions;
+
 import com.company.web.forum.services.TagService;
 import com.company.web.forum.services.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +22,10 @@ public class HomeMvcController {
         this.topicService = topicService;
     }
 
-    @GetMapping(value = "/")
+    @GetMapping
     public String showHomePage(Model model) {
-        model.addAttribute("topics", topicService.get10("desc", "creation date"));
-        model.addAttribute("topics", topicService.get10("desc", "posts"));
+        model.addAttribute("topicsByDate", topicService.get10("desc", "creation date"));
+        model.addAttribute("topicsByPosts", topicService.get10("desc", "posts"));
         model.addAttribute("tags", tagService.getTopTags());
         return "index";
     }
