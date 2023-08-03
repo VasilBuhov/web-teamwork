@@ -44,12 +44,12 @@ public class TopicRestController {
             @RequestParam(required = false) String creatorUsername,
             @RequestParam(required = false) String tagTitle,
             @RequestParam(required = false) String title,
-            @RequestParam(required = false) LocalDateTime minCreationDate,
+            @RequestParam(required = false) Integer minLikes,
             @RequestParam(required = false) LocalDateTime maxCreationDate,
             @RequestParam(required = false) String sortBy,
             @RequestParam(required = false) String sortOrder
     ) {
-        FilterTopicOptions filterTopicOptions = new FilterTopicOptions(creatorUsername, tagTitle, title, minCreationDate, maxCreationDate, sortBy, sortOrder);
+        FilterTopicOptions filterTopicOptions = new FilterTopicOptions(creatorUsername, tagTitle, title, minLikes, maxCreationDate, sortBy, sortOrder);
         List<Topic> topics = service.get(filterTopicOptions);
         return topicMapper.topicDtoList(topics);
     }

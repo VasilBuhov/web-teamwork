@@ -40,7 +40,7 @@ public class TopicRepositoryImpl implements TopicRepository {
                 params.put("creatorUsername", value);
             });
             filterTopicOptions.getTagTitle().ifPresent(value -> {
-                filters.add("tag.title = :tagTitle");
+                filters.add("id IN (SELECT t.id FROM Topic t JOIN t.tags tag WHERE tag.name = :tagTitle)");
                 params.put("tagTitle", value);
             });
             filterTopicOptions.getTitle().ifPresent(value -> {
@@ -48,13 +48,8 @@ public class TopicRepositoryImpl implements TopicRepository {
                 params.put("title", String.format("%%%s%%", value));
             });
             filterTopicOptions.getMinCreationDate().ifPresent(value -> {
-                filters.add("creationDate >= :minCreationDate");
-                params.put("minCreationDate", value);
-            });
-
-            filterTopicOptions.getMaxCreationDate().ifPresent(value -> {
-                filters.add("creationDate <= :maxCreationDate");
-                params.put("maxCreationDate", value);
+                filters.add("likes >= :minLikes");
+                params.put("minLikes", value);
             });
 
             String queryString = "from Topic" +
@@ -70,6 +65,7 @@ public class TopicRepositoryImpl implements TopicRepository {
             return query.list();
         }
     }
+
     @Override
     public List<Topic> get10(List<Topic> resultList) {
         return resultList.stream().limit(10).collect(Collectors.toList());

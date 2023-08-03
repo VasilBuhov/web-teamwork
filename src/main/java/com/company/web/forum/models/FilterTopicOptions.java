@@ -7,7 +7,7 @@ public class FilterTopicOptions {
     private Optional<String> creatorUsername;
     private Optional<String> tagTitle;
     private Optional<String> title;
-    private Optional<LocalDateTime> minCreationDate;
+    private Optional<Integer> minLikes;
     private Optional<LocalDateTime> maxCreationDate;
     private Optional<String> sortBy;
     private Optional<String> sortOrder;
@@ -16,11 +16,11 @@ public class FilterTopicOptions {
         this(null, null, null, null, null, null, null);
     }
 
-    public FilterTopicOptions(String creatorUsername, String tagTitle, String title, LocalDateTime minCreationDate, LocalDateTime maxCreationDate, String sortBy, String sortOrder) {
+    public FilterTopicOptions(String creatorUsername, String tagTitle, String title, Integer minLikes, LocalDateTime maxCreationDate, String sortBy, String sortOrder) {
         this.creatorUsername = Optional.ofNullable(creatorUsername);
         this.tagTitle = Optional.ofNullable(tagTitle);
         this.title = Optional.ofNullable(title);
-        this.minCreationDate = Optional.ofNullable(minCreationDate);
+        this.minLikes = Optional.ofNullable(minLikes);
         this.maxCreationDate = Optional.ofNullable(maxCreationDate);
         this.sortBy = Optional.ofNullable(sortBy);
         this.sortOrder = Optional.ofNullable(sortOrder);
@@ -46,8 +46,8 @@ public class FilterTopicOptions {
         return sortOrder;
     }
 
-    public Optional<LocalDateTime> getMinCreationDate() {
-        return minCreationDate;
+    public Optional<Integer> getMinCreationDate() {
+        return minLikes;
     }
 
     public Optional<LocalDateTime> getMaxCreationDate() {
@@ -66,8 +66,8 @@ public class FilterTopicOptions {
         this.title = title;
     }
 
-    public void setMinCreationDate(Optional<LocalDateTime> minCreationDate) {
-        this.minCreationDate = minCreationDate;
+    public void setMinCreationDate(Optional<Integer> minCreationDate) {
+        this.minLikes = minLikes;
     }
 
     public void setMaxCreationDate(Optional<LocalDateTime> maxCreationDate) {
