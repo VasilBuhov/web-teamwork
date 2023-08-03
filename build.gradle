@@ -4,6 +4,7 @@ plugins {
     id 'java'
 }
 
+
 group = 'com.company.web'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
@@ -20,6 +21,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'io.springfox:springfox-boot-starter:3.0.0'
+    implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+
 
 }
 
