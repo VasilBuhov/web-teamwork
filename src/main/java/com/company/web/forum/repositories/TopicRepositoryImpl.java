@@ -134,7 +134,7 @@ public class TopicRepositoryImpl implements TopicRepository {
         topicToDelete.setStatusDeleted(1);
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            session.delete(topicToDelete);
+            session.update(topicToDelete);
             session.getTransaction().commit();
         }
     }

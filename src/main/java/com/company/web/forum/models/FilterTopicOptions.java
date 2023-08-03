@@ -8,20 +8,18 @@ public class FilterTopicOptions {
     private Optional<String> tagTitle;
     private Optional<String> title;
     private Optional<Integer> minLikes;
-    private Optional<LocalDateTime> maxCreationDate;
     private Optional<String> sortBy;
     private Optional<String> sortOrder;
 
     public FilterTopicOptions() {
-        this(null, null, null, null, null, null, null);
+        this(null, null, null, null, null, null);
     }
 
-    public FilterTopicOptions(String creatorUsername, String tagTitle, String title, Integer minLikes, LocalDateTime maxCreationDate, String sortBy, String sortOrder) {
+    public FilterTopicOptions(String creatorUsername, String tagTitle, String title, Integer minLikes, String sortBy, String sortOrder) {
         this.creatorUsername = Optional.ofNullable(creatorUsername);
         this.tagTitle = Optional.ofNullable(tagTitle);
         this.title = Optional.ofNullable(title);
         this.minLikes = Optional.ofNullable(minLikes);
-        this.maxCreationDate = Optional.ofNullable(maxCreationDate);
         this.sortBy = Optional.ofNullable(sortBy);
         this.sortOrder = Optional.ofNullable(sortOrder);
     }
@@ -50,9 +48,6 @@ public class FilterTopicOptions {
         return minLikes;
     }
 
-    public Optional<LocalDateTime> getMaxCreationDate() {
-        return maxCreationDate;
-    }
 
     public void setCreatorUsername(Optional<String> creatorUsername) {
         this.creatorUsername = creatorUsername;
@@ -68,10 +63,6 @@ public class FilterTopicOptions {
 
     public void setMinCreationDate(Optional<Integer> minCreationDate) {
         this.minLikes = minLikes;
-    }
-
-    public void setMaxCreationDate(Optional<LocalDateTime> maxCreationDate) {
-        this.maxCreationDate = maxCreationDate;
     }
 
     public void setSortBy(Optional<String> sortBy) {

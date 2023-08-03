@@ -9,6 +9,7 @@ import com.company.web.forum.services.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -29,6 +30,7 @@ public class TopicMapper {
         oldTopic.setContent(dto.getContent());
         return oldTopic;
     }
+
     public Topic updateTopicTitleDto(int id, TopicDto dto) {
         Topic oldTopic = topicService.get(id);
         oldTopic.setTitle(dto.getTitle());
@@ -51,7 +53,6 @@ public class TopicMapper {
         Set<String> tagNames = tags.stream()
                 .map(Tag::getName)
                 .collect(Collectors.toSet());
-
         topicDto.setTags(tagNames);
         topicDto.setCreationDate(topic.getCreationDate());
         topicDto.setLikes(topic.getLikes());
@@ -60,7 +61,8 @@ public class TopicMapper {
         topicDto.setViews(topic.getViews());
         return topicDto;
     }
-    public List<TopicDto> topicDtoList (List<Topic> topics) {
+
+    public List<TopicDto> topicDtoList(List<Topic> topics) {
         return topics.stream()
                 .map(this::toDto)
                 .collect(Collectors.toList());

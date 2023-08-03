@@ -122,6 +122,7 @@ public class TopicServiceImpl implements TopicService {
     public void create(Topic topic, User user) {
         topic.setCreator(user);
         topic.setCreationDate(LocalDateTime.now());
+        topic.setTags(new HashSet<>());
         topic.setPosts(new HashSet<>());
         topic.setLikedBy(new HashSet<>());
         topic.setLikes(0);
