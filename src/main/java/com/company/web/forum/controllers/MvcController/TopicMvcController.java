@@ -37,6 +37,7 @@ public class TopicMvcController {
             Topic topic = service.get(id);
             model.addAttribute("topic", topic);
             model.addAttribute("posts", topic.getPosts());
+            model.addAttribute("tags", topic.getTags());
             return "post_details";
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
