@@ -3,6 +3,7 @@ package com.company.web.forum.controllers.MvcController;
 import com.company.web.forum.exceptions.EntityNotFoundException;
 import com.company.web.forum.models.FilterTopicOptions;
 import com.company.web.forum.models.Topic;
+import com.company.web.forum.services.PostService;
 import com.company.web.forum.services.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,9 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class TopicMvcController {
     private final TopicService service;
 
+    private final PostService postService;
+
     @Autowired
-    public TopicMvcController(TopicService service) {
+    public TopicMvcController(TopicService service, PostService postService) {
         this.service = service;
+        this.postService = postService;
     }
 
     @GetMapping
@@ -32,6 +36,7 @@ public class TopicMvcController {
         try {
             Topic topic = service.get(id);
             model.addAttribute("topic", topic);
+            model.addAttribute("posts", topic.getPosts());
             return "post_details";
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());

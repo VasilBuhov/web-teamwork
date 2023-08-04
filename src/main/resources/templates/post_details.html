@@ -112,12 +112,13 @@
                     <div class="post-details">
                         <div class="details-header923">
                             <div class="row">
+                                <div class="col-md-1">
+                                    <div class="left-user12923 left-user12923-repeat">
+                                        <a href="#" th:href="@{/users/{id}(id=${topic.getCreator().getId()})}"><img th:src="${topic.getCreator().getAvatar()}" alt="User Avatar"> </a> </div>
+                                </div>
                                 <div class="col-md-8">
                                     <div class="post-title-left129">
                                         <h3 th:text="${topic.getTitle()}"> </h3> </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="post-que-rep-rihght320"> <a href="#"><i class="fa fa-question-circle" aria-hidden="true"></i> Question</a> <a href="#" class="r-clor10">Report</a> </div>
                                 </div>
                             </div>
                         </div>
@@ -125,7 +126,7 @@
                             <p th:utext="${topic.getContent()}" />
                             <hr>
                             <div class="post-footer29032">
-                                <div class="l-side2023"> <i class="fa fa-check check2" aria-hidden="true"> solved</i> <a href="#"><i class="fa fa-star star2" aria-hidden="true">  5</i></a> <i class="fa fa-folder folder2" aria-hidden="true"> wordpress</i> <i class="fa fa-clock-o clock2" aria-hidden="true"> 4 min ago</i> <a href="#"><i class="fa fa-commenting commenting2" aria-hidden="true"> 5 answer</i></a> <i class="fa fa-user user2" aria-hidden="true"> 70 views</i> </div>
+                                <div class="l-side2023">  <a href="#"><i class="fa fa-star star2" aria-hidden="true">  5</i></a> <i class="fa fa-folder folder2" aria-hidden="true"> wordpress</i> <i class="fa fa-clock-o clock2" aria-hidden="true"> 4 min ago</i> <a href="#"><i class="fa fa-commenting commenting2" aria-hidden="true"> 5 answer</i></a> <i class="fa fa-user user2" aria-hidden="true"> 70 views</i> </div>
                                 <div class="l-rightside39">
                                     <button type="button" class="tolltip-button thumbs-up2" data-toggle="tooltip" data-placement="bottom" title="Like"><i class="fa fa-thumbs-o-up " aria-hidden="true"></i></button>
                                     <button type="button" class="tolltip-button  thumbs-down2" data-toggle="tooltip" data-placement="bottom" title="Dislike"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i></button> <span class="single-question-vote-result">+22</span> </div>
@@ -143,59 +144,18 @@
                            
                                 <div class="comments-container">
                                     <ul id="comments-list" class="comments-list">
-                                        <li>
+                                        <li th:each="post : ${posts}">
                                              <div class="comment-main-level">
-                                                <!-- Avatar -->
-                                                <div class="comment-avatar"><img src="image/images.png" alt=""></div>
-                                                <!-- Contenedor del Comentario -->
+                                                <!-- Avatar part -->
+                                                <div class="comment-avatar"><img th:src="${post.getCreator().getAvatar()}" alt="User Avatar"></div>
+                                                <!-- Comment part -->
                                                 <div class="comment-box">
                                                     <div class="comment-head">
-                                                        <h6 class="comment-name"><a href="#">Lorena Rojero</a></h6> <span><i class="fa fa-clock-o" aria-hidden="true"> January 15 , 2014 at 10:00 pm</i></span> <i class="fa fa-reply"></i> <i class="fa fa-heart"></i> </div>
-                                                    <div class="comment-content"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo? </div>
-                                                </div>
-                                            </div>
-                                                
-                                      
-                                            <ul class="comments-list reply-list">
-                                                <li>
-                                                    <div class="comment-avatar"><img src="image/images.png" alt=""></div>
-                                                    <div class="comment-box">
-                                                        <div class="comment-head">
-                                                            <h6 class="comment-name"><a href="#">Lorena Rojero</a></h6> <span><i class="fa fa-clock-o" aria-hidden="true"> January 15 , 2014 at 10:00 pm</i></span> <i class="fa fa-reply"></i> <i class="fa fa-heart"></i> </div>
-                                                        <div class="comment-content"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo? </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="comment-avatar"><img src="image/images.png" alt=""></div>
-                                                    <div class="comment-box">
-                                                        <div class="comment-head">
-                                                            <h6 class="comment-name by-author"><a href="#">Agustin Ortiz</a></h6> <span><i class="fa fa-clock-o" aria-hidden="true"> January 15 , 2014 at 10:00 pm</i></span> <i class="fa fa-reply"></i> <i class="fa fa-heart"></i> </div>
-                                                        <div class="comment-content"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo? </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="comment-avatar"><img src="image/images.png" alt=""></div>
-                                                    <div class="comment-box">
-                                                        <div class="comment-head">
-                                                            <h6 class="comment-name"><a href="#">Lorena Rojero</a></h6> <span><i class="fa fa-clock-o" aria-hidden="true"> January 15 , 2014 at 10:00 pm</i></span> <i class="fa fa-reply"></i> <i class="fa fa-heart"></i> </div>
-                                                        <div class="comment-content"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo? </div>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <div class="comment-main-level">
-                                                <!-- Avatar -->
-                                                <div class="comment-avatar"><img src="image/images.png" alt=""></div>
-                                                <!-- Contenedor del Comentario -->
-                                                <div class="comment-box">
-                                                    <div class="comment-head">
-                                                        <h6 class="comment-name"><a href="#">Lorena Rojero</a></h6> <span><i class="fa fa-clock-o" aria-hidden="true"> January 15 , 2014 at 10:00 pm</i></span> <i class="fa fa-reply"></i> <i class="fa fa-heart"></i> </div>
-                                                    <div class="comment-content"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo? </div>
+                                                        <h6 class="comment-name"><a href="#" th:href="@{/users/{id}(id=${post.getCreator().getId()})}" th:text="'Author: ' + ${post.getCreator().getUsername()}"> </a></a></h6> <span><i class="fa fa-clock-o" aria-hidden="true"> January 15 , 2014 at 10:00 pm</i></span> <i class="fa fa-reply"></i> <i class="fa fa-heart"></i> </div>
+                                                    <div class="comment-content" th:utext="${post.getContent()}">  </div>
                                                 </div>
                                             </div>
                                         </li>
-                                           
                                     </ul>
                         
                             </div>
