@@ -1,30 +1,41 @@
 package com.company.web.forum.controllers.MvcController;
 
+import com.company.web.forum.exceptions.EntityDuplicateException;
 import com.company.web.forum.exceptions.EntityNotFoundException;
+import com.company.web.forum.helpers.AuthenticationHelper;
 import com.company.web.forum.helpers.PostMapper;
+import com.company.web.forum.helpers.TopicMapper;
 import com.company.web.forum.models.*;
 import com.company.web.forum.services.PostService;
 import com.company.web.forum.services.TopicService;
 import com.company.web.forum.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/topics")
 public class TopicMvcController {
     private final TopicService topicService;
+    private final TopicMapper topicMapper;
     private final PostMapper postMapper;
     private final PostService postService;
     private final UserService userService;
+    private final AuthenticationHelper authenticationHelper;
 
     @Autowired
-    public TopicMvcController(TopicService service, PostMapper postMapper, PostService postService, UserService userService) {
+    public TopicMvcController(TopicService service, TopicMapper topicMapper, PostMapper postMapper, PostService postService, UserService userService, AuthenticationHelper authenticationHelper) {
         this.topicService = service;
+        this.topicMapper = topicMapper;
         this.postMapper = postMapper;
         this.postService = postService;
         this.userService = userService;
+        this.authenticationHelper = authenticationHelper;
     }
 
     @GetMapping
@@ -50,6 +61,30 @@ public class TopicMvcController {
             model.addAttribute("error", e.getMessage());
             return "NotFoundView";
         }
+    }
+
+    @GetMapping("/new")
+    public String showNewTopicPage(Model model){
+        model.addAttribute("topic", new TopicDto());
+        return "ask_question";
+    }
+
+    @PostMapping("/new")
+    public String createTopic(@Valid @RequestHeader HttpHeaders httpHeaders, @ModelAttribute("topic") TopicDto topicDto, BindingResult errors, Model model) {
+        if(errors.hasErrors()){
+            model.addAttribute("errorMessage", "Please fill in all required fields.");
+            return "ask_question";
+        }
+        try {
+            User authenticatedUser = authenticationHelper.tryGetUser(httpHeaders);
+            Topic newTopic = topicMapper.createTopicDto(topicDto);
+            topicService.create(newTopic, authenticatedUser);
+            return "redirect:/" ;
+        } catch (EntityDuplicateException e) {
+            model.addAttribute("alreadyExists", e.getMessage());
+        }
+
+        return "AlreadyExistsView";
     }
 
     //    @GetMapping("/{title}")
