@@ -6,6 +6,8 @@ import com.company.web.forum.models.Topic;
 import com.company.web.forum.models.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.util.HashSet;
+
 public class Auxiliary {
 
     public static User createMockAdmin() {
@@ -39,7 +41,7 @@ public class Auxiliary {
         mockTopic.setCreator(createMockUser());
         mockTopic.setContent("Mock content");
         mockTopic.setLikes(13);
-//        mockTopic.setPosts(0);
+        mockTopic.setPosts(new HashSet<>());
         mockTopic.setTitle("Put your hands in the air, come on");
         mockTopic.setViews(69);
         return mockTopic;
