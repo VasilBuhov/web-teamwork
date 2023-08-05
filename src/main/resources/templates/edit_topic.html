@@ -31,7 +31,8 @@
             <div class="col-md-6">
                 <div class="navbar-menu-left-side239">
                     <ul>
-                        <li><a href="mailto:telerikforums@gmail.com"><i class="fa fa-envelope-o" aria-hidden="true"></i>Contact</a></li>
+                        <li><a href="mailto:telerikforums@gmail.com"><i class="fa fa-envelope-o" aria-hidden="true"></i>Contact</a>
+                        </li>
                         <li><a href="#"><i class="fa fa-headphones" aria-hidden="true"></i>Support</a></li>
                         &nbsp;
                         <!-- Use Thymeleaf expression to check if the user is logged in -->
@@ -58,7 +59,8 @@
                             <label for="srch-term"></label>
                             <input class="form-control form-control222" placeholder="Search" id="srch-term" type="text">
                             <div class="input-group-btn">
-                                <button class="btn btn-default btn-default2913" type="button" th:field="*{title}"><i class="glyphicon glyphicon-search"></i></button>
+                                <button class="btn btn-default btn-default2913" type="button" th:field="*{title}"><i
+                                        class="glyphicon glyphicon-search"></i></button>
                             </div>
                         </div>
                     </form>
@@ -148,7 +150,7 @@
                         </div>
                         <div class="details2-239">
                             <div class="col-md-12 nopadding">
-                                <span class="form-description433" >Content* </span>
+                                <span class="form-description433">Content* </span>
                                 <label for="txtEditor"></label>
                                 <textarea id="txtEditor" class="question-textarea" th:text="${topic.getContent()}">
                                 </textarea>
@@ -271,19 +273,14 @@
     </div>
 </section>
 
-<script src="../static/js/jquery-3.1.1.min.js" th:href="@{/js/jquery-3.1.1.min.js}"></script>
-<script src="../static/js/bootstrap.min.js" th:href="@{/js/bootstrap.min.js}"></script>
-<script src="../static/js/editor.js" th:href="@{/js/editor.js}"></script>
-
-
-
+<script src="/js/jquery-3.1.1.min.js" th:href="@{/js/jquery-3.1.1.min.js}"></script>
+<script src="/js/bootstrap.min.js" th:href="@{/js/bootstrap.min.js}"></script>
+<script src="/js/editor.js" th:href="@{/js/editor.js}"></script>
 
 <script>
     $(document).ready(function () {
         $("#txtEditor").Editor();
     });
 </script>
-
 </body>
-
 </html>
