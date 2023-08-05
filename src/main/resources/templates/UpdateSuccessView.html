@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Successfully Updated</title>
+  <link href="../static/css/bootstrap.css" rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}">
+  <link href="../static/css/style.css" rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+  <link href="../static/css/animate.css" rel="stylesheet" type="text/css" th:href="@{/css/animate.css}">
+  <link href="../static/css/font-awesome.min.css" rel="stylesheet" type="text/css" th:href="@{/css/font-awesome.min.css}">
+  <style>
+    /* Custom styles for the success message container */
+    .success-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 500px; /* Adjust this value to make the container bigger */
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f8f8f8;
+    }
+
+    /* Custom styles for the home link container */
+    .home-container {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+    }
+
+    /* Custom styles for the bigger Home link */
+    .bigger-home-link {
+      width: 40px; /* Adjust this value to resize the image */
+      height: 40px;
+    }
+    .mid-bar{
+      background-color: #333333;
+      padding: 40px;
+    }
+    .top-bar{
+      position: absolute;
+      left: 0;
+      right: 0;
+      background-color: #ff7361;
+      padding: 40px;
+      width: 100%;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+<div class="mid-bar">
+</div>
+<div class="container min-vh-100">
+  <div class="home-container">
+    <a href="/" class="bigger-home-link">
+      <img src="/assets/img/flogo.png" alt="Home">
+    </a>
+  </div>
+  <div class="top-bar">
+  </div>
+
+  <div class="success-container">
+    <h2 class="text-center">Update Successful</h2>
+    <p>Your profile has been successfully updated.</p>
+    <a href="/" class="btn btn-primary">Back to Home Page</a>
+  </div>
+
+</div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="../static/js/jquery-3.1.1.min.js" th:href="@{/js/jquery-3.1.1.min.js}"></script>
+<script src="../static/js/bootstrap.min.js" th:href="@{/js/bootstrap.min.js}"></script>
+<script src="../static/js/npm.js" th:href="@{/js/npm.js}"></script>
+</html>
