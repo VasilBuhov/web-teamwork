@@ -570,7 +570,7 @@ hr {
 
 .ques-details10018 p {
     margin-top: 10px;
-    font-family: fontawesome;
+    font-family: fontawesome, serif;
 }
 
 .ques-icon-info3293 {
@@ -1502,10 +1502,11 @@ h5:hover {
 
 .question-title39 {
     margin-top: 30px;
+    width: 90%;
 }
 
 .question-ttile32 {
-    width: 75%;
+    width: 95%;
     height: 40px;
     background-color: #F3F3F3;
     border: none;

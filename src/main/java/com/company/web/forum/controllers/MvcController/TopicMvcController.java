@@ -3,10 +3,8 @@ package com.company.web.forum.controllers.MvcController;
 import com.company.web.forum.exceptions.EntityDuplicateException;
 import com.company.web.forum.exceptions.EntityNotFoundException;
 import com.company.web.forum.helpers.AuthenticationHelper;
-import com.company.web.forum.helpers.PostMapper;
 import com.company.web.forum.helpers.TopicMapper;
 import com.company.web.forum.models.*;
-import com.company.web.forum.services.PostService;
 import com.company.web.forum.services.TopicService;
 import com.company.web.forum.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,17 +21,13 @@ import javax.validation.Valid;
 public class TopicMvcController {
     private final TopicService topicService;
     private final TopicMapper topicMapper;
-    private final PostMapper postMapper;
-    private final PostService postService;
     private final UserService userService;
     private final AuthenticationHelper authenticationHelper;
 
     @Autowired
-    public TopicMvcController(TopicService service, TopicMapper topicMapper, PostMapper postMapper, PostService postService, UserService userService, AuthenticationHelper authenticationHelper) {
+    public TopicMvcController(TopicService service, TopicMapper topicMapper, UserService userService, AuthenticationHelper authenticationHelper) {
         this.topicService = service;
         this.topicMapper = topicMapper;
-        this.postMapper = postMapper;
-        this.postService = postService;
         this.userService = userService;
         this.authenticationHelper = authenticationHelper;
     }

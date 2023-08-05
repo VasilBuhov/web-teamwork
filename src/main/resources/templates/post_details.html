@@ -29,12 +29,23 @@
             <div class="col-md-6">
                 <div class="navbar-menu-left-side239">
                     <ul>
-                        <li><a href="contact_us.html" target="_blank"><i class="fa fa-envelope-o"
-                                                                         aria-hidden="true"></i>Contact</a></li>
-                        <li><a href="#" target="_blank"><i class="fa fa-headphones" aria-hidden="true"></i>Support</a>
+                        <li><a href="mailto:telerikforums@gmail.com"><i class="fa fa-envelope-o" aria-hidden="true"></i>Contact</a></li>
+                        <li><a href="#"><i class="fa fa-headphones" aria-hidden="true"></i>Support</a></li>
+                        &nbsp;
+                        <!-- Use Thymeleaf expression to check if the user is logged in -->
+                        <li>
+                            <!-- If the currentUser session attribute is not null, display the logout link -->
+                            <a th:href="@{/auth/logout}" th:if="${session.currentUser} != null">
+                                <i class="fa fa-sign-out" aria-hidden="true"></i>Logout
+                            </a>
+                            &nbsp;
+                            <!-- If the currentUser session attribute is null, display the login link -->
+                            <a th:href="@{/auth/login}" th:if="${session.currentUser} == null">
+                                <i class="fa fa-user" aria-hidden="true"></i>&nbsp;Login Area
+                            </a>
+                            <!-- Display the username if the user is logged in -->
+                            <span th:text="${session.currentUser}" th:if="${session.currentUser} != null"></span>
                         </li>
-                        <li><a href="log_in.html" target="_blank"><i class="fa fa-user" aria-hidden="true"></i>Login
-                            Area</a></li>
                     </ul>
                 </div>
             </div>
@@ -42,11 +53,10 @@
                 <div class="navbar-serch-right-side">
                     <form class="navbar-form" role="search">
                         <div class="input-group add-on">
-                            <input class="form-control form-control222" placeholder="Search" name="srch-term"
-                                   id="srch-term" type="text">
+                            <label for="srch-term"></label>
+                            <input class="form-control form-control222" placeholder="Search" id="srch-term" type="text">
                             <div class="input-group-btn">
-                                <button class="btn btn-default btn-default2913" type="submit"><i
-                                        class="glyphicon glyphicon-search"></i></button>
+                                <button class="btn btn-default btn-default2913" type="button" th:field="*{title}"><i class="glyphicon glyphicon-search"></i></button>
                             </div>
                         </div>
                     </form>
@@ -493,9 +503,9 @@
     </div>
 </section>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="js/jquery-3.1.1.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/npm.js"></script>
+<script src="../static/js/jquery-3.1.1.min.js" th:href="@{/js/jquery-3.1.1.min.js}"></script>
+<script src="../static/js/bootstrap.min.js" th:href="@{/js/bootstrap.min.js}"></script>
+<script src="../static/js/npm.js" th:href="@{/js/npm.js}"></script>
 </body>
 
 </html>
