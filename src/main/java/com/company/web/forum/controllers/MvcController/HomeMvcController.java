@@ -2,7 +2,6 @@ package com.company.web.forum.controllers.MvcController;
 
 
 import com.company.web.forum.models.FilterTopicOptions;
-import com.company.web.forum.services.PostService;
 import com.company.web.forum.services.TagService;
 import com.company.web.forum.services.TopicService;
 import com.company.web.forum.services.UserService;
@@ -10,11 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.Optional;
-
 
 @Controller
 @RequestMapping("/")
@@ -45,7 +40,10 @@ public class HomeMvcController {
 
     @GetMapping(value = "/contact_us")
     public String showContactUs(Model model) {
+        FilterTopicOptions filterTopicOptions = new FilterTopicOptions();
         model.addAttribute("tags", tagService.getTagById(9));
+        model.addAttribute("allTopics", topicService.get(filterTopicOptions));
+        model.addAttribute("allUsers", userService.getAllUsers());
         return "contact_us";
     }
 

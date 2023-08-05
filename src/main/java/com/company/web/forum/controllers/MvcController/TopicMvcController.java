@@ -81,6 +81,31 @@ public class TopicMvcController {
         return "AlreadyExistsView";
     }
 
+    @GetMapping("/edit/{id}")
+    public String editTopicPage(@PathVariable int id, Model model){
+        Topic topic = topicService.get(id);
+        model.addAttribute("topic", topic);
+        return "edit_topic";
+    }
+
+    @PutMapping("/edit/{id}")
+    public String createTopic(@Valid @RequestHeader HttpHeaders httpHeaders, @ModelAttribute("topic") TopicDto topicDto, @PathVariable int id, BindingResult errors, Model model) {
+        if(errors.hasErrors()){
+            model.addAttribute("errorMessage", "Please fill in all required fields.");
+            return "edit_topic";
+        }
+        try {
+            User authenticatedUser = authenticationHelper.tryGetUser(httpHeaders);
+            Topic newTopic = topicMapper.createTopicDto(topicDto);
+            topicService.update(newTopic, authenticatedUser);
+            return "redirect:/" ;
+        } catch (EntityDuplicateException e) {
+            model.addAttribute("alreadyExists", e.getMessage());
+        }
+
+        return "AlreadyExistsView";
+    }
+
     //    @GetMapping("/{title}")
 //    public String searchByTopicName (@PathVariable String title, Model model) {
 //        FilterTopicOptions filterTopicOptions = new FilterTopicOptions();

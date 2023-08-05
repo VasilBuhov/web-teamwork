@@ -15,7 +15,8 @@
     <link href="../static/css/bootstrap.css" rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}">
     <link href="../static/css/style.css" rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
     <link href="../static/css/animate.css" rel="stylesheet" type="text/css" th:href="@{/css/animate.css}">
-    <link href="../static/css/font-awesome.min.css" rel="stylesheet" type="text/css" th:href="@{/css/font-awesome.min.css}">
+    <link href="../static/css/font-awesome.min.css" rel="stylesheet" type="text/css"
+          th:href="@{/css/font-awesome.min.css}">
 </head>
 
 <body>
@@ -26,7 +27,8 @@
             <div class="col-md-6">
                 <div class="navbar-menu-left-side239">
                     <ul>
-                        <li><a href="mailto:telerikforums@gmail.com"><i class="fa fa-envelope-o" aria-hidden="true"></i>Contact</a></li>
+                        <li><a href="mailto:telerikforums@gmail.com"><i class="fa fa-envelope-o" aria-hidden="true"></i>Contact</a>
+                        </li>
                         <li><a href="#"><i class="fa fa-headphones" aria-hidden="true"></i>Support</a></li>
                         &nbsp;
                         <!-- Use Thymeleaf expression to check if the user is logged in -->
@@ -53,7 +55,8 @@
                             <label for="srch-term"></label>
                             <input class="form-control form-control222" placeholder="Search" id="srch-term" type="text">
                             <div class="input-group-btn">
-                                <button class="btn btn-default btn-default2913" type="button" th:field="*{title}"><i class="glyphicon glyphicon-search"></i></button>
+                                <button class="btn btn-default btn-default2913" type="button" th:field="*{title}"><i
+                                        class="glyphicon glyphicon-search"></i></button>
                             </div>
                         </div>
                     </form>
@@ -70,16 +73,21 @@
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false"><span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+                </button>
                 <a class="navbar-brand" href="#"><img src="/assets/img/flogo.png" alt="FLogo"></a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav"> </ul>
+                <ul class="nav navbar-nav"></ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#" th:href="@{/}">Home</a></li>
                     <li><a href="#" th:href="@{/topics/new}">Ask Question</a></li>
-                    <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Question <span class="caret"></span></a>
+                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                            aria-haspopup="true" aria-expanded="false">Question <span
+                            class="caret"></span></a>
                         <ul class="dropdown-menu animated zoomIn">
                             <li><a href="category.html">Question Category</a></li>
                             <li><a href="category.html">HTML</a></li>
@@ -89,15 +97,18 @@
                         </ul>
                     </li>
 
-                    <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Blog <span class="caret"></span></a>
+                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                            aria-haspopup="true" aria-expanded="false">Blog <span class="caret"></span></a>
                         <ul class="dropdown-menu animated zoomIn">
                             <li><a href="blog.html">Blog </a></li>
                         </ul>
                     </li>
-                    <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Page <span class="caret"></span></a>
+                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                            aria-haspopup="true" aria-expanded="false">Page <span class="caret"></span></a>
                         <ul class="dropdown-menu animated zoomIn">
                             <li><a href="#" th:href="@{/login}">Login</a></li>
-                            <li><a href="#" th:href="@{/contact_us}" th:text="#{navigation.contactus}"> Contact Us</a></li>
+                            <li><a href="#" th:href="@{/contact_us}" th:text="#{navigation.contactus}"> Contact Us</a>
+                            </li>
                             <li><a href="#" th:href="@{/topics/new}"> Ask Question </a></li>
                             <li><a href="#" th:href="@{/topics}"> Post-Details </a></li>
                             <li><a href="user.html">All User</a></li>
@@ -139,7 +150,6 @@
                     <label for="tab4">Most viewed topics</label>
 
 
-
                     <section id="content1">
                         <!--Most recent topics -->
 
@@ -147,22 +157,30 @@
                             <div class="row">
                                 <div class="col-md-1">
                                     <div class="left-user12923 left-user12923-repeat">
-                                        <a href="#" th:href="@{/users/{id}(id=${topic.getCreator().getId()})}"><img th:src="${topic.getCreator().getAvatar()}" alt="User Avatar"> </a> <a href="#"><i class="fa fa-check" aria-hidden="true"></i></a> </div>
+                                        <a href="#" th:href="@{/users/{id}(id=${topic.getCreator().getId()})}"><img
+                                                th:src="${topic.getCreator().getAvatar()}" alt="User Avatar"> </a> <a
+                                            href="#"><i class="fa fa-check" aria-hidden="true"></i></a></div>
                                 </div>
                                 <div class="col-md-9">
                                     <div class="right-description893">
                                         <div id="que-headder2983">
-                                            <h3><a href="post_details.html" th:href="@{/topics/{id}(id=${topic.getId()})}" th:text="${topic.getTitle().length() > 40 ? topic.getTitle().substring(0, 40) + '...' : topic.getTitle()}" > </a></h3> </div>
-                                        <a href="#" th:href="@{/users/{id}(id=${topic.getCreator().getId()})}" th:text="'Author: ' + ${topic.getCreator().getUsername()}"></a>
+                                            <h3><a href="post_details.html"
+                                                   th:href="@{/topics/{id}(id=${topic.getId()})}"
+                                                   th:text="${topic.getTitle().length() > 40 ? topic.getTitle().substring(0, 40) + '...' : topic.getTitle()}"> </a>
+                                            </h3></div>
+                                        <a href="#" th:href="@{/users/{id}(id=${topic.getCreator().getId()})}"
+                                           th:text="'Author: ' + ${topic.getCreator().getUsername()}"></a>
                                         <div class="ques-details10018">
-                                            <p th:utext="${topic.getContent().length() > 255 ? topic.getContent().substring(0, 255) + '...' : topic.getContent()}" />
+                                            <p th:utext="${topic.getContent().length() > 255 ? topic.getContent().substring(0, 255) + '...' : topic.getContent()}"/>
                                         </div>
                                         <hr>
                                         <div class="ques-icon-info3293">
 
                                             <i class="fa fa-star" aria-hidden="true" th:text="${topic.getLikes}"> </i>
-                                            <i class="fa fa-clock-o" aria-hidden="true" th:text="' ' + ${#temporals.format(topic.getCreationDate(), 'dd MMMM, yyyy')}"> </i>
-                                            <a href="#"><i class="fa fa-question-circle-o" aria-hidden="true"> Comment on this topic</i> </a>
+                                            <i class="fa fa-clock-o" aria-hidden="true"
+                                               th:text="' ' + ${#temporals.format(topic.getCreationDate(), 'dd MMMM, yyyy')}"> </i>
+                                            <a href="#"><i class="fa fa-question-circle-o" aria-hidden="true"> Comment
+                                                on this topic</i> </a>
                                             <a href="#"><i class="fa fa-bug" aria-hidden="true"> Report problem</i></a>
                                         </div>
                                     </div>
@@ -170,11 +188,16 @@
                                 <div class="col-md-2">
                                     <div class="ques-type302">
                                         <a href="#">
-                                            <button type="button" class="q-type238"><i class="fa fa-comment" aria-hidden="true" th:text="' Comments: ' + ${topic.getPosts().size()}">  </i></button>
+                                            <button type="button" class="q-type238"><i class="fa fa-comment"
+                                                                                       aria-hidden="true"
+                                                                                       th:text="' Comments: ' + ${topic.getPosts().size()}">
+                                                 </i></button>
                                         </a>
-                                        <br />
+                                        <br/>
                                         <a href="#">
-                                            <button type="button" class="q-type23 button-ques2973"> <i class="fa fa-user-circle-o" aria-hidden="true" th:text="' Views: ' + ${topic.getViews()}">  </i> </button>
+                                            <button type="button" class="q-type23 button-ques2973"><i
+                                                    class="fa fa-user-circle-o" aria-hidden="true"
+                                                    th:text="' Views: ' + ${topic.getViews()}">  </i></button>
                                         </a>
                                     </div>
                                 </div>
@@ -209,22 +232,30 @@
                             <div class="row">
                                 <div class="col-md-1">
                                     <div class="left-user12923 left-user12923-repeat">
-                                        <a href="#" th:href="@{/users/{id}(id=${topic.getCreator().getId()})}"><img th:src="${topic.getCreator().getAvatar()}" alt="User Avatar"> </a> <a href="#"><i class="fa fa-check" aria-hidden="true"></i></a> </div>
+                                        <a href="#" th:href="@{/users/{id}(id=${topic.getCreator().getId()})}"><img
+                                                th:src="${topic.getCreator().getAvatar()}" alt="User Avatar"> </a> <a
+                                            href="#"><i class="fa fa-check" aria-hidden="true"></i></a></div>
                                 </div>
                                 <div class="col-md-9">
                                     <div class="right-description893">
                                         <div id="que-hedder298312">
-                                            <h3><a href="post_details.html" th:href="@{/topics/{id}(id=${topic.getId()})}" th:text="${topic.getTitle().length() > 40 ? topic.getTitle().substring(0, 40) + '...' : topic.getTitle()}" > </a></h3> </div>
-                                        <a href="#" th:href="@{/users/{id}(id=${topic.getCreator().getId()})}" th:text="'Author: ' + ${topic.getCreator().getUsername()}"></a>
+                                            <h3><a href="post_details.html"
+                                                   th:href="@{/topics/{id}(id=${topic.getId()})}"
+                                                   th:text="${topic.getTitle().length() > 40 ? topic.getTitle().substring(0, 40) + '...' : topic.getTitle()}"> </a>
+                                            </h3></div>
+                                        <a href="#" th:href="@{/users/{id}(id=${topic.getCreator().getId()})}"
+                                           th:text="'Author: ' + ${topic.getCreator().getUsername()}"></a>
                                         <div class="ques-details10018">
-                                            <p th:utext="${topic.getContent().length() > 255 ? topic.getContent().substring(0, 255) + '...' : topic.getContent()}" />
+                                            <p th:utext="${topic.getContent().length() > 255 ? topic.getContent().substring(0, 255) + '...' : topic.getContent()}"/>
                                         </div>
                                         <hr>
                                         <div class="ques-icon-info3293">
 
                                             <i class="fa fa-star" aria-hidden="true" th:text="${topic.getLikes}"> </i>
-                                            <i class="fa fa-clock-o" aria-hidden="true" th:text="' ' + ${#temporals.format(topic.getCreationDate(), 'dd MMMM, yyyy')}"> </i>
-                                            <a href="#"><i class="fa fa-question-circle-o" aria-hidden="true"> Comment on this topic</i> </a>
+                                            <i class="fa fa-clock-o" aria-hidden="true"
+                                               th:text="' ' + ${#temporals.format(topic.getCreationDate(), 'dd MMMM, yyyy')}"> </i>
+                                            <a href="#"><i class="fa fa-question-circle-o" aria-hidden="true"> Comment
+                                                on this topic</i> </a>
                                             <a href="#"><i class="fa fa-bug" aria-hidden="true"> Report problem</i></a>
                                         </div>
                                     </div>
@@ -232,11 +263,16 @@
                                 <div class="col-md-2">
                                     <div class="ques-type302">
                                         <a href="#">
-                                            <button type="button" class="q-type238"><i class="fa fa-comment" aria-hidden="true" th:text="' Comments: ' + ${topic.getPosts().size()}">  </i></button>
+                                            <button type="button" class="q-type238"><i class="fa fa-comment"
+                                                                                       aria-hidden="true"
+                                                                                       th:text="' Comments: ' + ${topic.getPosts().size()}">
+                                                 </i></button>
                                         </a>
-                                        <br />
+                                        <br/>
                                         <a href="#">
-                                            <button type="button" class="q-type23 button-ques2973"> <i class="fa fa-user-circle-o" aria-hidden="true" th:text="' Views: ' + ${topic.getViews()}">  </i> </button>
+                                            <button type="button" class="q-type23 button-ques2973"><i
+                                                    class="fa fa-user-circle-o" aria-hidden="true"
+                                                    th:text="' Views: ' + ${topic.getViews()}">  </i></button>
                                         </a>
                                     </div>
                                 </div>
@@ -272,22 +308,30 @@
                             <div class="row">
                                 <div class="col-md-1">
                                     <div class="left-user12923 left-user12923-repeat">
-                                        <a href="#" th:href="@{/users/{id}(id=${topic.getCreator().getId()})}"><img th:src="${topic.getCreator().getAvatar()}" alt="User Avatar"> </a> <a href="#"><i class="fa fa-check" aria-hidden="true"></i></a> </div>
+                                        <a href="#" th:href="@{/users/{id}(id=${topic.getCreator().getId()})}"><img
+                                                th:src="${topic.getCreator().getAvatar()}" alt="User Avatar"> </a> <a
+                                            href="#"><i class="fa fa-check" aria-hidden="true"></i></a></div>
                                 </div>
                                 <div class="col-md-9">
                                     <div class="right-description893">
                                         <div id="que-hedder2983">
-                                            <h3><a href="post_details.html" th:href="@{/topics/{id}(id=${topic.getId()})}" th:text="${topic.getTitle().length() > 40 ? topic.getTitle().substring(0, 40) + '...' : topic.getTitle()}" > </a></h3> </div>
-                                        <a href="#" th:href="@{/users/{id}(id=${topic.getCreator().getId()})}" th:text="'Author: ' + ${topic.getCreator().getUsername()}"></a>
+                                            <h3><a href="post_details.html"
+                                                   th:href="@{/topics/{id}(id=${topic.getId()})}"
+                                                   th:text="${topic.getTitle().length() > 40 ? topic.getTitle().substring(0, 40) + '...' : topic.getTitle()}"> </a>
+                                            </h3></div>
+                                        <a href="#" th:href="@{/users/{id}(id=${topic.getCreator().getId()})}"
+                                           th:text="'Author: ' + ${topic.getCreator().getUsername()}"></a>
                                         <div class="ques-details10018">
-                                            <p th:utext="${topic.getContent().length() > 255 ? topic.getContent().substring(0, 255) + '...' : topic.getContent()}" />
+                                            <p th:utext="${topic.getContent().length() > 255 ? topic.getContent().substring(0, 255) + '...' : topic.getContent()}"/>
                                         </div>
                                         <hr>
                                         <div class="ques-icon-info3293">
 
                                             <i class="fa fa-star" aria-hidden="true" th:text="${topic.getLikes}"> </i>
-                                            <i class="fa fa-clock-o" aria-hidden="true" th:text="' ' + ${#temporals.format(topic.getCreationDate(), 'dd MMMM, yyyy')}"> </i>
-                                            <a href="#"><i class="fa fa-question-circle-o" aria-hidden="true"> Comment on this topic</i> </a>
+                                            <i class="fa fa-clock-o" aria-hidden="true"
+                                               th:text="' ' + ${#temporals.format(topic.getCreationDate(), 'dd MMMM, yyyy')}"> </i>
+                                            <a href="#"><i class="fa fa-question-circle-o" aria-hidden="true"> Comment
+                                                on this topic</i> </a>
                                             <a href="#"><i class="fa fa-bug" aria-hidden="true"> Report problem</i></a>
                                         </div>
                                     </div>
@@ -295,11 +339,16 @@
                                 <div class="col-md-2">
                                     <div class="ques-type302">
                                         <a href="#">
-                                            <button type="button" class="q-type238"><i class="fa fa-comment" aria-hidden="true" th:text="' Comments: ' + ${topic.getPosts().size()}">  </i></button>
+                                            <button type="button" class="q-type238"><i class="fa fa-comment"
+                                                                                       aria-hidden="true"
+                                                                                       th:text="' Comments: ' + ${topic.getPosts().size()}">
+                                                 </i></button>
                                         </a>
-                                        <br />
+                                        <br/>
                                         <a href="#">
-                                            <button type="button" class="q-type23 button-ques2973"> <i class="fa fa-user-circle-o" aria-hidden="true" th:text="' Views: ' + ${topic.getViews()}">  </i> </button>
+                                            <button type="button" class="q-type23 button-ques2973"><i
+                                                    class="fa fa-user-circle-o" aria-hidden="true"
+                                                    th:text="' Views: ' + ${topic.getViews()}">  </i></button>
                                         </a>
                                     </div>
                                 </div>
@@ -335,22 +384,30 @@
                             <div class="row">
                                 <div class="col-md-1">
                                     <div class="left-user12923 left-user12923-repeat">
-                                        <a href="#" th:href="@{/users/{id}(id=${topic.getCreator().getId()})}"><img th:src="${topic.getCreator().getAvatar()}" alt="User Avatar"> </a> <a href="#"><i class="fa fa-check" aria-hidden="true"></i></a> </div>
+                                        <a href="#" th:href="@{/users/{id}(id=${topic.getCreator().getId()})}"><img
+                                                th:src="${topic.getCreator().getAvatar()}" alt="User Avatar"> </a> <a
+                                            href="#"><i class="fa fa-check" aria-hidden="true"></i></a></div>
                                 </div>
                                 <div class="col-md-9">
                                     <div class="right-description893">
                                         <div id="que-hedder2983i">
-                                            <h3><a href="post_details.html" th:href="@{/topics/{id}(id=${topic.getId()})}" th:text="${topic.getTitle().length() > 40 ? topic.getTitle().substring(0, 40) + '...' : topic.getTitle()}" > </a></h3> </div>
-                                        <a href="#" th:href="@{/users/{id}(id=${topic.getCreator().getId()})}" th:text="'Author: ' + ${topic.getCreator().getUsername()}"></a>
+                                            <h3><a href="post_details.html"
+                                                   th:href="@{/topics/{id}(id=${topic.getId()})}"
+                                                   th:text="${topic.getTitle().length() > 40 ? topic.getTitle().substring(0, 40) + '...' : topic.getTitle()}"> </a>
+                                            </h3></div>
+                                        <a href="#" th:href="@{/users/{id}(id=${topic.getCreator().getId()})}"
+                                           th:text="'Author: ' + ${topic.getCreator().getUsername()}"></a>
                                         <div class="ques-details10018">
-                                            <p th:utext="${topic.getContent().length() > 255 ? topic.getContent().substring(0, 255) + '...' : topic.getContent()}" />
+                                            <p th:utext="${topic.getContent().length() > 255 ? topic.getContent().substring(0, 255) + '...' : topic.getContent()}"/>
                                         </div>
                                         <hr>
                                         <div class="ques-icon-info3293">
 
                                             <i class="fa fa-star" aria-hidden="true" th:text="${topic.getLikes}"> </i>
-                                            <i class="fa fa-clock-o" aria-hidden="true" th:text="' ' + ${#temporals.format(topic.getCreationDate(), 'dd MMMM, yyyy')}"> </i>
-                                            <a href="#"><i class="fa fa-question-circle-o" aria-hidden="true"> Comment on this topic</i> </a>
+                                            <i class="fa fa-clock-o" aria-hidden="true"
+                                               th:text="' ' + ${#temporals.format(topic.getCreationDate(), 'dd MMMM, yyyy')}"> </i>
+                                            <a href="#"><i class="fa fa-question-circle-o" aria-hidden="true"> Comment
+                                                on this topic</i> </a>
                                             <a href="#"><i class="fa fa-bug" aria-hidden="true"> Report problem</i></a>
                                         </div>
                                     </div>
@@ -358,11 +415,16 @@
                                 <div class="col-md-2">
                                     <div class="ques-type302">
                                         <a href="#">
-                                            <button type="button" class="q-type238"><i class="fa fa-comment" aria-hidden="true" th:text="' Comments: ' + ${topic.getPosts().size()}">  </i></button>
+                                            <button type="button" class="q-type238"><i class="fa fa-comment"
+                                                                                       aria-hidden="true"
+                                                                                       th:text="' Comments: ' + ${topic.getPosts().size()}">
+                                                 </i></button>
                                         </a>
-                                        <br />
+                                        <br/>
                                         <a href="#">
-                                            <button type="button" class="q-type23 button-ques2973"> <i class="fa fa-user-circle-o" aria-hidden="true" th:text="' Views: ' + ${topic.getViews()}">  </i> </button>
+                                            <button type="button" class="q-type23 button-ques2973"><i
+                                                    class="fa fa-user-circle-o" aria-hidden="true"
+                                                    th:text="' Views: ' + ${topic.getViews()}">  </i></button>
                                         </a>
                                     </div>
                                 </div>
@@ -396,8 +458,10 @@
             <aside class="col-md-3 sidebar97239">
                 <div class="status-part3821">
                     <h4>Forum statistics</h4>
-                    <a href="#"><i class="fa fa-question-circle" aria-hidden="true" th:text="' Active Topics: ' + ${allTopics.size()}"> </i></a>
-                    <i class="fa fa-comment" aria-hidden="true" th:text="' Registered Users: ' + ${allUsers.size()}"> </i> </div>
+                    <a href="#"><i class="fa fa-question-circle" aria-hidden="true"
+                                   th:text="' Active Topics: ' + ${allTopics.size()}"> </i></a>
+                    <i class="fa fa-comment" aria-hidden="true"
+                       th:text="' Registered Users: ' + ${allUsers.size()}"> </i></div>
                 <div class="categori-part329">
                     <h4>Category</h4>
                     <ul>
@@ -454,11 +518,11 @@
                 <!--              login part-->
                 <div class="login-part2389">
                     <h4>Login</h4>
-                    <div class="input-group300"> <span><i class="fa fa-user" aria-hidden="true"></i></span>
+                    <div class="input-group300"><span><i class="fa fa-user" aria-hidden="true"></i></span>
                         <label>
                             <input type="text" class="namein309" placeholder="Username">
                         </label></div>
-                    <div class="input-group300"> <span><i class="fa fa-lock" aria-hidden="true"></i></span>
+                    <div class="input-group300"><span><i class="fa fa-lock" aria-hidden="true"></i></span>
                         <label>
                             <input type="password" class="passin309" placeholder="Name">
                         </label></div>
@@ -467,7 +531,10 @@
                     </a>
                     <div class="rememberme">
                         <label>
-                            <input type="checkbox" checked="checked"> Remember Me</label> <a href="#" th:href="@{/users/new}" class="resbutton3892">Register</a> </div>
+                            <input type="checkbox" checked="checked"> Remember Me</label> <a href="#"
+                                                                                             th:href="@{/users/new}"
+                                                                                             class="resbutton3892">Register</a>
+                    </div>
                 </div>
                 <!--              highest part-->
                 <div class="highest-part302">
@@ -475,52 +542,62 @@
                     <div class="pints-wrapper">
                         <div class="left-user3898">
                             <a href="#"><img src="/assets/img/images.png" alt="Image"></a>
-                            <div class="imag-overlay39"> <a href="#"><i class="fa fa-plus" aria-hidden="true"></i></a> </div>
-                        </div> <span class="points-details938">
+                            <div class="imag-overlay39"><a href="#"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                        <span class="points-details938">
 <a href="#"><h5>Ahmed Hasan</h5></a>
 <a href="#" class="designetion439">Pundit</a>
 <p>206 points</p>
-</span> </div>
+</span></div>
                     <hr>
                     <div class="pints-wrapper">
                         <div class="left-user3898">
                             <a href="#"><img src="/assets/img/images.png" alt="Image"></a>
-                            <div class="imag-overlay39"> <a href="#"><i class="fa fa-plus" aria-hidden="true"></i></a> </div>
-                        </div> <span class="points-details938">
+                            <div class="imag-overlay39"><a href="#"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                        <span class="points-details938">
 <a href="#"><h5>Ahmed Hasan</h5></a>
 <a href="#" class="designetion439">Pundit</a>
 <p>206 points</p>
-</span> </div>
+</span></div>
                     <hr>
                     <div class="pints-wrapper">
                         <div class="left-user3898">
                             <a href="#"><img src="/assets/img/images.png" alt="Image"></a>
-                            <div class="imag-overlay39"> <a href="#"><i class="fa fa-plus" aria-hidden="true"></i></a> </div>
-                        </div> <span class="points-details938">
+                            <div class="imag-overlay39"><a href="#"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                        <span class="points-details938">
 <a href="#"><h5>Ahmed Hasan</h5></a>
 <a href="#" class="designetion439">Pundit</a>
 <p>206 points</p>
-</span> </div>
+</span></div>
                     <hr>
                     <div class="pints-wrapper">
                         <div class="left-user3898">
                             <a href="#"><img src="/assets/img/images.png" alt="Image"></a>
-                            <div class="imag-overlay39"> <a href="#"><i class="fa fa-plus" aria-hidden="true"></i></a> </div>
-                        </div> <span class="points-details938">
+                            <div class="imag-overlay39"><a href="#"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                        <span class="points-details938">
 <a href="#"><h5>Ahmed Hasan</h5></a>
 <a href="#" class="designetion439">Pundit</a>
 <p>206 points</p>
-</span> </div>
+</span></div>
                     <hr>
                     <div class="pints-wrapper">
                         <div class="left-user3898">
                             <a href="#"><img src="/assets/img/images.png" alt="Image"></a>
-                            <div class="imag-overlay39"> <a href="#"><i class="fa fa-plus" aria-hidden="true"></i></a> </div>
-                        </div> <span class="points-details938">
+                            <div class="imag-overlay39"><a href="#"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                        <span class="points-details938">
 <a href="#"><h5>Ahmed Hasan</h5></a>
 <a href="#" class="designetion439">Pundit</a>
 <p>206 points</p>
-</span> </div>
+</span></div>
                 </div>
                 <!--               end of Highest points -->
                 <!--          start tags part-->
@@ -545,7 +622,8 @@
             <div class="col-md-3">
                 <div class="info-part-one320">
                     <h4>Where We Are ?</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi adipiscing gravida odio, sit amet suscipit risus ultrices eu.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi adipiscing gravida odio, sit amet
+                        suscipit risus ultrices eu.</p>
                     <h4>Address :</h4>
                     <p>Ask Me Network, 33 Street, syada
                         <br> Sofia, Bulgaria</p>
@@ -589,27 +667,33 @@
                     <h4>Popular Questions</h4>
                     <div class="news-info209">
                         <h5>Why are the British confused</h5>
-                        <p>(Why I darest say, they darest not get offended when they so ...</p> <small>July 16, 2017</small> </div>
+                        <p>(Why I darest say, they darest not get offended when they so ...</p> <small>July 16,
+                        2017</small></div>
                     <div class="news-info209">
                         <h5>How to approach applying for</h5>
-                        <p>(I am trying to find/change my career trajectory. Its a good cozy ...</p> <small>July 16, 2017</small> </div>
+                        <p>(I am trying to find/change my career trajectory. Its a good cozy ...</p> <small>July 16,
+                        2017</small></div>
                     <div class="news-info209">
                         <h5>How to evaluate whether a</h5>
-                        <p>A friend of mine is the CEO of his own small business. ...</p> <small>July 16, 2017</small> </div>
+                        <p>A friend of mine is the CEO of his own small business. ...</p> <small>July 16, 2017</small>
+                    </div>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="info-part-four320">
                     <h4>Latest Tweets</h4>
                     <div class="tweet-details29">
-                        <p><i class="fa fa-twitter-square" aria-hidden="true"></i><a href="#"> codeThemesCheck a new update #AskMe #ThemeForest #WordPress #2code #Envato#2code
-                            Themehttps://t.co/urb3LgsOCi</a></p> <small>about 2 weeks ago</small> </div>
+                        <p><i class="fa fa-twitter-square" aria-hidden="true"></i><a href="#"> codeThemesCheck a new
+                            update #AskMe #ThemeForest #WordPress #2code #Envato#2code
+                            Themehttps://t.co/urb3LgsOCi</a></p> <small>about 2 weeks ago</small></div>
                     <div class="tweet-details29">
-                        <p><i class="fa fa-twitter-square" aria-hidden="true"></i><a href="#"> codeThemesCheck a new update #AskMe #ThemeForest #WordPress #2code #Envato#2code
-                            Themehttps://t.co/urb3LgsOCi</a></p> <small>about 2 weeks ago</small> </div>
+                        <p><i class="fa fa-twitter-square" aria-hidden="true"></i><a href="#"> codeThemesCheck a new
+                            update #AskMe #ThemeForest #WordPress #2code #Envato#2code
+                            Themehttps://t.co/urb3LgsOCi</a></p> <small>about 2 weeks ago</small></div>
                     <div class="tweet-details29">
-                        <p><i class="fa fa-twitter-square" aria-hidden="true"></i><a href="#"> codeThemesCheck a new update #AskMe #ThemeForest #WordPress #2code #Envato#2code
-                            Themehttps://t.co/urb3LgsOCi</a></p> <small>about 2 weeks ago</small> </div>
+                        <p><i class="fa fa-twitter-square" aria-hidden="true"></i><a href="#"> codeThemesCheck a new
+                            update #AskMe #ThemeForest #WordPress #2code #Envato#2code
+                            Themehttps://t.co/urb3LgsOCi</a></p> <small>about 2 weeks ago</small></div>
                 </div>
             </div>
         </div>
@@ -622,7 +706,15 @@
                 <p>Copyright 2023 - Sex forums | <strong>Team 10 @ Telerik A48 Java Cohort</strong></p>
             </div>
             <div class="col-md-6">
-                <div class="social-right2389"> <a href="#"><i class="fa fa-twitter-square" aria-hidden="true"></i></a> <a href="https://www.facebook.com/profile.php?id=100095611680778"><i class="fa fa-facebook" aria-hidden="true"></i></a> <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a> <a href="#"><i class="fa fa-youtube" aria-hidden="true"></i></a> <a href="#"><i class="fa fa-skype" aria-hidden="true"></i></a> <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a> <a href="#"><i class="fa fa-rss" aria-hidden="true"></i></a> </div>
+                <div class="social-right2389"><a href="#"><i class="fa fa-twitter-square" aria-hidden="true"></i></a> <a
+                        href="https://www.facebook.com/profile.php?id=100095611680778"><i class="fa fa-facebook"
+                                                                                          aria-hidden="true"></i></a> <a
+                        href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a> <a href="#"><i
+                        class="fa fa-youtube" aria-hidden="true"></i></a> <a href="#"><i class="fa fa-skype"
+                                                                                         aria-hidden="true"></i></a> <a
+                        href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a> <a href="#"><i class="fa fa-rss"
+                                                                                                      aria-hidden="true"></i></a>
+                </div>
             </div>
         </div>
     </div>

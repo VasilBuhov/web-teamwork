@@ -1502,7 +1502,7 @@ h5:hover {
 
 .question-title39 {
     margin-top: 30px;
-    width: 90%;
+    width: 85%;
 }
 
 .question-ttile32 {
@@ -1515,6 +1515,17 @@ h5:hover {
     border-radius: 3px;
     border: 1px solid #fd6371;
 }
+
+.question-ttile321 {
+     width: 80%;
+     height: 40px;
+     background-color: #F3F3F3;
+     border: none;
+     outline: inherit;
+     padding: 10px;
+     border-radius: 3px;
+     border: 1px solid #fd6371;
+ }
 
 .form-description433 {
     margin-right: 90px;
@@ -2333,3 +2344,4 @@ h5:hover {
 .category2781 {
     margin-top: 70px;
 }
+

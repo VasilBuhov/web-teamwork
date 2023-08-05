@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
@@ -128,7 +128,7 @@
         <h3>Ask Question</h3>
         <ol class="breadcrumb breadcrumb839">
             <li><a href="#" th:href="@{/}">Home</a></li>
-            <li class="active">Ask Question</li>
+            <li class="active">Edit Topic</li>
         </ol>
     </div>
 </section>
@@ -137,20 +137,21 @@
         <div class="row">
             <div class="col-md-9">
                 <div class="ask-question-input-part032">
-                    <h4>Ask Question</h4>
+                    <h4>Edit Topic Question</h4>
                     <hr>
                     <form>
                         <div class="question-title39">
                             <span class="form-description433">Question-Title* </span>
                             <label>
-                                <input type="text" name="fname" class="question-ttile32" placeholder="Write Your Question Title">
+                                <input type="text" name="fname" class="question-ttile32" th:value="${topic.getTitle()}">
                             </label>
                         </div>
                         <div class="details2-239">
                             <div class="col-md-12 nopadding">
-                                <span class="form-description433">Content* </span>
+                                <span class="form-description433" >Content* </span>
                                 <label for="txtEditor"></label>
-                                <textarea id="txtEditor" class="question-textarea"></textarea>
+                                <textarea id="txtEditor" class="question-textarea" th:text="${topic.getContent()}">
+                                </textarea>
                             </div>
                         </div>
 
@@ -273,6 +274,8 @@
 <script src="../static/js/jquery-3.1.1.min.js" th:href="@{/js/jquery-3.1.1.min.js}"></script>
 <script src="../static/js/bootstrap.min.js" th:href="@{/js/bootstrap.min.js}"></script>
 <script src="../static/js/editor.js" th:href="@{/js/editor.js}"></script>
+
+
 
 
 <script>
