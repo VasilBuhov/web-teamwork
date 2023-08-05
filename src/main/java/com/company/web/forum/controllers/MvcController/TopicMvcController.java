@@ -36,6 +36,7 @@ public class TopicMvcController {
     @GetMapping("/{id}")
     public String showSingleTopic(@PathVariable int id, Model model) {
         try {
+            String currentUrl = String.format("localhost:8080/topics/%d", id); // Replace this with the actual current URL
             FilterTopicOptions filterTopicOptions = new FilterTopicOptions();
             Topic topic = topicService.get(id);
             model.addAttribute("topic", topic);
@@ -43,6 +44,7 @@ public class TopicMvcController {
             model.addAttribute("tags", topic.getTags());
             model.addAttribute("allTopics", topicService.get(filterTopicOptions));
             model.addAttribute("allUsers", userService.getAllUsers());
+            model.addAttribute("currentUrl", currentUrl);
             return "post_details";
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
