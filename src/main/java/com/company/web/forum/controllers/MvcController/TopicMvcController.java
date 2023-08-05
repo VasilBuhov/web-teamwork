@@ -1,27 +1,33 @@
 package com.company.web.forum.controllers.MvcController;
 
 import com.company.web.forum.exceptions.EntityNotFoundException;
-import com.company.web.forum.models.FilterTopicOptions;
-import com.company.web.forum.models.Topic;
+import com.company.web.forum.helpers.AuthenticationHelper;
+import com.company.web.forum.helpers.PostMapper;
+import com.company.web.forum.models.*;
 import com.company.web.forum.services.PostService;
 import com.company.web.forum.services.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
 @RequestMapping("/topics")
 public class TopicMvcController {
     private final TopicService service;
+    private final PostMapper postMapper;
+    private final PostService postService;
 
     @Autowired
-    public TopicMvcController(TopicService service) {
+    public TopicMvcController(TopicService service, PostMapper postMapper, PostService postService) {
         this.service = service;
+        this.postMapper = postMapper;
+        this.postService = postService;
     }
 
     @GetMapping
@@ -43,7 +49,8 @@ public class TopicMvcController {
             return "NotFoundView";
         }
     }
-//    @GetMapping("/{title}")
+
+    //    @GetMapping("/{title}")
 //    public String searchByTopicName (@PathVariable String title, Model model) {
 //        FilterTopicOptions filterTopicOptions = new FilterTopicOptions();
 //        Optional<String> byTitle = Optional.of(title);
@@ -52,4 +59,5 @@ public class TopicMvcController {
 //
 //        return "SearchBarView";
 //    }
+
 }
