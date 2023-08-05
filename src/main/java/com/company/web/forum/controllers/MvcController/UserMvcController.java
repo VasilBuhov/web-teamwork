@@ -1,6 +1,7 @@
 package com.company.web.forum.controllers.MvcController;
 
 import com.company.web.forum.exceptions.AuthenticationFailureException;
+import com.company.web.forum.exceptions.AuthorizationException;
 import com.company.web.forum.exceptions.EntityDuplicateException;
 import com.company.web.forum.exceptions.EntityNotFoundException;
 import com.company.web.forum.helpers.AuthenticationHelper;
@@ -78,7 +79,6 @@ public class UserMvcController {
 
         return "AlreadyExistsView";
     }
-
     @GetMapping("/delete")
     public String showDeleteUserPage(Model model, HttpSession session) {
         String username = (String) session.getAttribute("currentUser");
@@ -113,6 +113,52 @@ public class UserMvcController {
             }
         } else {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not logged in");
+        }
+    }
+
+    @GetMapping("/profile")
+    public String showUserProfile(Model model, HttpSession session) {
+        String username = (String) session.getAttribute("currentUser");
+        if (username != null) {
+            try {
+                User user = userService.getUserByUsername(username);
+                model.addAttribute("user", userMapper.toDto(user));
+                return "edit-user";
+            } catch (EntityNotFoundException e) {
+                model.addAttribute("error", "User not found");
+                return "NotFoundView";
+            }
+        } else {
+            return "redirect:/auth/login"; // Redirect to the login page if not logged in
+        }
+    }
+
+
+
+    @PostMapping("/profile")
+    public String updateUserProfile(@Valid @ModelAttribute("user") UserDto userDto, BindingResult errors, Model model, HttpSession session) {
+        String username = (String) session.getAttribute("currentUser");
+        if (username != null) {
+            if (errors.hasErrors()) {
+                return "edit-user"; // Stay on the profile page with error messages
+            }
+            try {
+                User authenticatedUser = userService.getUserByUsername(username);
+                User user = userMapper.fromDto(userDto);
+                user.setId(authenticatedUser.getId()); // Set the ID of the authenticated user
+
+                userService.updateUser(authenticatedUser, user);
+
+                return "UpdateSuccessView"; // Redirect to the profile page after successful update
+            } catch (EntityNotFoundException e) {
+                model.addAttribute("error", "User not found");
+                return "NotFoundView";
+            } catch (AuthorizationException e) {
+                model.addAttribute("error", "Unauthorized access");
+                return "UnauthorizedView";
+            }
+        } else {
+            return "redirect:/auth/login"; // Redirect to the login page if not logged in
         }
     }
 }
