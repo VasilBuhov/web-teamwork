@@ -12,17 +12,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/topics")
 public class TopicMvcController {
     private final TopicService service;
 
-    private final PostService postService;
-
     @Autowired
-    public TopicMvcController(TopicService service, PostService postService) {
+    public TopicMvcController(TopicService service) {
         this.service = service;
-        this.postService = postService;
     }
 
     @GetMapping
@@ -44,4 +43,13 @@ public class TopicMvcController {
             return "NotFoundView";
         }
     }
+//    @GetMapping("/{title}")
+//    public String searchByTopicName (@PathVariable String title, Model model) {
+//        FilterTopicOptions filterTopicOptions = new FilterTopicOptions();
+//        Optional<String> byTitle = Optional.of(title);
+//        filterTopicOptions.setTitle(byTitle);
+//        model.addAttribute("topicsByName", service.get(filterTopicOptions));
+//
+//        return "SearchBarView";
+//    }
 }
