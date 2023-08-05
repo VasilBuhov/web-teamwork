@@ -152,7 +152,7 @@
 
 
                                 <i class="fa fa-clock-o" aria-hidden="true"
-                                   th:text="' ' + ${topic.getCreationDate()}"> </i>
+                                   th:text="' ' + ${#temporals.format(topic.getCreationDate(), 'dd MMMM, yyyy')}"> </i>
                                 <a href="#">
                                     <i class="fa fa-commenting commenting2" aria-hidden="true"
                                        th:text="' ' + ${topic.getPosts().size()} + ' comments'"> </i></a> <i
@@ -230,8 +230,8 @@
                         </div>
                         <div class="col-md-12">
                             <div class="post9320-box">
-                                <input type="text" class="comment-input219882" placeholder="Enter Your Post"></div>
-                            <button type="button" class="pos393-submit">Post Your Answer</button>
+                                <input type="text" class="comment-input219882" placeholder="Enter your comment here..."></div>
+                            <button type="button" class="pos393-submit">Post Comment</button>
                         </div>
 
                     </div>
