@@ -27,34 +27,31 @@
             <div class="col-md-6">
                 <div class="navbar-menu-left-side239">
                     <ul>
-                        <li><a href="mailto:telerikforums@gmail.com"><i class="fa fa-envelope-o" aria-hidden="true"></i>Contact</a>
+                        <li><a href="mailto:telerikforums@gmail.com">
+                            <i class="fa fa-envelope-o" aria-hidden="true"></i>Contact</a>
                         </li>
-                        <li><a href="#"><i class="fa fa-headphones" aria-hidden="true"></i>Support</a></li>
+                        <li><a href="#">
+                            <i class="fa fa-headphones" aria-hidden="true"></i>Support</a>
+                        </li>
                         &nbsp;
-                        <li>
-                            <!-- Use Thymeleaf expression to check if the user is logged in -->
-                            <!-- If the currentUser session attribute is not null, display the logout link -->
-                            <a th:href="@{/auth/logout}" th:if="${session.currentUser} != null">
-                                <i class="fa fa-sign-out" aria-hidden="true"></i>Logout
-                            </a>
-                            <!-- If the currentUser session attribute is null, display the login link -->
-                            <a th:href="@{/auth/login}" th:if="${session.currentUser} == null">
-                                <i class="fa fa-user" aria-hidden="true"></i>&nbsp;Login Area
-                            </a>
-                            <ul>
-                                <li th:if="${session.currentUser} != null">
+                        <li th:if="${session.currentUser} != null">
                                     <!-- If the user is logged in, display the link to edit their profile -->
                                     <a th:href="@{/users/profile}">
                                         <i class="fa fa-user" aria-hidden="true"></i>&nbsp;
                                         <span th:text="${session.currentUser}"></span>
                                     </a>
-                                </li>
-                            </ul>
-
-                            <div class="navbar-menu-right-side">
-
-                            </div>
                         </li>
+                        &nbsp;
+                        <li><a th:href="@{/auth/logout}" th:if="${session.currentUser} != null">
+                            <i class="fa fa-sign-out" aria-hidden="true"></i>Logout
+                        </a>
+                            <!-- If the currentUser session attribute is null, display the login link -->
+                            <a th:href="@{/auth/login}" th:if="${session.currentUser} == null">
+                                <i class="fa fa-user" aria-hidden="true"></i>&nbsp;Login Area
+                            </a>
+                        </li>
+
+
                     </ul>
                 </div>
             </div>
@@ -91,8 +88,8 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav"> </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="#" th:href="@{/topics/new}">Ask Question</a></li>
+                    <li><a href="#" th:href="@{/}">Home</a></li>
+                    <li th:if="${session.currentUser != null}"><a href="#" th:href="@{/topics/new}">Ask Question</a></li>
                     <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Question <span class="caret"></span></a>
                         <ul class="dropdown-menu animated zoomIn">
                             <li><a href="category.html">Question Category</a></li>
@@ -112,18 +109,16 @@
                     <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                             aria-haspopup="true" aria-expanded="false">Page <span class="caret"></span></a>
                         <ul class="dropdown-menu animated zoomIn">
-                            <li><a href="#" th:href="@{/login}">Login</a></li>
-                            <li><a href="#" th:href="@{/contact_us}" th:text="#{navigation.contactus}"> Contact Us</a>
-                            </li>
-                            <li><a href="#" th:href="@{/topics/new}"> Ask Question </a></li>
-                            <li><a href="#" th:href="@{/topics}"> Post-Details </a></li>
-                            <li><a href="user.html">All User</a></li>
-                            <li><a href="user_question.html"> User Question </a></li>
-                            <li><a href="category.html"> Category </a></li>
-                            <li><a href="#"> 404 </a></li>
+                            <li th:if="${session.currentUser} == null"><a href="#" th:href="@{/auth/login}" th:text="#{navigation.login}">Login</a></li>
+
+                            <li th:if="${session.currentUser} != null"><a href="#" th:href="@{/topics/new}" th:text="#{navigation.create_topic}"> Ask Question </a></li>
+                            <li th:if="${session.currentUser} != null"><a href="#" th:href="@{/topics}" th:text="#{navigation.list_all_topics}"> List all topics </a></li>
+                            <li th:if="${session.currentUser} != null"><a href="#" th:href="@{/users}" th:text="#{navigation.list_all_users}">List all users</a></li>
+                            <li th:if="${session.currentUser} != null"><a href="#" th:href="@{/tags}" th:text="#{navigation.list_all_tags}"> List all tags </a></li>
+                            <li><a href="#" th:href="@{/contact_us}" th:text="#{navigation.contact_us}"> Contact Us</a></li>
                         </ul>
                     </li>
-                    <li><a href="contact_us">Contact us</a></li>
+                    <li><a href="#" th:href="@{/contact_us}" th:text="#{navigation.contact_us}">Contact us</a></li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -171,7 +166,7 @@
                                             <h3><a href="post_details.html" th:href="@{/topics/{id}(id=${topic.getId()})}" th:text="${topic.getTitle().length() > 40 ? topic.getTitle().substring(0, 40) + '...' : topic.getTitle()}" > </a></h3> </div>
                                         <a href="#" th:href="@{/users/{id}(id=${topic.getCreator().getId()})}" th:text="'Author: ' + ${topic.getCreator().getUsername()}"></a>
                                         <div class="ques-details10018">
-                                            <p th:utext="${topic.getContent().length() > 255 ? topic.getContent().substring(0, 255) + '...' : topic.getContent()}" />
+                                            <p th:utext="${topic.getContent().length() > 255 ? topic.getContent().substring(0, 255) + '...' : topic.getContent()}"></p>
                                         </div>
                                         <hr>
                                         <div class="ques-icon-info3293">
@@ -204,7 +199,7 @@
                             </div>
                         </div>
 
-                        <nav aria-label="Page navigation">
+                        <nav aria-label="Page navigation" th:if="${session.currentUser != null}">
                             <ul class="pagination">
                                 <li>
                                     <a href="#" aria-label="Previous">
@@ -240,7 +235,7 @@
                                             <h3><a href="post_details.html" th:href="@{/topics/{id}(id=${topic.getId()})}" th:text="${topic.getTitle().length() > 40 ? topic.getTitle().substring(0, 40) + '...' : topic.getTitle()}" > </a></h3> </div>
                                         <a href="#" th:href="@{/users/{id}(id=${topic.getCreator().getId()})}" th:text="'Author: ' + ${topic.getCreator().getUsername()}"></a>
                                         <div class="ques-details10018">
-                                            <p th:utext="${topic.getContent().length() > 255 ? topic.getContent().substring(0, 255) + '...' : topic.getContent()}" />
+                                            <p th:utext="${topic.getContent().length() > 255 ? topic.getContent().substring(0, 255) + '...' : topic.getContent()}"></p>
                                         </div>
                                         <hr>
                                         <div class="ques-icon-info3293">
@@ -272,8 +267,8 @@
                                 </div>
                             </div>
                         </div>
-
-                        <nav aria-label="Page navigation">
+<!-- th:text="${session.currentUser}" th:if="${session.currentUser} != null"-->
+                        <nav aria-label="Page navigation" th:if="${session.currentUser != null}">
                             <ul class="pagination">
                                 <li>
                                     <a href="#" aria-label="Previous">
@@ -316,7 +311,7 @@
                                         <a href="#" th:href="@{/users/{id}(id=${topic.getCreator().getId()})}"
                                            th:text="'Author: ' + ${topic.getCreator().getUsername()}"></a>
                                         <div class="ques-details10018">
-                                            <p th:utext="${topic.getContent().length() > 255 ? topic.getContent().substring(0, 255) + '...' : topic.getContent()}"/>
+                                            <p th:utext="${topic.getContent().length() > 255 ? topic.getContent().substring(0, 255) + '...' : topic.getContent()}"></p>
                                         </div>
                                         <hr>
                                         <div class="ques-icon-info3293">
@@ -349,7 +344,7 @@
                             </div>
                         </div>
 
-                        <nav aria-label="Page navigation">
+                        <nav aria-label="Page navigation" th:if="${session.currentUser != null}">
                             <ul class="pagination">
                                 <li>
                                     <a href="#" aria-label="Previous">
@@ -392,7 +387,7 @@
                                         <a href="#" th:href="@{/users/{id}(id=${topic.getCreator().getId()})}"
                                            th:text="'Author: ' + ${topic.getCreator().getUsername()}"></a>
                                         <div class="ques-details10018">
-                                            <p th:utext="${topic.getContent().length() > 255 ? topic.getContent().substring(0, 255) + '...' : topic.getContent()}"/>
+                                            <p th:utext="${topic.getContent().length() > 255 ? topic.getContent().substring(0, 255) + '...' : topic.getContent()}"></p>
                                         </div>
                                         <hr>
                                         <div class="ques-icon-info3293">
@@ -425,7 +420,7 @@
                             </div>
                         </div>
 
-                        <nav aria-label="Page navigation">
+                        <nav aria-label="Page navigation" th:if="${session.currentUser != null}">
                             <ul class="pagination">
                                 <li>
                                     <a href="#" aria-label="Previous">
@@ -459,47 +454,50 @@
                 <!--             social part -->
                 <div class="social-part2189">
                     <h4>Find us</h4>
-                    <li class="rss-one">
-                        <a href="#" target="_blank"> <strong>
-                            <span>Subscribe</span>
-                            <i class="fa fa-rss" aria-hidden="true"></i>
+                    <ul> <!-- Wrap the li elements inside a ul element -->
+                        <li class="rss-one">
+                            <a href="#" target="_blank"> <strong>
+                                <span>Subscribe</span>
+                                <i class="fa fa-rss" aria-hidden="true"></i>
 
-                            <br>
-                            <small>To RSS Feed</small>
+                                <br>
+                                <small>To RSS Feed</small>
 
-                        </strong> </a>
-                    </li>
-                    <li class="facebook-two">
-                        <a href="https://www.facebook.com/profile.php?id=100095611680778" target="_blank"> <strong>
-                            <span>Follow us on</span>
-                            <i class="fa fa-facebook" aria-hidden="true"></i>
+                            </strong> </a>
+                        </li>
+                        <li class="facebook-two">
+                            <a href="https://www.facebook.com/profile.php?id=100095611680778" target="_blank"> <strong>
+                                <span>Follow us on</span>
+                                <i class="fa fa-facebook" aria-hidden="true"></i>
 
-                            <br>
-                            <small>Facebook</small>
+                                <br>
+                                <small>Facebook</small>
 
-                        </strong> </a>
-                    </li>
-                    <li class="twitter-three">
-                        <a href="#" target="_blank"> <strong>
-                            <span>Subscribe</span>
-                            <i class="fa fa-twitter" aria-hidden="true"></i>
+                            </strong> </a>
+                        </li>
+                        <li class="twitter-three">
+                            <a href="#" target="_blank"> <strong>
+                                <span>Subscribe</span>
+                                <i class="fa fa-twitter" aria-hidden="true"></i>
 
-                            <br>
-                            <small>To twitter Feed</small>
+                                <br>
+                                <small>To twitter Feed</small>
 
-                        </strong> </a>
-                    </li>
-                    <li class="youtube-four">
-                        <a href="#" target="_blank"> <strong>
-                            <span>Subscribe</span>
-                            <i class="fa fa-youtube" aria-hidden="true"></i>
+                            </strong> </a>
+                        </li>
+                        <li class="youtube-four">
+                            <a href="#" target="_blank"> <strong>
+                                <span>Subscribe</span>
+                                <i class="fa fa-youtube" aria-hidden="true"></i>
 
-                            <br>
-                            <small>To youtube Feed</small>
+                                <br>
+                                <small>To youtube Feed</small>
 
-                        </strong> </a>
-                    </li>
+                            </strong> </a>
+                        </li>
+                    </ul>
                 </div>
+
                 <!--              login part-->
                 <div class="login-part2389">
                     <h4>Login</h4>
