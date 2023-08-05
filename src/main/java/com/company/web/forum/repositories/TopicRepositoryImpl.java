@@ -4,6 +4,7 @@ package com.company.web.forum.repositories;
 import com.company.web.forum.exceptions.EntityNotFoundException;
 import com.company.web.forum.models.FilterTopicOptions;
 import com.company.web.forum.models.Topic;
+import com.company.web.forum.models.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -66,6 +67,7 @@ public class TopicRepositoryImpl implements TopicRepository {
         }
     }
 
+
     @Override
     public List<Topic> get10(List<Topic> resultList) {
         return resultList.stream().limit(10).collect(Collectors.toList());
@@ -79,6 +81,14 @@ public class TopicRepositoryImpl implements TopicRepository {
                 throw new EntityNotFoundException("Topic", id);
             }
             return topic;
+        }
+    }
+    @Override
+    public List<Topic> getTopicsByUser(User user) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Topic> query = session.createQuery("FROM Topic WHERE creator = :user", Topic.class);
+            query.setParameter("user", user);
+            return query.list();
         }
     }
 

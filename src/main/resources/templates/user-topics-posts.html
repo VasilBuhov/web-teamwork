@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>User Profile</title>
+  <!-- Add your Bootstrap, Font Awesome, and other CSS links here -->
+  <link href="../static/css/bootstrap.css" rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}">
+  <link href="../static/css/style.css" rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+  <link href="../static/css/animate.css" rel="stylesheet" type="text/css" th:href="@{/css/animate.css}">
+  <link href="../static/css/font-awesome.min.css" rel="stylesheet" type="text/css" th:href="@{/css/font-awesome.min.css}">
+</head>
+<body>
+<!-- Add your header and top-bar here -->
+<div class="header">
+  <!-- Your header content goes here -->
+</div>
+<div class="top-bar">
+  <!-- Your top-bar content goes here -->
+</div>
+
+<!-- Display user's profile information -->
+<div class="container">
+  <h2>User Profile</h2>
+  <div class="profile-info">
+    <p><strong>Username:</strong> <span th:text="${user.username}"></span></p>
+    <p><strong>Email:</strong> <span th:text="${user.email}"></span></p>
+    <!-- Add other user properties here -->
+  </div>
+</div>
+
+<!-- Display user's topics -->
+<div class="container">
+  <h2>User Topics</h2>
+  <div class="table">
+    <div class="header">
+      <div class="cell">Title</div>
+      <div class="cell">Content</div>
+      <!-- Add other topic properties you want to display -->
+    </div>
+    <div class="row" th:each="topic : ${userTopics}">
+      <div class="cell" th:text="${topic.title}"></div>
+      <div class="cell" th:text="${topic.content}"></div>
+      <!-- Add other topic properties you want to display -->
+    </div>
+  </div>
+</div>
+
+<!-- Display user's posts -->
+<div class="container">
+  <h2>User Posts</h2>
+  <div class="table">
+    <div class="header">
+      <div class="cell">Content</div>
+      <!-- Add other post properties you want to display -->
+    </div>
+    <div class="row" th:each="post : ${userPosts}">
+      <div class="cell" th:text="${post.content}"></div>
+      <!-- Add other post properties you want to display -->
+    </div>
+  </div>
+</div>
+
+<!-- Your footer or other elements go here -->
+
+<!-- Add your Bootstrap and other JavaScript links here -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="../static/js/jquery-3.1.1.min.js" th:href="@{/js/jquery-3.1.1.min.js}"></script>
+<script src="../static/js/bootstrap.min.js" th:href="@{/js/bootstrap.min.js}"></script>
+<script src="../static/js/npm.js" th:href="@{/js/npm.js}"></script>
+</body>
+</html>

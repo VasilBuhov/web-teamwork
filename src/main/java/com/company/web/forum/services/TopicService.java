@@ -9,6 +9,8 @@ import java.util.List;
 public interface TopicService {
     List<Topic> get(FilterTopicOptions filterTopicOptions);
 
+    List<Topic> getTopicsByUser(User user);
+
     Topic replaceSmileys(Topic topic);
 
     List<Topic> get10(String order, String sortBy);

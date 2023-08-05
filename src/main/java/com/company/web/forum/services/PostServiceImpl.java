@@ -2,8 +2,6 @@ package com.company.web.forum.services;
 
 import com.company.web.forum.exceptions.AuthorizationException;
 import com.company.web.forum.exceptions.EntityDeletedException;
-import com.company.web.forum.exceptions.EntityDuplicateException;
-import com.company.web.forum.exceptions.EntityNotFoundException;
 import com.company.web.forum.models.*;
 import com.company.web.forum.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +39,10 @@ public class PostServiceImpl implements PostService {
             throw new EntityDeletedException("Post", "ID", String.valueOf(post.getId()));
         }
         return post;
+    }
+    @Override
+    public List<Post> getPostsByUser(User user) {
+        return repository.getPostsByUser(user);
     }
 
     @Override

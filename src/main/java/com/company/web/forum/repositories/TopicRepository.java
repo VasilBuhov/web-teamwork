@@ -2,6 +2,7 @@ package com.company.web.forum.repositories;
 
 import com.company.web.forum.models.FilterTopicOptions;
 import com.company.web.forum.models.Topic;
+import com.company.web.forum.models.User;
 
 
 import java.util.List;
@@ -12,6 +13,8 @@ public interface TopicRepository {
     List<Topic> get10(List<Topic> resultList);
 
     Topic get(int id);
+
+    List<Topic> getTopicsByUser(User user);
 
     Topic get(String title);
 

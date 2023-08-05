@@ -3,37 +3,100 @@
 <head>
   <meta charset="UTF-8">
   <title>All Users</title>
-  <link href="../static/Styles.css" th:href="@{/Styles.css}" rel="stylesheet"/>
+  <link href="../static/css/bootstrap.css" rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}">
+  <link href="../static/css/style.css" rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+  <link href="../static/css/animate.css" rel="stylesheet" type="text/css" th:href="@{/css/animate.css}">
+  <link href="../static/css/font-awesome.min.css" rel="stylesheet" type="text/css" th:href="@{/css/font-awesome.min.css}">
+  <style>
+    /* Custom styles for the home link container */
+    .home-container {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+    }
+
+    /* Custom styles for the bigger Home link */
+    .bigger-home-link {
+      width: 40px; /* Adjust this value to resize the image */
+      height: 40px;
+    }
+
+    .mid-bar {
+      background-color: #333333;
+      padding: 40px;
+    }
+
+    .top-bar {
+      position: absolute;
+      left: 0;
+      right: 0;
+      background-color: #ff7361;
+      padding: 40px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    .header {
+      background-color: #f2f2f2;
+      text-align: left;
+      padding: 8px;
+    }
+
+    .cell {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+
+    .row:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    .row:hover {
+      background-color: #f2f2f2;
+    }
+  </style>
 </head>
 <body>
-<ul>
-  <li><h3><a href="/" th:text="#{navigation.home}">Home</a></h3></li>
-</ul>
+<div class="mid-bar"></div>
+<div class="container min-vh-100">
+  <div class="home-container">
+    <a href="/" class="bigger-home-link">
+      <img src="/assets/img/flogo.png" alt="Home">
+    </a>
+  </div>
+  <div class="top-bar"></div>
 
-<div th:if="${users.isEmpty()}">
-  <h2 th:text="#{users.empty}">No Users</h2>
-</div>
-
-<div th:unless="${users.isEmpty()}">
-  <h2 th:text="#{users.title}">All Users</h2>
-  <div class="table">
-    <div class="header">
-      <div class="cell" th:text="#{user.username}">Username</div>
-      <div class="cell" th:text="#{user.email}">Email</div>
-      <div class="cell" th:text="#{user.firstName}">First Name</div>
-      <div class="cell" th:text="#{user.lastName}">Last Name</div>
-      <div class="cell" th:text="#{user.isAdmin}">Is Admin</div>
-    </div>
-    <div class="row" th:each="user : ${users}">
-      <div class="cell">
-        <a href="#" th:href="@{/users/{id}(id=${user.getId()})}" th:text="${user.getUsername()}">User</a>
+  <div class="table-container">
+    <h2 class="text-center" th:text="#{users.title}">All Users</h2>
+    <div class="table">
+      <div class="header">
+        <div class="cell" th:text="#{user.username}">Username</div>
+        <div class="cell" th:text="#{user.email}">Email</div>
+        <div class="cell" th:text="#{user.firstName}">First Name</div>
+        <div class="cell" th:text="#{user.lastName}">Last Name</div>
+        <div class="cell" th:text="#{user.isAdmin}">Is Admin</div>
       </div>
-      <div class="cell" th:text="${user.getEmail()}">-</div>
-      <div class="cell" th:text="${user.getFirstName()}">-</div>
-      <div class="cell" th:text="${user.getLastName()}">-</div>
-      <div class="cell" th:text="${user.getIsAdmin() == 1 ? 'Yes' : 'No'}">-</div>
+      <div class="row" th:each="user : ${users}">
+        <div class="cell">
+          <a href="#" th:href="@{/users/{id}(id=${user.getId()})}" th:text="${user.getUsername()}">User</a>
+        </div>
+        <div class="cell" th:text="${user.getEmail()}">-</div>
+        <div class="cell" th:text="${user.getFirstName()}">-</div>
+        <div class="cell" th:text="${user.getLastName()}">-</div>
+        <div class="cell" th:text="${user.getIsAdmin() == 1 ? 'Yes' : 'No'}">-</div>
+      </div>
     </div>
   </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="../static/js/jquery-3.1.1.min.js" th:href="@{/js/jquery-3.1.1.min.js}"></script>
+<script src="../static/js/bootstrap.min.js" th:href="@{/js/bootstrap.min.js}"></script>
+<script src="../static/js/npm.js" th:href="@{/js/npm.js}"></script>
 </body>
 </html>

@@ -40,6 +40,10 @@ public class TopicServiceImpl implements TopicService {
         replaceSmileys(topic);
         return topic;
     }
+    @Override
+    public List<Topic> getTopicsByUser(User user) {
+        return repository.getTopicsByUser(user);
+    }
 
     @Override
     public Topic replaceSmileys(Topic topic){

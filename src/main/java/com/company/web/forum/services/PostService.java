@@ -16,6 +16,8 @@ public interface PostService {
      void update(Post post, User user);
     void updateLike(Post post, User user);
 
+    List<Post> getPostsByUser(User user);
+
     void create(Post post, User user, Topic topic);
 
     void delete(int id, User user, Post post, Topic topic);

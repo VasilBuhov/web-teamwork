@@ -6,8 +6,12 @@ import com.company.web.forum.exceptions.EntityDuplicateException;
 import com.company.web.forum.exceptions.EntityNotFoundException;
 import com.company.web.forum.helpers.AuthenticationHelper;
 import com.company.web.forum.helpers.UserMapper;
+import com.company.web.forum.models.Post;
+import com.company.web.forum.models.Topic;
 import com.company.web.forum.models.User;
 import com.company.web.forum.models.UserDto;
+import com.company.web.forum.services.PostService;
+import com.company.web.forum.services.TopicService;
 import com.company.web.forum.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,15 +32,19 @@ public class UserMvcController {
     private final UserMapper userMapper;
     private final AuthenticationController authenticationController;
     private final AuthenticationHelper authenticationHelper;
+    private final TopicService topicService;
+    private final PostService postService;
 
     @Autowired
-    public UserMvcController(UserService userService, UserMapper userMapper,AuthenticationController authenticationController,
-                             AuthenticationHelper authenticationHelper) {
+    public UserMvcController(UserService userService, UserMapper userMapper, AuthenticationController authenticationController,
+                             AuthenticationHelper authenticationHelper, TopicService topicService, PostService postService) {
         this.userService = userService;
         this.userMapper=userMapper;
         this.authenticationController=authenticationController;
 
         this.authenticationHelper = authenticationHelper;
+        this.topicService = topicService;
+        this.postService = postService;
     }
 
     @GetMapping
@@ -159,6 +167,28 @@ public class UserMvcController {
             }
         } else {
             return "redirect:/auth/login"; // Redirect to the login page if not logged in
+        }
+    }
+    @GetMapping("/profile/{id}")
+    public String getUserProfile(@PathVariable int id, Model model) {
+        try {
+            // Get the user by ID
+            User user = userService.getUserById(id);
+            model.addAttribute("user", user);
+
+            // Get the topics created by the user
+            List<Topic> userTopics = topicService.getTopicsByUser(user);
+
+            model.addAttribute("userTopics", userTopics);
+
+            // Get the posts created by the user
+            List<Post> userPosts = postService.getPostsByUser(user);
+            model.addAttribute("userPosts", userPosts);
+
+            return "user-topics-posts"; // The name of the Thymeleaf template file
+        } catch (EntityNotFoundException e) {
+            // Handle the exception as needed, e.g., show a not found page
+            return "NotFoundView";
         }
     }
 }

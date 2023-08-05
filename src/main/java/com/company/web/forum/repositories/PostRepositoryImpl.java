@@ -8,9 +8,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Repository
 public class PostRepositoryImpl implements PostRepository {
@@ -75,6 +73,15 @@ public class PostRepositoryImpl implements PostRepository {
             return result.get(0);
         }
     }
+    @Override
+    public List<Post> getPostsByUser(User user) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Post> query = session.createQuery("FROM Post WHERE creator = :user", Post.class);
+            query.setParameter("user", user);
+            return query.list();
+        }
+    }
+
 
 
     @Override

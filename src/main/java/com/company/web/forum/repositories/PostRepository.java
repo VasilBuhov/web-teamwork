@@ -12,6 +12,8 @@ public interface PostRepository {
 
     Post get(String creatorUsername);
 
+    List<Post> getPostsByUser(User user);
+
     void create(Post post);
     void addPostToTopic(Post post);
 
