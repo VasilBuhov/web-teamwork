@@ -92,13 +92,33 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void makeRegularUserAdmin(int id) {
+
+    }
+
+    @Override
+    public void makeRegularUserAdmin(int id, User authenticatedUser) throws EntityNotFoundException, AuthorizationException {
         User user = userRepository.getUserById(id);
         if (user == null) {
-            throw new EntityNotFoundException("User not found",id);
+            throw new EntityNotFoundException("User not found", id);
         }
-         user.setIsAdmin(1);
-         userRepository.updateUser(user);
+
+        // Check if the authenticated user has the permission to make another user an admin
+        checkModifyPermissionsForUpdating(authenticatedUser);
+
+        user.setIsAdmin(1); // Set the user as an admin
+        userRepository.updateUser(user); // Save the changes to the user
     }
+
+
+//    @Override
+//    public void makeRegularUserAdmin(int id) {
+//        User user = userRepository.getUserById(id);
+//        if (user == null) {
+//            throw new EntityNotFoundException("User not found",id);
+//        }
+//         user.setIsAdmin(1);
+//         userRepository.updateUser(user);
+//    }
 
     public User getUserByUsername(String username) {
         return userRepository.getUserByUsername(username);
@@ -110,9 +130,16 @@ public class UserServiceImpl implements UserService {
         }
 
 
+
     private void checkModifyPermissionsForDeleting(User authenticatedUser, User user) {
         if (!(authenticatedUser.getIsAdmin() == 1 || authenticatedUser.getId() == user.getId())) {
             throw new AuthorizationException(DELETE_USER_ERROR_MESSAGE);
+        }
+    }
+    private void checkModifyPermissionsForUpdating(User authenticatedUser) throws AuthorizationException {
+        // Check if the authenticated user is an admin or if they are modifying their own profile
+        if (authenticatedUser.getIsAdmin() != 1 && authenticatedUser.getIsAdmin() != 2) {
+            throw new AuthorizationException("Only admin or blocked user can modify a user.");
         }
     }
 

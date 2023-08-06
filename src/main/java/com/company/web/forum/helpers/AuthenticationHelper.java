@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpSession;
+
 @Component
 public class AuthenticationHelper {
     private static final String AUTHORIZATION_HEADER_NAME = "Authorization";
@@ -84,5 +86,13 @@ public class AuthenticationHelper {
         } catch (EntityNotFoundException e){
             throw new AuthenticationFailureException(AUTHENTIFICATION_FAILURE_MESSAGE);
         }
+    }
+    public boolean isAdmin(HttpSession session) {
+        String username = (String) session.getAttribute("currentUser");
+        if (username != null) {
+            User user = userService.getUserByUsername(username);
+            return user != null && user.getIsAdmin() == 1;
+        }
+        return false;
     }
 }

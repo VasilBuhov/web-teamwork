@@ -191,4 +191,85 @@ public class UserMvcController {
             return "NotFoundView";
         }
     }
+    @GetMapping("/admin-panel")
+    public String showAdminPanel(Model model, HttpSession session) {
+        if (authenticationHelper.isAdmin(session)) {
+            List<User> users = userService.getAllUsers();
+            model.addAttribute("users", users);
+            return "admin-panel"; // View for the admin panel
+        } else {
+            return "redirect:/"; // Redirect to home view if not an admin
+        }
+    }
+    @PostMapping("/{id}/block")
+    public String blockUser(@PathVariable int id, HttpSession session) {
+        if (authenticationHelper.isAdmin(session)) {
+            try {
+                userService.blockOrUnblockUser(id, true);
+                return "redirect:/users/admin-panel"; // Redirect to the admin panel after blocking user
+            } catch (EntityNotFoundException e) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+            }
+        } else {
+            return "redirect:/"; // Redirect to home view if not an admin
+        }
+    }
+
+    @PostMapping("{id}/unblock")
+    public String unblockUser(@PathVariable int id, HttpSession session) {
+        if (authenticationHelper.isAdmin(session)) {
+            try {
+                userService.blockOrUnblockUser(id, false);
+                return "redirect:/users/admin-panel"; // Redirect to the admin panel after unblocking user
+            } catch (EntityNotFoundException e) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+            }
+        } else {
+            return "redirect:/"; // Redirect to home view if not an admin
+        }
+    }
+    @PostMapping("/{id}/admin")
+    public String makeUserAdmin(@PathVariable int id, HttpSession session) {
+        if (authenticationHelper.isAdmin(session)) {
+            try {
+                User authenticatedUser = getAuthenticatedUser(session);
+                userService.makeRegularUserAdmin(id,authenticatedUser);
+                return "redirect:/users/admin-panel"; // Redirect to the admin panel after setting user as admin
+            } catch (EntityNotFoundException e) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+            } catch (AuthorizationException e) {
+                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+            }
+        } else {
+            return "redirect:/"; // Redirect to home view if not an admin
+        }
+    }
+    @PostMapping("/{id}/delete")
+    public String adminDeleteUser(@PathVariable int id, HttpSession session) {
+        String username = (String) session.getAttribute("currentUser");
+        if (username != null) {
+            try {
+                User authenticatedUser = userService.getUserByUsername(username);
+                userService.deleteUser(authenticatedUser, id);
+
+                // Redirect to the admin panel after successful deletion
+                return "redirect:/users/admin-panel";
+            } catch (EntityNotFoundException e) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+            } catch (AuthenticationFailureException e) {
+                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+            }
+        } else {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not logged in");
+        }
+    }
+    private User getAuthenticatedUser(HttpSession session) {
+        String username = (String) session.getAttribute("currentUser");
+        if (username != null) {
+            return userService.getUserByUsername(username);
+        }
+        return null;
+    }
+
+
 }
