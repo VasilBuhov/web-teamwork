@@ -2345,3 +2345,13 @@ h5:hover {
     margin-top: 70px;
 }
 
+.emoticon-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.emoticon-container img {
+    margin: 5px; /* You can adjust the margin as needed */
+}
