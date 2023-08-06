@@ -43,8 +43,14 @@ public class TopicMvcController {
     }
 
     @GetMapping("/{id}")
-    public String showSingleTopic(@PathVariable int id, Model model) {
+    public String showSingleTopic(@PathVariable int id, Model model,HttpSession session) {
+        String username = (String) session.getAttribute("currentUser");
+        if (username == null) {
+            return "redirect:/auth/login"; // Redirect to the login page
+        }
         try {
+            User authenticatedUser = userService.getUserByUsername(username);
+            authenticationHelper.verifyAuthentication(authenticatedUser.getUsername(), authenticatedUser.getPassword());
             String currentUrl = String.format("localhost:8080/topics/%d", id);
             FilterTopicOptions filterTopicOptions = new FilterTopicOptions();
             Topic topic = topicService.get(id);
@@ -63,8 +69,14 @@ public class TopicMvcController {
     }
 
     @GetMapping("/new")
-    public String showNewTopicPage(Model model){
-        model.addAttribute("topic", new TopicDto());
+    public String showNewTopicPage(Model model,HttpSession session){
+        String username = (String) session.getAttribute("currentUser");
+        if (username == null) {
+            return "redirect:/auth/login"; // Redirect to the login page
+        }
+
+
+            model.addAttribute("topic", new TopicDto());
         return "ask_question";
     }
 
@@ -87,7 +99,11 @@ public class TopicMvcController {
     }
 
     @GetMapping("/edit/{id}")
-    public String editTopicPage(@PathVariable int id, Model model){
+    public String editTopicPage(@PathVariable int id, Model model ,HttpSession session){
+        String username = (String) session.getAttribute("currentUser");
+        if (username == null) {
+            return "redirect:/auth/login"; // Redirect to the login page
+        }
         try {
             Topic topic = topicService.get(id);
             model.addAttribute("topic", topic);
