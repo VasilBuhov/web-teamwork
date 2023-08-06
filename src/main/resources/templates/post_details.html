@@ -32,7 +32,7 @@
         <ol class="breadcrumb breadcrumb839">
             <li><a href="#" th:href="@{/}">Home</a></li>
             <li><a href="#">Post Details</a></li>
-            <li class="active">This Is My first Question</li>
+            <li class="active" th:text="${topic.getTitle()}"></li>
         </ol>
     </div>
 </section>
@@ -100,6 +100,7 @@
                         </div>
                         <div class="R-tags309">
                             <i class="fa fa-tags" aria-hidden="true">
+                                <span th:if="${topic.tags.isEmpty()}">No tags</span>
                                 <span th:each="tag, iterStat : ${topic.tags}">
                                      <a th:href="@{'/tags/' + ${tag.getId()}}"><span th:text="${tag.getName()}"></span></a>
                                      <span th:if="${!iterStat.last}">,</span>
@@ -113,6 +114,7 @@
                             <div class="row">
                                 <div class="comments-container">
                                     <ul id="comments-list" class="comments-list">
+                                        <li th:if="${posts.isEmpty()}" th:text="#{navigation.nocomments}"></li>
                                         <li th:each="post : ${posts}">
                                             <div class="comment-main-level">
                                                 <!-- Avatar part -->
