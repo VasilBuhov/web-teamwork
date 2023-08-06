@@ -79,89 +79,16 @@
 
             <!--           strart col-md-3 (side bar)-->
             <aside class="col-md-3 sidebar97239">
-                <div class="status-part3821">
-                    <h4>Forum statistics</h4>
-                    <a href="#"><i class="fa fa-question-circle" aria-hidden="true"
-                                   th:text="' Active Topics: ' + ${allTopics.size()}"> </i></a>
-                    <i class="fa fa-comment" aria-hidden="true"
-                       th:text="' Registered Users: ' + ${allUsers.size()}"> </i></div>
+                <!-- forum stats part-->
+                <div th:replace="fragments/stats_sidebar :: stats"></div>
                 <!--             social part -->
-                <div class="social-part2189">
-                    <h4>Find us</h4>
-                    <li class="rss-one">
-                        <a href="#" target="_blank">
-                            <strong>
-                                <span>Subscribe</span>
-                                <i class="fa fa-rss" aria-hidden="true"></i>
-
-                                <br>
-                                <small>To RSS Feed</small>
-
-                            </strong>
-                        </a>
-                    </li>
-                    <li class="facebook-two">
-                        <a href="#" target="_blank">
-                            <strong>
-                                <span>Subscribe</span>
-                                <i class="fa fa-facebook" aria-hidden="true"></i>
-
-                                <br>
-                                <small>To Facebook Feed</small>
-
-                            </strong>
-                        </a>
-                    </li>
-                    <li class="twitter-three">
-                        <a href="#" target="_blank">
-                            <strong>
-                                <span>Subscribe</span>
-                                <i class="fa fa-twitter" aria-hidden="true"></i>
-
-                                <br>
-                                <small>To twitter Feed</small>
-
-                            </strong>
-                        </a>
-                    </li>
-                    <li class="youtube-four">
-                        <a href="#" target="_blank">
-                            <strong>
-                                <span>Subscribe</span>
-                                <i class="fa fa-youtube" aria-hidden="true"></i>
-
-                                <br>
-                                <small>To youtube Feed</small>
-
-                            </strong>
-                        </a>
-                    </li>
-
-                </div>
-
-                <!--              login part-->
-                <div class="login-part2389">
-                    <h4>Login</h4>
-                    <div class="input-group300">
-                        <span><i class="fa fa-user" aria-hidden="true"></i></span>
-                        <input type="text" class="namein309" placeholder="Username">
-                    </div>
-                    <div class="input-group300">
-                        <span><i class="fa fa-lock" aria-hidden="true"></i></span>
-                        <input type="password" class="passin309" placeholder="Name">
-                    </div>
-                    <a href="#">
-                        <button type="button" class="userlogin320">Log In</button>
-                    </a>
-                    <div class="rememberme">
-                        <label><input type="checkbox" checked="checked"> Remember Me</label>
-                        <a href="#" class="resbutton3892">Register</a>
-                    </div>
-                </div>
+                <div th:replace="fragments/social_sidebar :: social"></div>
+                <!--              highest part-->
+                <div th:replace="fragments/top_users_sidebar :: topusers"></div>
+                <!--               end of Highest points -->
                 <!--          start tags part-->
                 <div th:replace="fragments/tags_sidebar :: sidetags"></div>
                 <!--          End tags part-->
-
             </aside>
         </div>
     </div>
