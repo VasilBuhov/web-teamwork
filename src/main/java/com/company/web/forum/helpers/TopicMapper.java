@@ -43,6 +43,12 @@ public class TopicMapper {
         topic.setContent(dto.getContent());
         return topic;
     }
+    public Topic updateTopicDto(TopicDto dto, int id) {
+        Topic topic = topicService.get(id);
+        topic.setTitle(dto.getTitle());
+        topic.setContent(dto.getContent());
+        return topic;
+    }
 
     public TopicDto toDto(Topic topic) {
         TopicDto topicDto = new TopicDto();

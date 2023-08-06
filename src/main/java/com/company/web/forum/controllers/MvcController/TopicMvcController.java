@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Controller
@@ -44,7 +45,7 @@ public class TopicMvcController {
     @GetMapping("/{id}")
     public String showSingleTopic(@PathVariable int id, Model model) {
         try {
-            String currentUrl = String.format("localhost:8080/topics/%d", id); // Replace this with the actual current URL
+            String currentUrl = String.format("localhost:8080/topics/%d", id);
             FilterTopicOptions filterTopicOptions = new FilterTopicOptions();
             Topic topic = topicService.get(id);
             model.addAttribute("topic", topic);
@@ -87,40 +88,35 @@ public class TopicMvcController {
 
     @GetMapping("/edit/{id}")
     public String editTopicPage(@PathVariable int id, Model model){
-        Topic topic = topicService.get(id);
-        model.addAttribute("topic", topic);
-        model.addAttribute("topicDto", topicService.get(id));
-        model.addAttribute("tags", tagService.getTopicTags(id));
-        return "edit_topic";
+        try {
+            Topic topic = topicService.get(id);
+            model.addAttribute("topic", topic);
+            model.addAttribute("topicDto", topicService.get(id));
+            model.addAttribute("tags", tagService.getTopicTags(id));
+            return "edit_topic";
+        } catch (EntityNotFoundException e) {
+        model.addAttribute("error", e.getMessage());
+        return "NotFoundView";
+    }
     }
 
     @PostMapping("/edit/{id}")
-    public String createTopic(@Valid @RequestHeader HttpHeaders httpHeaders, @RequestParam("content") String content, @RequestParam("title") String title, @PathVariable int id, BindingResult errors, Model model) {
+    public String editTopic(@PathVariable int id, @Valid @ModelAttribute("post") TopicDto topicDto, BindingResult errors, Model model, HttpSession session) {
         if(errors.hasErrors()){
             model.addAttribute("errorMessage", "Please fill in all required fields.");
             return "edit_topic";
         }
-        try {
-            User authenticatedUser = authenticationHelper.tryGetUser(httpHeaders);
-            Topic newTopic = topicService.get(id);
-            newTopic.setTitle(title);
-            newTopic.setContent(content);
-            topicService.update(newTopic, authenticatedUser);
-            return "redirect:/topic/" + id ;
-        } catch (EntityDuplicateException e) {
-            model.addAttribute("alreadyExists", e.getMessage());
-        }
-        return "AlreadyExistsView";
-    }
 
-    //    @GetMapping("/{title}")
-//    public String searchByTopicName (@PathVariable String title, Model model) {
-//        FilterTopicOptions filterTopicOptions = new FilterTopicOptions();
-//        Optional<String> byTitle = Optional.of(title);
-//        filterTopicOptions.setTitle(byTitle);
-//        model.addAttribute("topicsByName", service.get(filterTopicOptions));
-//
-//        return "SearchBarView";
-//    }
+            try {
+                Topic topic = topicMapper.updateTopicDto(topicDto, id);
+                String username = (String) session.getAttribute("currentUser");
+                User user = userService.getUserByUsername(username);
+                topicService.update(topic, user);
+                return "redirect:/topics/" + id ;
+            } catch (EntityNotFoundException e) {
+                model.addAttribute("error", e.getMessage());
+                return "NotFoundView";
+            }
+    }
 
 }
