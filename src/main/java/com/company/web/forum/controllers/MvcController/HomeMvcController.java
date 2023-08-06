@@ -34,16 +34,16 @@ public class HomeMvcController {
         model.addAttribute("topicsByViews", topicService.get10("desc", "views"));
         model.addAttribute("allTopics", topicService.get(filterTopicOptions));
         model.addAttribute("countUsers", userService.getUsersCount());
-        model.addAttribute("toptags", tagService.getTopTags());
+        model.addAttribute("topТags", tagService.getTopTags());
         return "index";
     }
 
     @GetMapping(value = "/contact_us")
     public String showContactUs(Model model) {
         FilterTopicOptions filterTopicOptions = new FilterTopicOptions();
-        model.addAttribute("tags", tagService.getTagById(9));
         model.addAttribute("allTopics", topicService.get(filterTopicOptions));
-        model.addAttribute("allUsers", userService.getAllUsers());
+        model.addAttribute("countUsers", userService.getUsersCount());
+        model.addAttribute("topТags", tagService.getTopTags());
         return "contact_us";
     }
 
