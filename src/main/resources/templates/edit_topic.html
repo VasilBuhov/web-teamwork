@@ -43,11 +43,11 @@
                 <div class="ask-question-input-part032">
                     <h4>Edit Topic Question</h4>
                     <hr>
-                    <form name="topic" th:action="@{/topic/edit/{id}(id=${topic.getId()})}" method="POST" th:object="${topicDto}">
+                    <form name="topic" th:action="@{/topic/edit/{id}(id=${topic.getId()})}" method="post" th:object="${topic}">
                         <div class="question-title39">
                             <span class="form-description433">Question-Title* </span>
                             <label>
-                                <input type="text" name="title" class="question-ttile32" th:field="*{title}" th:value="${topic.getTitle()}">
+                                <input type="text" name="title" class="question-tile32" th:field="*{title}" th:value="${topic.getTitle()}">
                             </label>
                         </div>
                         <div class="question-title39">
@@ -139,13 +139,13 @@
                         <div class="question-title39">
                             <span class="form-description433">Tags </span>
                             <label>
-                                <input type="text" name="tags" class="question-ttile32" th:field="*{tags}" th:value="${topic.getTags()}">
+                                <input type="text" name="tags" class="question-tile32" th:field="*{tags}" th:value="${topic.getTags()}">
                             </label>
                         </div>
                     </form>
 
                     <div class="publish-button2389">
-                        <input type="submit" value="Submit" class="publis1291">
+                        <input type="submit" value="Submit" class="publish1291">
                     </div>
                 </div>
             </div>
