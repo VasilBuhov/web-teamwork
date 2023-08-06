@@ -134,6 +134,20 @@ public class TagRepositoryImpl implements TagRepository {
     }
 
     @Override
+    public List<Tag> getTopicTags(int id) {
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<Tag> cq = cb.createQuery(Tag.class);
+            Root<Tag> tagRoot = cq.from(Tag.class);
+            return session.createQuery(cq)
+                    .setMaxResults(3)
+                    .list();
+        } catch (Exception e) {
+            throw new javax.persistence.EntityNotFoundException("Not found");
+        }
+    }
+
+    @Override
     public List<Tag> getAllTags() {
         try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();

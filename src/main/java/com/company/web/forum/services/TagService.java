@@ -14,6 +14,8 @@ public interface TagService {
 
     List<Tag> getTopTags();
 
+    List<Tag> getTopicTags(int id);
+
     List<Tag> getAllTags(Integer  page, Integer  size);
 
     List<Tag> getAllTags();

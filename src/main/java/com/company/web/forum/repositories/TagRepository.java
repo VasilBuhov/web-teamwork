@@ -19,6 +19,8 @@ public interface TagRepository {
 
     List<Tag> getTopTags();
 
+    List<Tag> getTopicTags(int id);
+
     List<Tag> getAllTags();
 
     void create(Tag tag);

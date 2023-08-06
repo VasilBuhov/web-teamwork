@@ -28,6 +28,10 @@ public class UserServiceImpl implements UserService {
         return userRepository.getAllUsers();
     }
 
+    public long getUsersCount() {
+        return userRepository.getUsersCount();
+    }
+
     public User getUserById(int id) {
         return userRepository.getUserById(id);
     }

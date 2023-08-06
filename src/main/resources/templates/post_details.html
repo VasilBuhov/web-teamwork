@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Edit post details</title>
+    <title>Topic details</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -54,7 +54,8 @@
                                     <h3 th:text="${topic.getTitle()}"> </h3></div>
                             </div>
 
-                            <div class="col-md-8 ques-type302b" th:if="${topic.getCreator().getUsername()} == ${session.currentUser}">
+                            <div class="col-md-8 ques-type302b"
+                                 th:if="${topic.getCreator().getUsername()} == ${session.currentUser}">
                                 <a href="#" th:href="@{/topics/edit/{id}(id=${topic.getId()})}">
                                     <button type="button" class="q-type238"><i aria-hidden="true"
                                                                                th:text="' Edit topic '">
@@ -119,7 +120,8 @@
                                                     <img th:src="${post.getCreator().getAvatar()}" alt="User Avatar">
                                                 </div>
                                                 <!-- Comment part -->
-                                                <div class="col-md-8 ques-type302b" th:if="${post.getCreator().getUsername()} == ${session.currentUser}">
+                                                <div class="col-md-8 ques-type302b"
+                                                     th:if="${post.getCreator().getUsername()} == ${session.currentUser}">
                                                     <a href="#" th:href="@{/posts/edit/{id}(id=${post.getId()})}">
                                                         <button type="button" class="q-type238"><i aria-hidden="true"
                                                                                                    th:text="' Edit comment '">
@@ -152,10 +154,12 @@
                     <h3>Leave A Reply</h3>
                     <hr>
                     <div class="row">
-<!--                        You are commenting as **** part here -->
+                        <!--                        You are commenting as **** part here -->
                         <div class="col-md-12">
                             <div class="post9320-box">
-                                <input type="text" class="comment-input219882" placeholder="Enter your comment here..."></div>
+                                <label> </label>
+                                <input type="text" class="comment-input219882" placeholder="Enter your comment here...">
+                            </div>
                             <button type="button" class="pos393-submit">Post Comment</button>
                         </div>
 
@@ -166,138 +170,16 @@
             <!--           strart col-md-3 (side bar)-->
             <aside class="col-md-3 sidebar97239">
                 <!--- Forum statistics part -->
-                <div class="status-part3821">
-                    <h4>Forum statistics</h4>
-                    <a href="#"><i class="fa fa-question-circle" aria-hidden="true" th:text="' Active Topics: ' + ${allTopics.size()}"> </i></a>
-                    <i class="fa fa-comment" aria-hidden="true" th:text="' Registered Users: ' + ${allUsers.size()}"> </i> </div>
-                <!--              login part-->
-                <div class="login-part2389">
-                    <h4>Login</h4>
-                    <div class="input-group300"><span><i class="fa fa-user" aria-hidden="true"></i></span>
-                        <input type="text" class="namein309" placeholder="Username"></div>
-                    <div class="input-group300"><span><i class="fa fa-lock" aria-hidden="true"></i></span>
-                        <input type="password" class="passin309" placeholder="Name"></div>
-                    <a href="#">
-                        <button type="button" class="userlogin320">Log In</button>
-                    </a>
-                    <div class="rememberme">
-                        <label>
-                            <input type="checkbox" checked="checked"> Remember Me</label> <a href="#"
-                                                                                             class="resbutton3892">Register</a>
-                    </div>
-                </div>
+                <div th:replace="fragments/stats_sidebar :: stats"></div>
                 <!--             social part -->
-                <div class="social-part2189">
-                    <h4>Find us</h4>
-                    <li class="rss-one">
-                        <a href="#" target="_blank"> <strong>
-                            <span>Subscribe</span>
-                            <i class="fa fa-rss" aria-hidden="true"></i>
-
-                            <br>
-                            <small>To RSS Feed</small>
-
-                        </strong> </a>
-                    </li>
-                    <li class="facebook-two">
-                        <a href="#" target="_blank"> <strong>
-                            <span>Subscribe</span>
-                            <i class="fa fa-facebook" aria-hidden="true"></i>
-
-                            <br>
-                            <small>To Facebook Feed</small>
-
-                        </strong> </a>
-                    </li>
-                    <li class="twitter-three">
-                        <a href="#" target="_blank"> <strong>
-                            <span>Subscribe</span>
-                            <i class="fa fa-twitter" aria-hidden="true"></i>
-
-                            <br>
-                            <small>To twitter Feed</small>
-
-                        </strong> </a>
-                    </li>
-                    <li class="youtube-four">
-                        <a href="#" target="_blank"> <strong>
-                            <span>Subscribe</span>
-                            <i class="fa fa-youtube" aria-hidden="true"></i>
-
-                            <br>
-                            <small>To youtube Feed</small>
-
-                        </strong> </a>
-                    </li>
-                </div>
+                <div th:replace="fragments/social_sidebar :: social"></div>
                 <!--              highest part-->
-                <div class="highest-part302">
-                    <h4>Highest Points</h4>
-                    <div class="pints-wrapper">
-                        <div class="left-user3898">
-                            <a href="#"><img src="image/images.png" alt="Image"></a>
-                            <div class="imag-overlay39"><a href="#"><i class="fa fa-plus" aria-hidden="true"></i></a>
-                            </div>
-                        </div>
-                        <span class="points-details938">
-                     <a href="#"><h5>Ahmed Hasan</h5></a>
-                <a href="#" class="designetion439">Pundit</a>
-                     <p>206 points</p>
-                 </span></div>
-                    <hr>
-                    <div class="pints-wrapper">
-                        <div class="left-user3898">
-                            <a href="#"><img src="image/images.png" alt="Image"></a>
-                            <div class="imag-overlay39"><a href="#"><i class="fa fa-plus" aria-hidden="true"></i></a>
-                            </div>
-                        </div>
-                        <span class="points-details938">
-                     <a href="#"><h5>Ahmed Hasan</h5></a>
-                <a href="#" class="designetion439">Pundit</a>
-                     <p>206 points</p>
-                 </span></div>
-                    <hr>
-                    <div class="pints-wrapper">
-                        <div class="left-user3898">
-                            <a href="#"><img src="image/images.png" alt="Image"></a>
-                            <div class="imag-overlay39"><a href="#"><i class="fa fa-plus" aria-hidden="true"></i></a>
-                            </div>
-                        </div>
-                        <span class="points-details938">
-                     <a href="#"><h5>Ahmed Hasan</h5></a>
-                <a href="#" class="designetion439">Pundit</a>
-                     <p>206 points</p>
-                 </span></div>
-                    <hr>
-                    <div class="pints-wrapper">
-                        <div class="left-user3898">
-                            <a href="#"><img src="image/images.png" alt="Image"></a>
-                            <div class="imag-overlay39"><a href="#"><i class="fa fa-plus" aria-hidden="true"></i></a>
-                            </div>
-                        </div>
-                        <span class="points-details938">
-                     <a href="#"><h5>Ahmed Hasan</h5></a>
-                <a href="#" class="designetion439">Pundit</a>
-                     <p>206 points</p>
-                 </span></div>
-                    <hr>
-                    <div class="pints-wrapper">
-                        <div class="left-user3898">
-                            <a href="#"><img src="image/images.png" alt="Image"></a>
-                            <div class="imag-overlay39"><a href="#"><i class="fa fa-plus" aria-hidden="true"></i></a>
-                            </div>
-                        </div>
-                        <span class="points-details938">
-                     <a href="#"><h5>Ahmed Hasan</h5></a>
-                <a href="#" class="designetion439">Pundit</a>
-                     <p>206 points</p>
-                 </span></div>
-                </div>
+                <div th:replace="fragments/top_users_sidebar :: topusers"></div>
                 <!--               end of Highest points -->
                 <!--          start tags part-->
                 <div th:replace="fragments/tags_sidebar :: sidetags"></div>
                 <!--          End tags part-->
-               </aside>
+            </aside>
         </div>
     </div>
 </section>

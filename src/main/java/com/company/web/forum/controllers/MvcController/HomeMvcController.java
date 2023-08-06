@@ -33,8 +33,8 @@ public class HomeMvcController {
         model.addAttribute("topicsByLikes", topicService.get10("desc", "likes"));
         model.addAttribute("topicsByViews", topicService.get10("desc", "views"));
         model.addAttribute("allTopics", topicService.get(filterTopicOptions));
-        model.addAttribute("allUsers", userService.getAllUsers());
-        model.addAttribute("tags", tagService.getTopTags());
+        model.addAttribute("countUsers", userService.getUsersCount());
+        model.addAttribute("toptags", tagService.getTopTags());
         return "index";
     }
 

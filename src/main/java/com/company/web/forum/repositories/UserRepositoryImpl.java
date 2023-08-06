@@ -4,7 +4,6 @@ import com.company.web.forum.exceptions.EntityNotFoundException;
 import com.company.web.forum.models.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -36,6 +35,19 @@ public class UserRepositoryImpl implements UserRepository {
         } catch (Exception e) {
             // Handle exceptions  // I should think a bit more here
             return new ArrayList<>();
+        }
+    }
+
+    @Override
+    public long getUsersCount() {
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+            Root<User> root = cq.from(User.class);
+            cq.select(cb.count(root));
+            return session.createQuery(cq).uniqueResult();
+        } catch (Exception e) {
+            return 0L;
         }
     }
 
@@ -86,7 +98,6 @@ public class UserRepositoryImpl implements UserRepository {
             }
             return user;
         } catch (Exception e) {
-            // Handle exceptions
             return null;
         }
     }
@@ -101,14 +112,6 @@ public class UserRepositoryImpl implements UserRepository {
             // Handle exceptions
         }
     }
-//    @Override
-//    public void createUser(User user) {
-//        try (Session session = sessionFactory.openSession()) {
-//
-//            session.save(user);
-//
-//        }
-//    }
 
     @Override
     public void updateUser(User user) {

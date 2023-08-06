@@ -141,8 +141,6 @@ public class UserMvcController {
         }
     }
 
-
-
     @PostMapping("/profile")
     public String updateUserProfile(@Valid @ModelAttribute("user") UserDto userDto, BindingResult errors, Model model, HttpSession session) {
         String username = (String) session.getAttribute("currentUser");

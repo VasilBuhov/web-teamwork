@@ -1,113 +1,77 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Edit User</title>
-  <link href="../static/css/bootstrap.css" rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}">
-  <link href="../static/css/style.css" rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
-  <link href="../static/css/animate.css" rel="stylesheet" type="text/css" th:href="@{/css/animate.css}">
-  <link href="../static/css/font-awesome.min.css" rel="stylesheet" type="text/css" th:href="@{/css/font-awesome.min.css}">
-  <style>
-    /* Custom styles for the form container */
-    .form-container {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      max-width: 500px; /* Adjust this value to make the form bigger */
-      padding: 20px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      background-color: #f8f8f8;
-    }
-
-    /* Custom styles for the home link container */
-    .home-container {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-    }
-
-    /* Custom styles for the bigger Home link */
-    .bigger-home-link {
-      width: 40px; /* Adjust this value to resize the image */
-      height: 40px;
-    }
-    .mid-bar{
-      background-color: #333333;
-      padding: 40px;
-    }
-    .top-bar{
-      position: absolute;
-      left: 0;
-      right: 0;
-      background-color: #ff7361;
-      padding: 40px;
-      width: 100%;
-      text-align: center;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Edit User</title>
+    <link href="../static/css/bootstrap.css" rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}">
+    <link href="../static/css/style.css" rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link href="../static/css/animate.css" rel="stylesheet" type="text/css" th:href="@{/css/animate.css}">
+    <link href="../static/css/font-awesome.min.css" rel="stylesheet" type="text/css"
+          th:href="@{/css/font-awesome.min.css}">
 </head>
 <body>
-<div class="mid-bar">
-</div>
-<div class="container min-vh-100">
-  <div class="home-container">
-    <a href="/" class="bigger-home-link">
-      <img src="/assets/img/flogo.png" alt="Home">
-    </a>
-  </div>
-  <div class="top-bar">
-  </div>
+<div th:replace="fragments/navbar :: navbar"></div>
 
-  <div class="form-container">
-    <h2 class="text-center">Edit User</h2>
-    <form action="/users/profile" th:object="${user}" method="post">
-      <label th:text="#{user.username}">User</label>
-      <br/>
-      <input type="text" th:field="*{username}">
-      <!-- Display the validation errors for the username field -->
-      <div th:if="${#fields.hasErrors('username')}" class="alert alert-danger" role="alert">
-        <p th:errors="*{username}"></p>
-      </div>
-      <br><br/>
 
-      <label th:text="#{user.email}">User</label>
-      <br/>
-      <input type="text" th:field="*{email}">
-      <!-- Display the validation errors for the email field -->
-      <div th:if="${#fields.hasErrors('email')}" class="alert alert-danger" role="alert">
-        <p th:errors="*{email}"></p>
-      </div>
-      <br><br/>
+<section class="main-content921 centered-width">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="ask-question-input-part032">
+                    <h4>Edit profile details</h4>
+                    <hr>
+                        <h2 class="text-center">Edit User</h2>
+                        <form action="/users/profile" th:object="${user}" method="post">
+                            <label th:text="#{user.username}">User</label>
+                            <br/>
+                            <input type="text" th:field="*{username}">
+                            <!-- Display the validation errors for the username field -->
+                            <div th:if="${#fields.hasErrors('username')}" class="alert alert-danger" role="alert">
+                                <p th:errors="*{username}"></p>
+                            </div>
+                            <br><br/>
 
-      <label th:text="#{user.firstName}">User</label>
-      <br/>
-      <input type="text" th:field="*{firstName}">
-      <br><br/>
+                            <label th:text="#{user.email}">User</label>
+                            <br/>
+                            <input type="text" th:field="*{email}">
+                            <!-- Display the validation errors for the email field -->
+                            <div th:if="${#fields.hasErrors('email')}" class="alert alert-danger" role="alert">
+                                <p th:errors="*{email}"></p>
+                            </div>
+                            <br><br/>
 
-      <label th:text="#{user.lastName}">User</label>
-      <br/>
-      <input type="text" th:field="*{lastName}">
-      <br><br/>
+                            <label th:text="#{user.firstName}">User</label>
+                            <br/>
+                            <input type="text" th:field="*{firstName}">
+                            <br><br/>
 
-      <label th:text="#{user.password}">User</label>
-      <br/>
-      <input type="password" th:field="*{password}">
-      <br><br/>
+                            <label th:text="#{user.lastName}">User</label>
+                            <br/>
+                            <input type="text" th:field="*{lastName}">
+                            <br><br/>
 
-      <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
-        <p th:text="${errorMessage}"></p>
-      </div>
+                            <label th:text="#{user.password}">User</label>
+                            <br/>
+                            <input type="password" th:field="*{password}">
+                            <br><br/>
 
-      <input type="submit" value="Save" class="btn btn-primary">
-    </form>
-  </div>
+                            <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+                                <p th:text="${errorMessage}"></p>
+                            </div>
 
-</div>
+                            <input type="submit" value="Save" class="btn btn-primary">
+                        </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+            <!--    footer -->
+            <div th:replace="fragments/footer :: footer"></div>
 </body>
+
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="../static/js/jquery-3.1.1.min.js" th:href="@{/js/jquery-3.1.1.min.js}"></script>
 <script src="../static/js/bootstrap.min.js" th:href="@{/js/bootstrap.min.js}"></script>
-<script src="../static/js/npm.js" th:href="@{/js/npm.js}"></script>
 </html>

@@ -9,7 +9,7 @@
     <div class="tags-part2398">
         <h4>Tags</h4>
         <ul>
-            <li th:each="tag : ${tags}">
+            <li th:each="tag : ${toptags}">
                 <a href="#" th:href="@{/tags/{id}(id=${tag.getId()})}" th:text="${tag.getName()}"></a>
             </li>
         </ul>

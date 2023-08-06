@@ -125,12 +125,14 @@
 
                             </div>
                         </div>
+
                         <div class="details2-239">
                             <div class="col-md-12 nopadding">
                                 <span class="form-description433">Content* </span>
                                 <label for="content"></label>
                                 <textarea id="content" class="question-textarea" th:field="*{content}" th:text="${topic.getContent()}">
                                 </textarea>
+
                             </div>
                         </div>
 
@@ -140,7 +142,6 @@
                                 <input type="text" name="tags" class="question-ttile32" th:field="*{tags}" th:value="${topic.getTags()}">
                             </label>
                         </div>
-
                     </form>
 
                     <div class="publish-button2389">
@@ -580,11 +581,7 @@
             var cursorPosition = content.selectionStart;
             var text = content.value;
             content.value = text.substring(0, cursorPosition) + ' :help: ' + text.substring(cursorPosition);
-        })
-
-
-
-        ;
+        });
     });
 </script>
 

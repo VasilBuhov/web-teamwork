@@ -49,6 +49,11 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
+    public List<Tag> getTopicTags(int id) {
+        return tagRepository.getTopicTags(id);
+    }
+
+    @Override
     public List<Tag> getAllTags(Integer page, Integer size) {
         return tagRepository.getAllTags(page, size);
     }

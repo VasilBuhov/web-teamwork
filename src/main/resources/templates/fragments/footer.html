@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Forum footer</title>
 </head>
 <body>
 <div th:fragment="footer">
@@ -11,44 +11,34 @@
             <div class="row">
                 <div class="col-md-3">
                     <div class="info-part-one320">
-                        <h4>Where We Are ?</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi adipiscing gravida odio, sit amet
-                            suscipit risus ultrices eu.</p>
+                        <h4>Who are we ?</h4>
+                        <p>Telerik and Kendo UI are part of Progress product portfolio. Progress is the leading provider of application development and digital experience technologies.</p>
                         <h4>Address :</h4>
-                        <p>Ask Me Network, 33 Street, syada
-                            <br> Sofia, Bulgaria</p>
+                        <p>A30, ul. "Krastyu Rakovski" str,
+                            <br> 1729 Sofia, Bulgaria</p>
                         <h4>Support :</h4>
-                        <p>Support Telephone No : (+2)01111011110</p>
+                        <p>Support Telephone No : +359 2 8099850</p>
                         <p>Support Email Account : </p>
-                        <p>telerikforums@gmail.com</p>
+                        <p><a th:href="'mailto:telerikforums@gmail.com'">telerikforums@gmail.com</a></p>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="info-part-two320">
                         <h4>Quick Links</h4>
-                        <a href="#">
-                            <p>-Home</p>
+                        <a href="#" th:href="@{/}">
+                            <p th:text="#{navigation.home}"></p>
                         </a>
-                        <a href="#">
-                            <p>-Ask Question</p>
+                        <a href="#" th:href="@{/topics/new}">
+                            <p th:text="#{navigation.ask_question}"></p>
                         </a>
-                        <a href="#">
-                            <p>-Questions</p>
+                        <a href="#" th:href="@{/users}">
+                            <p th:text="#{navigation.list_all_users}"></p>
                         </a>
-                        <a href="#">
-                            <p>-Users</p>
+                        <a href="#" th:href="@{/users/profile}">
+                            <p th:text="#{navigation.edit_profile}"></p>
                         </a>
-                        <a href="#">
-                            <p>-Edit Profile</p>
-                        </a>
-                        <a href="#">
-                            <p>-Page</p>
-                        </a>
-                        <a href="#">
-                            <p>-Contact Us</p>
-                        </a>
-                        <a href="contact_us.html" class="last-child12892">
-                            <p>-Buy now</p>
+                        <a href="#" th:href="@{/contact_us}">
+                            <p th:text="#{navigation.contact_us}"></p>
                         </a>
                     </div>
                 </div>
@@ -73,9 +63,10 @@
                     <div class="info-part-four320">
                         <h4>Latest Tweets</h4>
                         <div class="tweet-details29">
-                            <p><i class="fa fa-twitter-square" aria-hidden="true"></i><a href="#"> codeThemesCheck a new
+                            <p><i class="fa fa-twitter-square" aria-hidden="true"></i><a href="https://twitter.com/ForumsSxTelerik" th:href="@{https://twitter.com/ForumsSxTelerik}">codeThemesCheck a new
                                 update #AskMe #ThemeForest #WordPress #2code #Envato#2code
-                                Themehttps://t.co/urb3LgsOCi</a></p> <small>about 2 weeks ago</small></div>
+                                Themehttps://t.co/urb3LgsOCi</a></p> <small>about 2 weeks ago</small>
+                        </div>
                         <div class="tweet-details29">
                             <p><i class="fa fa-twitter-square" aria-hidden="true"></i><a href="#"> codeThemesCheck a new
                                 update #AskMe #ThemeForest #WordPress #2code #Envato#2code
@@ -96,7 +87,7 @@
                     <p>Copyright 2023 - Sex forums | <strong>Team 10 @ Telerik A48 Java Cohort</strong></p>
                 </div>
                 <div class="col-md-6">
-                    <div class="social-right2389"><a href="#"><i class="fa fa-twitter-square" aria-hidden="true"></i></a> <a
+                    <div class="social-right2389"><a href="https://twitter.com/ForumsSxTelerik" th:href="@{https://twitter.com/ForumsSxTelerik}"><i class="fa fa-twitter-square" aria-hidden="true"></i></a> <a
                             href="https://www.facebook.com/profile.php?id=100095611680778"><i class="fa fa-facebook"
                                                                                               aria-hidden="true"></i></a> <a
                             href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a> <a href="#"><i

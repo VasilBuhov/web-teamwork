@@ -5,6 +5,7 @@ import com.company.web.forum.exceptions.EntityNotFoundException;
 import com.company.web.forum.helpers.AuthenticationHelper;
 import com.company.web.forum.helpers.TopicMapper;
 import com.company.web.forum.models.*;
+import com.company.web.forum.services.TagService;
 import com.company.web.forum.services.TopicService;
 import com.company.web.forum.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +23,15 @@ public class TopicMvcController {
     private final TopicService topicService;
     private final TopicMapper topicMapper;
     private final UserService userService;
+    private final TagService tagService;
     private final AuthenticationHelper authenticationHelper;
 
     @Autowired
-    public TopicMvcController(TopicService service, TopicMapper topicMapper, UserService userService, AuthenticationHelper authenticationHelper) {
+    public TopicMvcController(TopicService service, TopicMapper topicMapper, UserService userService, TagService tagService, AuthenticationHelper authenticationHelper) {
         this.topicService = service;
         this.topicMapper = topicMapper;
         this.userService = userService;
+        this.tagService = tagService;
         this.authenticationHelper = authenticationHelper;
     }
 
@@ -47,8 +50,9 @@ public class TopicMvcController {
             model.addAttribute("topic", topic);
             model.addAttribute("posts", topic.getPosts());
             model.addAttribute("tags", topic.getTags());
+            model.addAttribute("toptags", tagService.getTopTags());
             model.addAttribute("allTopics", topicService.get(filterTopicOptions));
-            model.addAttribute("allUsers", userService.getAllUsers());
+            model.addAttribute("countUsers", userService.getUsersCount());
             model.addAttribute("currentUrl", currentUrl);
             return "post_details";
         } catch (EntityNotFoundException e) {
@@ -86,6 +90,7 @@ public class TopicMvcController {
         Topic topic = topicService.get(id);
         model.addAttribute("topic", topic);
         model.addAttribute("topicDto", topicService.get(id));
+        model.addAttribute("tags", tagService.getTopicTags(id));
         return "edit_topic";
     }
 
