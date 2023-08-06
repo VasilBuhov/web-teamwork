@@ -1,5 +1,6 @@
 package com.company.web.forum.controllers.MvcController;
 
+import com.company.web.forum.exceptions.AuthorizationException;
 import com.company.web.forum.exceptions.EntityDuplicateException;
 import com.company.web.forum.exceptions.EntityNotFoundException;
 import com.company.web.forum.helpers.AuthenticationHelper;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -132,6 +134,10 @@ public class TopicMvcController {
             } catch (EntityNotFoundException e) {
                 model.addAttribute("error", e.getMessage());
                 return "NotFoundView";
+
+            } catch (AuthorizationException e){
+                model.addAttribute("error", e.getMessage());
+                return "UnauthorizedView";
             }
     }
 
