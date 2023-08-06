@@ -143,9 +143,18 @@
                                     <a href="#" th:href="@{/users/{id}(id=${topic.getCreator().getId()})}"><img
                                             th:src="${topic.getCreator().getAvatar()}" alt="User Avatar"> </a></div>
                             </div>
+
                             <div class="col-md-8">
                                 <div class="post-title-left129">
                                     <h3 th:text="${topic.getTitle()}"> </h3></div>
+                            </div>
+
+                            <div class="col-md-8 ques-type302b" th:if="${topic.getCreator().getUsername()} == ${session.currentUser}">
+                                <a href="#" th:href="@{/topics/edit/{id}(id=${topic.getId()})}">
+                                    <button type="button" class="q-type238"><i aria-hidden="true"
+                                                                               th:text="' Edit topic '">
+                                         </i></button>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -205,6 +214,15 @@
                                                     <img th:src="${post.getCreator().getAvatar()}" alt="User Avatar">
                                                 </div>
                                                 <!-- Comment part -->
+                                                <div class="col-md-8 ques-type302b" th:if="${post.getCreator().getUsername()} == ${session.currentUser}">
+                                                    <a href="#" th:href="@{/posts/edit/{id}(id=${post.getId()})}">
+                                                        <button type="button" class="q-type238"><i aria-hidden="true"
+                                                                                                   th:text="' Edit comment '">
+                                                             </i></button>
+                                                    </a>
+                                                </div>
+
+
                                                 <div class="comment-box">
                                                     <div class="comment-head">
                                                         <h6 class="comment-name">
