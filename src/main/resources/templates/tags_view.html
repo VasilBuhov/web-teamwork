@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="title" content="Sex life & problems forum">
+    <meta name="description" content="Sex life & problems forum">
+    <meta name="keywords" content="Sex forum">
+    <meta name="robots" content="index, nofollow">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="language" content="English">
+    <title>Sex life & problems forum</title>
+    <link href="../static/css/bootstrap.css" rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}">
+    <link href="../static/css/style.css" rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link href="../static/css/animate.css" rel="stylesheet" type="text/css" th:href="@{/css/animate.css}">
+    <link href="../static/css/font-awesome.min.css" rel="stylesheet" type="text/css"
+          th:href="@{/css/font-awesome.min.css}">
+</head>
+<body>
+<!--======== Navbar =======-->
+<div th:replace="fragments/navbar :: navbar"></div>
+
+    <!--======= welcome section on top background=====-->
+    <section class="welcome-part-one">
+        <div class="container">
+        </div>
+    </section>
+
+    <section class="main-content920">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    <div id="main">
+                        <div th:if="${topicList.isEmpty()}">
+                            <h2>No matches for your search</h2>
+                            <br /><br />
+                            <img src="/assets/img/not_found.jpeg" alt="Not found">
+                        </div>
+                        <div class="question-type2033" th:each="topic : ${topicList}">
+                            <div class="row">
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <div class="left-user12923 left-user12923-repeat">
+                                            <a href="#" th:href="@{/users/{id}(id=${topic.getCreator().getId()})}"><img
+                                                    th:src="${topic.getCreator().getAvatar()}" alt="User Avatar"> </a> <a
+                                                href="#"><i class="fa fa-check" aria-hidden="true"></i></a></div>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="right-description893">
+                                            <div id="que-headder2983">
+                                                <h3><a href="#" th:href="@{/topics/{id}(id=${topic.getId()})}"
+                                                       th:text="${topic.getTitle().length() > 40 ? topic.getTitle().substring(0, 40) + '...' : topic.getTitle()}"> </a>
+                                                </h3></div>
+                                            <a href="#" th:href="@{/users/{id}(id=${topic.getCreator().getId()})}"
+                                               th:text="'Author: ' + ${topic.getCreator().getUsername()}"></a>
+                                            <div class="ques-details10018">
+                                                <p th:utext="${topic.getContent().length() > 255 ? topic.getContent().substring(0, 255) + '...' : topic.getContent()}"></p>
+                                            </div>
+                                            <hr>
+                                            <div class="ques-icon-info3293">
+
+                                                <i class="fa fa-star" aria-hidden="true" th:text="${topic.getLikes}"> </i>
+                                                <i class="fa fa-clock-o" aria-hidden="true"
+                                                   th:text="' ' + ${#temporals.format(topic.getCreationDate(), 'dd MMMM, yyyy')}"> </i>
+                                                <a href="#"><i class="fa fa-question-circle-o" aria-hidden="true"> Comment on
+                                                    this topic</i> </a>
+                                                <a href="#"><i class="fa fa-bug" aria-hidden="true"> Report problem</i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="ques-type302">
+                                            <a href="#">
+                                                <button type="button" class="q-type238"><i class="fa fa-comment"
+                                                                                           aria-hidden="true"
+                                                                                           th:text="' Comments: ' + ${topic.getPosts().size()}">
+                                                     </i></button>
+                                            </a>
+                                            <br/>
+                                            <a href="#">
+                                                <button type="button" class="q-type23 button-ques2973"><i
+                                                        class="fa fa-user-circle-o" aria-hidden="true"
+                                                        th:text="' Views: ' + ${topic.getViews()}">  </i></button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <nav aria-label="Page navigation" th:if="${not topicList.isEmpty()}">
+                            <ul class="pagination">
+                                <li>
+                                    <a href="#" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <li><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                                <li>
+                                    <a href="#" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+
+                        <!-- End of content-1 -->
+                    </div>
+                </div>
+                <!-- end of col-md-9 -->
+                <!-- start col-md-3 (sidebar) -->
+                <aside class="col-md-3 sidebar97239">
+                    <div th:replace="fragments/stats_sidebar :: stats"></div>
+                    <!-- social part -->
+                    <div th:replace="fragments/social_sidebar :: social"></div>
+                    <!-- highest part -->
+                    <div th:replace="fragments/top_users_sidebar :: topusers"></div>
+                    <!-- end of Highest points -->
+                    <!-- start tags part -->
+                    <div th:replace="fragments/tags_sidebar :: sidetags"></div>
+                    <!-- End tags part -->
+                </aside>
+            </div>
+        </div>
+    </section>
+
+    <!--    footer -->
+    <div th:replace="fragments/footer :: footer"></div>
+    <script src="/js/jquery-3.1.1.min.js" th:href="@{/js/jquery-3.1.1.min.js}"></script>
+    <script src="/js/bootstrap.min.js" th:href="@{/js/bootstrap.min.js}"></script>
+</body>
+</html>

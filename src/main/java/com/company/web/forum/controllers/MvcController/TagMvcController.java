@@ -1,8 +1,11 @@
 package com.company.web.forum.controllers.MvcController;
 
 import com.company.web.forum.exceptions.EntityNotFoundException;
+import com.company.web.forum.models.FilterTopicOptions;
 import com.company.web.forum.models.Tag;
 import com.company.web.forum.services.TagService;
+import com.company.web.forum.services.TopicService;
+import com.company.web.forum.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -20,10 +24,14 @@ import java.util.stream.IntStream;
 @RequestMapping("/tags")
 public class TagMvcController {
     private final TagService tagService;
+    private final TopicService topicService;
+    private final UserService userService;
 
     @Autowired
-    public TagMvcController(TagService tagService) {
+    public TagMvcController(TagService tagService, TopicService topicService, UserService userService) {
         this.tagService = tagService;
+        this.topicService = topicService;
+        this.userService = userService;
     }
 
     @GetMapping
@@ -41,7 +49,6 @@ public class TagMvcController {
             model.addAttribute("totalPages", totalPages);
             model.addAttribute("pageSize", size);
         }
-
         model.addAttribute("tags", tagService.getAllTags(page, size));
         return "TagsView";
     }
@@ -49,9 +56,19 @@ public class TagMvcController {
     @GetMapping("/{id}")
     public String showSingleTag(@PathVariable int id, Model model) {
         try {
+            FilterTopicOptions filterTopicOptions = new FilterTopicOptions();
+            Optional<String> byTag = Optional.of(tagService.getTagById(id).getName());
+            filterTopicOptions.setTagTitle(byTag);
+            FilterTopicOptions noFilterTopicOptions = new FilterTopicOptions();
+
+
             Tag tag = tagService.getTagById(id);
-            model.addAttribute("topic", tag);
-            return "TagsView";
+            model.addAttribute("tag", tag);
+            model.addAttribute("topicList", topicService.get(filterTopicOptions));
+            model.addAttribute("allTopics", topicService.get(noFilterTopicOptions));
+            model.addAttribute("countUsers", userService.getUsersCount());
+            model.addAttribute("topTags", tagService.getTopTags());
+            return "tags_view";
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
             return "NotFoundView";
