@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8">
@@ -141,11 +141,11 @@
                 <div class="ask-question-input-part032">
                     <h4>Edit Topic Question</h4>
                     <hr>
-                    <form>
+                    <form name="topic" th:action="@{/topic/edit/{id}(id=${topic.getId()})}" method="POST" th:object="${topicDto}">
                         <div class="question-title39">
                             <span class="form-description433">Question-Title* </span>
                             <label>
-                                <input type="text" name="fname" class="question-ttile32" th:value="${topic.getTitle()}">
+                                <input type="text" name="title" class="question-ttile32" th:field="*{title}" th:value="${topic.getTitle()}">
                             </label>
                         </div>
                         <div class="question-title39">
@@ -226,16 +226,12 @@
                         <div class="details2-239">
                             <div class="col-md-12 nopadding">
                                 <span class="form-description433">Content* </span>
-                                <label for="txtEditor"></label>
-                                <textarea id="txtEditor" class="question-textarea" th:text="${topic.getContent()}">
+                                <label for="content"></label>
+                                <textarea id="content" class="question-textarea" th:field="*{content}" th:text="${topic.getContent()}">
                                 </textarea>
                             </div>
                         </div>
 
-                        <div class="button-group-addfile3239">
-                            <span class="form-description23993">Attachment*</span>
-                            <input type="file" name="ffile" class="question-ttile3226">
-                        </div>
                     </form>
 
                     <div class="publish-button2389">
@@ -351,12 +347,12 @@
 <script src="/js/jquery-3.1.1.min.js" th:href="@{/js/jquery-3.1.1.min.js}"></script>
 <script src="/js/bootstrap.min.js" th:href="@{/js/bootstrap.min.js}"></script>
 <script src="/js/editor.js" th:href="@{/js/editor.js}"></script>
-<!--
-<script>
-    $(document).ready(function () {
-        $("#txtEditor").Editor();
-    });
-</script>-->
+
+<!--<script>-->
+<!--    $(document).ready(function () {-->
+<!--        $("#content").Editor();-->
+<!--    });-->
+<!--</script>-->
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -417,362 +413,362 @@
             yippyButton = document.getElementById('insertYippy'),
             guitarButton = document.getElementById('insertGuitar'),
             winkButton = document.getElementById('insertWink');
-        var txtEditor = document.getElementById('txtEditor');
+        var content = document.getElementById('content');
 
         applauseButton.addEventListener('click', function () {
-                const cursorPosition = txtEditor.selectionStart;
-                const text = txtEditor.value;
-                txtEditor.value = text.substring(0, cursorPosition) + ' :applause: ' + text.substring(cursorPosition);
+                const cursorPosition = content.selectionStart;
+                const text = content.value;
+                content.value = text.substring(0, cursorPosition) + ' :applause: ' + text.substring(cursorPosition);
             }
         )
 
         betButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :bet: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :bet: ' + text.substring(cursorPosition);
         })
 
         bigButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :big: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :big: ' + text.substring(cursorPosition);
         })
 
         bigButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :big: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :big: ' + text.substring(cursorPosition);
         })
 
         bowButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :bow: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :bow: ' + text.substring(cursorPosition);
         })
 
         blinkButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :blink: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :blink: ' + text.substring(cursorPosition);
         })
 
         cheersButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :cheers: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :cheers: ' + text.substring(cursorPosition);
         })
 
         clappingButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :clap: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :clap: ' + text.substring(cursorPosition);
         })
 
         confusedButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :confused: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :confused: ' + text.substring(cursorPosition);
         })
 
         cryButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :cry: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :cry: ' + text.substring(cursorPosition);
         })
 
         dance2Button.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :dance: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :dance: ' + text.substring(cursorPosition);
         })
 
         dance3Button.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :megadance: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :megadance: ' + text.substring(cursorPosition);
         })
 
         daumenButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :dau: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :dau: ' + text.substring(cursorPosition);
         })
 
         downButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :down: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :down: ' + text.substring(cursorPosition);
         })
 
         drinkingButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :drinking: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :drinking: ' + text.substring(cursorPosition);
         })
 
         duckButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :duck: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :duck: ' + text.substring(cursorPosition);
         })
 
         duduButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :dudu: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :dudu: ' + text.substring(cursorPosition);
         })
 
         faintButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :faint: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :faint: ' + text.substring(cursorPosition);
         })
 
         gaeButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :gaehn: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :gaehn: ' + text.substring(cursorPosition);
         })
 
         heheheButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :hehehe: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :hehehe: ' + text.substring(cursorPosition);
         })
 
         helpButton.addEventListener('click', function () {
-            var cursorPosition = txtEditor.selectionStart;
-            var text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :help: ' + text.substring(cursorPosition);
+            var cursorPosition = content.selectionStart;
+            var text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :help: ' + text.substring(cursorPosition);
         })
 
         hihiButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :hihi: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :hihi: ' + text.substring(cursorPosition);
         })
 
         kaffeeButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :kaffee: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :kaffee: ' + text.substring(cursorPosition);
         })
 
         kissButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :kiss: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :kiss: ' + text.substring(cursorPosition);
         })
 
         kissedButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :kissed: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :kissed: ' + text.substring(cursorPosition);
         })
 
         kopButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :kop: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :kop: ' + text.substring(cursorPosition);
         })
 
         lolButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :lol: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :lol: ' + text.substring(cursorPosition);
         })
 
         madButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :mad: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :mad: ' + text.substring(cursorPosition);
         })
 
         mmhButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :mmh: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :mmh: ' + text.substring(cursorPosition);
         })
 
         mmlButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :mml: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :mml: ' + text.substring(cursorPosition);
         })
 
         muahahaButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :muahah: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :muahah: ' + text.substring(cursorPosition);
         })
 
         musicButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :music: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :music: ' + text.substring(cursorPosition);
         })
 
         ohhnoButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :ohhno: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :ohhno: ' + text.substring(cursorPosition);
         })
 
         oopsButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :opos: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :opos: ' + text.substring(cursorPosition);
         })
 
         patButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :pat: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :pat: ' + text.substring(cursorPosition);
         })
 
         pffButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :pff: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :pff: ' + text.substring(cursorPosition);
         })
 
         popButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :pop: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :pop: ' + text.substring(cursorPosition);
         })
 
         psstButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :psst: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :psst: ' + text.substring(cursorPosition);
         })
 
         roflButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :rofl: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :rofl: ' + text.substring(cursorPosition);
         })
 
         sadButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :sad: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :sad: ' + text.substring(cursorPosition);
         })
 
         slapButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :slap: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :slap: ' + text.substring(cursorPosition);
         })
 
         sleepingButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :sleeping: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :sleeping: ' + text.substring(cursorPosition);
         })
 
         slideButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :slide: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :slide: ' + text.substring(cursorPosition);
         })
 
         smileButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :smile: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :smile: ' + text.substring(cursorPosition);
         })
 
         spamButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :spam: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :spam: ' + text.substring(cursorPosition);
         })
 
         strecherButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :stretcher: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :stretcher: ' + text.substring(cursorPosition);
         })
 
         surprisedButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :surprised: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :surprised: ' + text.substring(cursorPosition);
         })
 
         thanksButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :thanks: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :thanks: ' + text.substring(cursorPosition);
         })
 
         tongueButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :tongue: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :tongue: ' + text.substring(cursorPosition);
         })
 
         totButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :lach: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :lach: ' + text.substring(cursorPosition);
         })
 
         uvdnsButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :dns: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :dns: ' + text.substring(cursorPosition);
         })
 
         vButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :v: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :v: ' + text.substring(cursorPosition);
         })
 
         winkieButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :winkie: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :winkie: ' + text.substring(cursorPosition);
         })
 
         yahooButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :yahoo: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :yahoo: ' + text.substring(cursorPosition);
         })
 
         yesButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :yes: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :yes: ' + text.substring(cursorPosition);
         })
 
         yippyButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :yippy: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :yippy: ' + text.substring(cursorPosition);
         })
 
         guitarButton.addEventListener('click', function () {
-            const cursorPosition = txtEditor.selectionStart;
-            const text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :guitar: ' + text.substring(cursorPosition);
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :guitar: ' + text.substring(cursorPosition);
         })
 
 
         winkButton.addEventListener('click', function () {
-            var cursorPosition = txtEditor.selectionStart;
-            var text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :wink: ' + text.substring(cursorPosition);
+            var cursorPosition = content.selectionStart;
+            var text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :wink: ' + text.substring(cursorPosition);
         })
 
         helpButton.addEventListener('click', function () {
-            var cursorPosition = txtEditor.selectionStart;
-            var text = txtEditor.value;
-            txtEditor.value = text.substring(0, cursorPosition) + ' :help: ' + text.substring(cursorPosition);
+            var cursorPosition = content.selectionStart;
+            var text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :help: ' + text.substring(cursorPosition);
         })
 
 

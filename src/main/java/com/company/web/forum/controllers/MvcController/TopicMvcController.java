@@ -85,24 +85,26 @@ public class TopicMvcController {
     public String editTopicPage(@PathVariable int id, Model model){
         Topic topic = topicService.get(id);
         model.addAttribute("topic", topic);
+        model.addAttribute("topicDto", topicService.get(id));
         return "edit_topic";
     }
 
-    @PutMapping("/edit/{id}")
-    public String createTopic(@Valid @RequestHeader HttpHeaders httpHeaders, @ModelAttribute("topic") TopicDto topicDto, @PathVariable int id, BindingResult errors, Model model) {
+    @PostMapping("/edit/{id}")
+    public String createTopic(@Valid @RequestHeader HttpHeaders httpHeaders, @RequestParam("content") String content, @RequestParam("title") String title, @PathVariable int id, BindingResult errors, Model model) {
         if(errors.hasErrors()){
             model.addAttribute("errorMessage", "Please fill in all required fields.");
             return "edit_topic";
         }
         try {
             User authenticatedUser = authenticationHelper.tryGetUser(httpHeaders);
-            Topic newTopic = topicMapper.createTopicDto(topicDto);
+            Topic newTopic = topicService.get(id);
+            newTopic.setTitle(title);
+            newTopic.setContent(content);
             topicService.update(newTopic, authenticatedUser);
-            return "redirect:/" ;
+            return "redirect:/topic/" + id ;
         } catch (EntityDuplicateException e) {
             model.addAttribute("alreadyExists", e.getMessage());
         }
-
         return "AlreadyExistsView";
     }
 
