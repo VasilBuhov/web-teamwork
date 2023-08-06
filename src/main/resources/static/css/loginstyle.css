@@ -82,7 +82,7 @@ label:first-child {
 .rerun-button.rerun-button {
   border: 1px solid rgba(255, 255, 255, 0.6);
   margin-bottom: 50px;
-  box-shadow: 0px 10px 15px -6px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 15px -6px rgba(0, 0, 0, 0.2);
   display: none;
 }
 
@@ -93,10 +93,8 @@ label:first-child {
 .modal-wrap {
   max-width: 600px;
   margin: 50px auto;
-  -webkit-transition: -webkit-transform 300ms ease-in-out;
-  transition: -webkit-transform 300ms ease-in-out;
-  transition: transform 300ms ease-in-out;
-  transition: transform 300ms ease-in-out, -webkit-transform 300ms ease-in-out;
+  -webkit-transition: -webkit-transform 300ms ease-in-out, transform 300ms ease-in-out;
+  transition: -webkit-transform 300ms ease-in-out, transform 300ms ease-in-out;
 }
 
 .modal-header {
@@ -135,7 +133,7 @@ label:first-child {
 .modal-body {
   background: white;
   padding: 40px 100px;
-  box-shadow: 0px 50px 30px -30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 50px 30px -30px rgba(0, 0, 0, 0.3);
   margin-bottom: 50px;
   position: absolute;
   top: 0;
@@ -143,8 +141,9 @@ label:first-child {
   box-sizing: border-box;
   width: 100%;
   -webkit-transform-origin: top left;
-          transform-origin: top left;
+  transform-origin: top left;
 }
+
 .modal-body.is-showing {
   display: block;
 }
