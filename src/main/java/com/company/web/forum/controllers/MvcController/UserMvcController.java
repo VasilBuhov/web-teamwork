@@ -59,7 +59,7 @@ public class UserMvcController {
         try {
             User user = userService.getUserById(id);
             model.addAttribute("user", user);
-            return "UsersView";
+            return "show_user";
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
             return "NotFoundView";
@@ -131,7 +131,7 @@ public class UserMvcController {
             try {
                 User user = userService.getUserByUsername(username);
                 model.addAttribute("user", userMapper.toDto(user));
-                return "edit-user";
+                return "edit_user";
             } catch (EntityNotFoundException e) {
                 model.addAttribute("error", "User not found");
                 return "NotFoundView";
@@ -148,7 +148,7 @@ public class UserMvcController {
         String username = (String) session.getAttribute("currentUser");
         if (username != null) {
             if (errors.hasErrors()) {
-                return "edit-user"; // Stay on the profile page with error messages
+                return "edit_user"; // Stay on the profile page with error messages
             }
             try {
                 User authenticatedUser = userService.getUserByUsername(username);
@@ -196,7 +196,7 @@ public class UserMvcController {
         if (authenticationHelper.isAdmin(session)) {
             List<User> users = userService.getAllUsers();
             model.addAttribute("users", users);
-            return "admin-panel"; // View for the admin panel
+            return "admin_panel"; // View for the admin panel
         } else {
             return "redirect:/"; // Redirect to home view if not an admin
         }

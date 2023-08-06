@@ -11,110 +11,7 @@
 </head>
 <body>
 <!--======== Navbar =======-->
-<div class="top-bar">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="navbar-menu-left-side239">
-                    <ul>
-                        <li><a href="mailto:telerikforums@gmail.com"><i class="fa fa-envelope-o" aria-hidden="true"></i>Contact</a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-headphones" aria-hidden="true"></i>Support</a></li>
-                        &nbsp;
-                        <!-- Use Thymeleaf expression to check if the user is logged in -->
-                        <li>
-                            <!-- If the currentUser session attribute is not null, display the logout link -->
-                            <a th:href="@{/auth/logout}" th:if="${session.currentUser} != null">
-                                <i class="fa fa-sign-out" aria-hidden="true"></i>Logout
-                            </a>
-                            &nbsp;
-                            <!-- If the currentUser session attribute is null, display the login link -->
-                            <a th:href="@{/auth/login}" th:if="${session.currentUser} == null">
-                                <i class="fa fa-user" aria-hidden="true"></i>&nbsp;Login Area
-                            </a>
-                            <!-- Display the username if the user is logged in -->
-                            <span th:text="${session.currentUser}" th:if="${session.currentUser} != null"></span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="navbar-serch-right-side">
-                    <form class="navbar-form" role="search">
-                        <div class="input-group add-on">
-                            <label for="srch-term"></label>
-                            <input class="form-control form-control222" placeholder="Search" id="srch-term" type="text">
-                            <div class="input-group-btn">
-                                <button class="btn btn-default btn-default2913" type="button" th:field="*{title}"><i
-                                        class="glyphicon glyphicon-search"></i></button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<!-- ==========header mega navbar=======-->
-<div class="top-menu-bottom932">
-    <nav class="navbar navbar-default">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false"><span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#"><img src="/assets/img/flogo.png" alt="FLogo"></a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav"></ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#" th:href="@{/}">Home</a></li>
-                    <li><a href="#" th:href="@{/topics/new}">Ask Question</a></li>
-                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                            aria-haspopup="true" aria-expanded="false">Question <span
-                            class="caret"></span></a>
-                        <ul class="dropdown-menu animated zoomIn">
-                            <li><a href="category.html">Question Category</a></li>
-                            <li><a href="category.html">HTML</a></li>
-                            <li><a href="category.html">CSS</a></li>
-                            <li><a href="category.html">Javascript</a></li>
-                            <li><a href="category.html">Bootstrap</a></li>
-                        </ul>
-                    </li>
-
-                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                            aria-haspopup="true" aria-expanded="false">Blog <span class="caret"></span></a>
-                        <ul class="dropdown-menu animated zoomIn">
-                            <li><a href="blog.html">Blog </a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                            aria-haspopup="true" aria-expanded="false">Page <span class="caret"></span></a>
-                        <ul class="dropdown-menu animated zoomIn">
-                            <li><a href="#" th:href="@{/login}">Login</a></li>
-                            <li><a href="#" th:href="@{/contact_us}" th:text="#{navigation.contact_us}"> Contact Us</a>
-                            </li>
-                            <li><a href="#" th:href="@{/topics/new}"> Ask Question </a></li>
-                            <li><a href="#" th:href="@{/topics}"> Post-Details </a></li>
-                            <li><a href="user.html">All User</a></li>
-                            <li><a href="user_question.html"> User Question </a></li>
-                            <li><a href="category.html"> Category </a></li>
-                            <li><a href="#"> 404 </a></li>
-                        </ul>
-                    </li>
-                    <li><a href="contact_us">Contact us</a></li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container-fluid -->
-    </nav>
-</div>
+<div th:replace="fragments/navbar :: navbar"></div>
 
 
 <!--======= welcome section on top background=====-->
@@ -134,11 +31,15 @@
                         <h2 class="text-center">Login</h2>
                         <form action="#" th:action="@{/auth/login}" th:object="${login}" method="post">
                             <label th:text="#{user.username}">Username</label>
-                            <input type="text" th:field="*{username}">
+                            <label>
+                                <input type="text" th:field="*{username}">
+                            </label>
                             <label class="error" th:errors="*{username}">Username error placeholder</label>
                             <br/><br/>
                             <label th:text="#{user.password}">Password</label>
-                            <input type="password" th:field="*{password}">
+                            <label>
+                                <input type="password" th:field="*{password}">
+                            </label>
                             <label class="error" th:errors="*{password}">Password error placeholder</label>
                             <br/><br/>
                             <div class="button-container">
@@ -151,11 +52,13 @@
             </div>
         </div>>
     </div>>
-</section>>
+</section>
+
+<!--    footer -->
+<div th:replace="fragments/footer :: footer"></div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="../static/js/jquery-3.1.1.min.js" th:href="@{/js/jquery-3.1.1.min.js}"></script>
 <script src="../static/js/bootstrap.min.js" th:href="@{/js/bootstrap.min.js}"></script>
-<script src="../static/js/npm.js" th:href="@{/js/npm.js}"></script>
 </body>
 </html>

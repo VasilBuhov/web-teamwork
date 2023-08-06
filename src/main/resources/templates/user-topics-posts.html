@@ -11,12 +11,7 @@
 </head>
 <body>
 <!-- Add your header and top-bar here -->
-<div class="header">
-  <!-- Your header content goes here -->
-</div>
-<div class="top-bar">
-  <!-- Your top-bar content goes here -->
-</div>
+<div th:replace="fragments/navbar :: navbar"></div>
 
 <!-- Display user's profile information -->
 <div class="container">
@@ -61,6 +56,8 @@
 </div>
 
 <!-- Your footer or other elements go here -->
+<!--    footer -->
+<div th:replace="fragments/footer :: footer"></div>
 
 <!-- Add your Bootstrap and other JavaScript links here -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

@@ -63,6 +63,16 @@
   </style>
 </head>
 <body>
+<!--======== Navbar =======-->
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<!--======= welcome section on top background=====-->
+<section class="welcome-part-one">
+  <div class="container">
+  </div>
+</section>
+
+
 <div class="mid-bar"></div>
 <div class="container min-vh-100">
   <div class="home-container">
@@ -94,9 +104,13 @@
     </div>
   </div>
 </div>
+
+
+<!--    footer -->
+<div th:replace="fragments/footer :: footer"></div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="../static/js/jquery-3.1.1.min.js" th:href="@{/js/jquery-3.1.1.min.js}"></script>
 <script src="../static/js/bootstrap.min.js" th:href="@{/js/bootstrap.min.js}"></script>
-<script src="../static/js/npm.js" th:href="@{/js/npm.js}"></script>
 </body>
 </html>

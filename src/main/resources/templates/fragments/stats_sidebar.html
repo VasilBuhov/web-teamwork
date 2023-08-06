@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Forum stats</title>
+</head>
+<body>
+
+<div th:fragment="stats">
+    <div class="status-part3821">
+        <h4>Forum statistics</h4>
+        <a href="#"><i class="fa fa-question-circle" aria-hidden="true"
+                       th:text="' Active Topics: ' + ${allTopics.size()}"> </i></a>
+        <i class="fa fa-comment" aria-hidden="true"
+           th:text="' Registered Users: ' + ${allUsers.size()}"> </i></div>
+</div>
+</body>
+</html>

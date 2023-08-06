@@ -6,6 +6,8 @@
 
 </head>
 <body>
+<div th:replace="fragments/navbar :: navbar"></div>
+
 <h2>Delete User</h2>
 <form th:action="@{/users/delete}" method="post">
   <label for="id">Enter User ID:</label>
@@ -14,5 +16,8 @@
   <input type="submit" value="Delete">
 </form>
 <a href="/">Cancel</a>
+
+<!--    footer -->
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>
