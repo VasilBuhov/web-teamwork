@@ -2,6 +2,7 @@ package com.company.web.forum.services;
 
 import com.company.web.forum.exceptions.AuthorizationException;
 import com.company.web.forum.exceptions.EntityDeletedException;
+import com.company.web.forum.helpers.ParseContent;
 import com.company.web.forum.helpers.ParseSmileys;
 import com.company.web.forum.models.FilterTopicOptions;
 import com.company.web.forum.models.Topic;
@@ -39,6 +40,7 @@ public class TopicServiceImpl implements TopicService {
         topic.setViews(topic.getViews() + 1);
         repository.updateViews(topic);
         topic.setContent(ParseSmileys.replaceSmileys(topic.getContent()));
+        topic.setContent(ParseContent.formatText(topic.getContent()));
         return topic;
     }
     @Override
@@ -47,6 +49,7 @@ public class TopicServiceImpl implements TopicService {
         List<Topic> resultList = repository.getTopicsByUser(user);
         for (Topic topic : resultList) {
             topic.setContent(ParseSmileys.replaceSmileys(topic.getContent()));
+            topic.setContent(ParseContent.formatText(topic.getContent()));
         }
         return resultList;
     }
@@ -61,6 +64,7 @@ public class TopicServiceImpl implements TopicService {
         List<Topic> resultList = repository.get(sort);
         for (Topic topic : resultList) {
             topic.setContent(ParseSmileys.replaceSmileys(topic.getContent()));
+            topic.setContent(ParseContent.formatText(topic.getContent()));
         }
         return repository.get10(resultList);
     }

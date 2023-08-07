@@ -4,6 +4,7 @@ import com.company.web.forum.exceptions.AuthorizationException;
 import com.company.web.forum.exceptions.EntityDuplicateException;
 import com.company.web.forum.exceptions.EntityNotFoundException;
 import com.company.web.forum.helpers.AuthenticationHelper;
+import com.company.web.forum.helpers.ParseContent;
 import com.company.web.forum.helpers.ParseSmileys;
 import com.company.web.forum.helpers.TopicMapper;
 import com.company.web.forum.models.*;
@@ -11,7 +12,6 @@ import com.company.web.forum.services.TagService;
 import com.company.web.forum.services.TopicService;
 import com.company.web.forum.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -61,6 +61,7 @@ public class TopicMvcController {
             List<Post> postList = new ArrayList<>(topic.getPosts());
             for (Post post : postList) {
                 post.setContent(ParseSmileys.replaceSmileys(post.getContent()));
+                post.setContent(ParseContent.formatText(post.getContent()));
             }
             model.addAttribute("topic", topic);
             model.addAttribute("posts", postList);

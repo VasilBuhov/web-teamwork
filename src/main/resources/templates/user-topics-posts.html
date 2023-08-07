@@ -27,13 +27,11 @@
 <div class="container">
   <h2>User Topics</h2>
   <div class="table">
-    <div class="header">
-      <div class="cell">Title</div>
-      <div class="cell">Content</div>
-      <!-- Add other topic properties you want to display -->
-    </div>
+
     <div class="row" th:each="topic : ${userTopics}">
-      <div class="cell" th:text="${topic.title}"></div>
+      <div class="cell">
+        <a th:href="@{/topics/{id}(id=${topic.id})}" th:text="${topic.title}">Topic</a>
+      </div>
       <div class="cell" th:text="${topic.content}"></div>
     </div>
   </div>
@@ -48,7 +46,9 @@
       <!-- Add other post properties you want to display -->
     </div>
     <div class="row" th:each="post : ${userPosts}">
-      <div class="cell" th:text="${post.content}"></div>
+      <div class="cell">
+        <a th:href="@{/posts/{id}(id=${post.id})}" th:text="${post.content}">Post</a>
+      </div>
       <!-- Add other post properties you want to display -->
     </div>
   </div>
