@@ -8,7 +8,9 @@ import com.company.web.forum.models.User;
 import com.company.web.forum.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpSession;
 
@@ -86,6 +88,7 @@ public class AuthenticationHelper {
         } catch (EntityNotFoundException e){
             throw new AuthenticationFailureException(AUTHENTIFICATION_FAILURE_MESSAGE);
         }
+
     }
     public boolean isAdmin(HttpSession session) {
         String username = (String) session.getAttribute("currentUser");

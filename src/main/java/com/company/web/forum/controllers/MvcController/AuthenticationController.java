@@ -1,6 +1,7 @@
 package com.company.web.forum.controllers.MvcController;
 
 import com.company.web.forum.exceptions.AuthenticationFailureException;
+import com.company.web.forum.exceptions.BlockedUserException;
 import com.company.web.forum.helpers.AuthenticationHelper;
 import com.company.web.forum.models.LoginDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -34,17 +36,21 @@ public class AuthenticationController {
     }
     @PostMapping("/login")
     public String handleLogin(@Valid @ModelAttribute("login") LoginDto dto, BindingResult bindingResult,
-                              HttpSession session){
-        if(bindingResult.hasErrors()){
+                              HttpSession session, RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
             return "loginOld";
         }
+
         try {
-            authenticationHelper.verifyAuthentication(dto.getUsername(),dto.getPassword());
-            session.setAttribute("currentUser",dto.getUsername());
+            authenticationHelper.verifyAuthentication(dto.getUsername(), dto.getPassword());
+            session.setAttribute("currentUser", dto.getUsername());
             return "redirect:/";
-        } catch (AuthenticationFailureException e){
-            bindingResult.rejectValue("username","auth error", e .getMessage());
+        } catch (AuthenticationFailureException e) {
+            bindingResult.rejectValue("username", "auth error", e.getMessage());
             return "loginOld";
+        } catch (BlockedUserException e) {
+            bindingResult.rejectValue("username", "auth error", e.getMessage());
+            return "BlockedUserView";
         }
     }
     @GetMapping("/logout")
