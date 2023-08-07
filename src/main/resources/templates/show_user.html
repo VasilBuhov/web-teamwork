@@ -1,38 +1,160 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>User Details</title>
-  <link href="../static/Styles.css" th:href="@{/Styles.css}" rel="stylesheet"/>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="title" content="Sex life & problems forum">
+    <meta name="description" content="Sex life & problems forum">
+    <meta name="keywords" content="Sex forum">
+    <meta name="robots" content="index, nofollow">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="language" content="English">
+    <title>Sex life & problems forum</title>
+    <link href="../static/css/bootstrap.css" rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}">
+    <link href="../static/css/style.css" rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link href="../static/css/animate.css" rel="stylesheet" type="text/css" th:href="@{/css/animate.css}">
+    <link href="../static/css/font-awesome.min.css" rel="stylesheet" type="text/css"
+          th:href="@{/css/font-awesome.min.css}">
 </head>
 <body>
-<ul>
-  <li><h3><a href="/" th:text="#{navigation.home}">Home</a></h3></li>
-</ul>
+<div th:replace="fragments/navbar :: navbar"></div>
 
-<div th:if="${user == null}">
-  <h2>User not found</h2>
-</div>
+<section class="main-content920">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-11">
+                <div class="ask-question-input-part032">
+                    <div class="share-tags-page-content12092">
 
-<div th:if="${user != null}">
-  <h2>User Details</h2>
-  <div class="table">
-    <div class="header">
-      <div class="cell" th:text="#{user.username}">Username</div>
-      <div class="cell" th:text="#{user.email}">Email</div>
-      <div class="cell" th:text="#{user.firstName}">First Name</div>
-      <div class="cell" th:text="#{user.lastName}">Last Name</div>
-      <div class="cell" th:text="#{user.isAdmin}">Is Admin</div>
+                        <div th:if="${user == null}"><h2>User not found</h2></div>
+
+                        <div th:if="${user != null}">
+                            <h2>User Details</h2>
+                            <div class="user-profile">
+                                <img class="user-avatar" th:src="${user.getAvatar()}" alt="User Avatar">
+                                <div class="user-details">
+                                    <div class="user-details-row">
+                                        <span th:text="'Username: ' + ${user.username}"></span>
+                                    </div>
+                                    <div class="user-details-row">
+                                        <span th:text="'Email: ' + ${user.email}"></span>
+                                    </div>
+                                    <div class="user-details-row">
+                                        <span th:text="'First name: ' + ${user.firstName}"></span>
+                                    </div>
+                                    <div class="user-details-row">
+                                        <span th:text="'Last Name: ' + ${user.lastName}"></span>
+                                    </div>
+                                    <div class="user-details-row">
+                                        <span th:text="'Has admin rights: ' + ${user.isAdmin == 1 ? 'Yes' : 'No'}"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ask-question-input-part032">
+                        <h2>User topics</h2>
+                        <div th:if="${topicsByUser == null}">No matches for topics on this user</div>
+
+
+                        <div class="question-type2033" th:each="topic : ${topicsByUser}">
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <div class="left-user12923 left-user12923-repeat">
+                                        <a href="#" th:href="@{/users/{id}(id=${topic.getCreator().getId()})}"><img
+                                                th:src="${topic.getCreator().getAvatar()}" alt="User Avatar"> </a> <a
+                                            href="#"><i class="fa fa-check" aria-hidden="true"></i></a></div>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="right-description893">
+                                        <div id="que-headder2983">
+                                            <h3><a href="#" th:href="@{/topics/{id}(id=${topic.getId()})}"
+                                                   th:text="${topic.getTitle().length() > 40 ? topic.getTitle().substring(0, 40) + '...' : topic.getTitle()}"> </a>
+                                            </h3></div>
+                                        <a href="#" th:href="@{/users/{id}(id=${topic.getCreator().getId()})}"
+                                           th:text="'Author: ' + ${topic.getCreator().getUsername()}"></a>
+                                        <div class="ques-details10018">
+                                            <p th:utext="${topic.getContent().length() > 255 ? topic.getContent().substring(0, 255) + '...' : topic.getContent()}"></p>
+                                        </div>
+                                        <hr>
+                                        <div class="ques-icon-info3293">
+
+                                            <i class="fa fa-star" aria-hidden="true" th:text="${topic.getLikes}"> </i>
+                                            <i class="fa fa-clock-o" aria-hidden="true"
+                                               th:text="' ' + ${#temporals.format(topic.getCreationDate(), 'dd MMMM, yyyy')}"> </i>
+                                            <a href="#"><i class="fa fa-question-circle-o" aria-hidden="true"> Comment
+                                                on
+                                                this topic</i> </a>
+                                            <a href="#"><i class="fa fa-bug" aria-hidden="true"> Report problem</i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="ques-type302">
+                                        <a href="#">
+                                            <button type="button" class="q-type238"><i class="fa fa-comment"
+                                                                                       aria-hidden="true"
+                                                                                       th:text="' Comments: ' + ${topic.getPosts().size()}">
+                                                 </i></button>
+                                        </a>
+                                        <br/>
+                                        <a href="#">
+                                            <button type="button" class="q-type23 button-ques2973"><i
+                                                    class="fa fa-user-circle-o" aria-hidden="true"
+                                                    th:text="' Views: ' + ${topic.getViews()}">  </i></button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="ask-question-input-part032">
+                        <h2>User comments</h2>
+                        <div th:if="${postsByUser == null}">No matches for comments on this user</div>
+
+                        <div class="question-type2033" th:each="post : ${postsByUser}">
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <div class="left-user12923 left-user12923-repeat">
+                                        <a href="#" th:href="@{/users/{id}(id=${post.getCreator().getId()})}"><img
+                                                th:src="${post.getCreator().getAvatar()}" alt="User Avatar"> </a> <a
+                                            href="#"><i class="fa fa-check" aria-hidden="true"></i></a></div>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="right-description893">
+                                        <a href="#" th:href="@{/users/{id}(id=${post.getCreator().getId()})}"
+                                           th:text="'Author: ' + ${post.getCreator().getUsername()}"></a>
+                                        <div class="ques-details10018">
+                                            <p th:utext="${post.getContent().length() > 500 ? post.getContent().substring(0, 500) + '...' : post.getContent()}"></p>
+                                        </div>
+                                        <hr>
+                                        <div class="ques-icon-info3293">
+                                            <i class="fa fa-star" aria-hidden="true" th:text="${post.getLikes}"> </i>
+                                            <i class="fa fa-clock-o" aria-hidden="true"
+                                               th:text="' ' + ${#temporals.format(post.getCreationDate(), 'dd MMMM, yyyy')}"> </i>
+                                            <a href="#"><i class="fa fa-bug" aria-hidden="true"> Report problem</i></a>
+                                        </div>
+                                        <div id="que-headder2983a">
+                                            <h4><a href="#" th:href="@{/topics/{id}(id=${post.getTopic()})}"
+                                                   th:text="'View in topic...'"> </a>
+                                            </h4></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="row">
-      <div class="cell" th:text="${user.username}">-</div>
-      <div class="cell" th:text="${user.email}">-</div>
-      <div class="cell" th:text="${user.firstName}">-</div>
-      <div class="cell" th:text="${user.lastName}">-</div>
-      <div class="cell" th:text="${user.isAdmin == 1 ? 'Yes' : 'No'}">-</div>
-    </div>
-  </div>
-</div>
-
+</section>
+<br/><br/>
+<!--    footer -->
+<div th:replace="fragments/footer :: footer"></div>
+<script src="/js/jquery-3.1.1.min.js" th:href="@{/js/jquery-3.1.1.min.js}"></script>
+<script src="/js/bootstrap.min.js" th:href="@{/js/bootstrap.min.js}"></script>
 </body>
 </html>

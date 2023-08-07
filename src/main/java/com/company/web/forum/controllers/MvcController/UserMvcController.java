@@ -59,6 +59,10 @@ public class UserMvcController {
         try {
             User user = userService.getUserById(id);
             model.addAttribute("user", user);
+            List<Topic> userTopics = topicService.getTopicsByUser(user);
+            model.addAttribute("topicsByUser", userTopics);
+            List<Post> userPosts = postService.getPostsByUser(user);
+            model.addAttribute("postsByUser", userPosts);
             return "show_user";
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
@@ -170,22 +174,15 @@ public class UserMvcController {
     @GetMapping("/topics-posts/{id}")
     public String getUserProfile(@PathVariable int id, Model model) {
         try {
-            // Get the user by ID
             User user = userService.getUserById(id);
             model.addAttribute("user", user);
-
-            // Get the topics created by the user
             List<Topic> userTopics = topicService.getTopicsByUser(user);
-
             model.addAttribute("userTopics", userTopics);
-
-            // Get the posts created by the user
             List<Post> userPosts = postService.getPostsByUser(user);
             model.addAttribute("userPosts", userPosts);
 
-            return "user-topics-posts"; // The name of the Thymeleaf template file
+            return "user-topics-posts";
         } catch (EntityNotFoundException e) {
-            // Handle the exception as needed, e.g., show a not found page
             return "NotFoundView";
         }
     }
