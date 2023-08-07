@@ -48,8 +48,8 @@ public class PostMvcController {
 //            return "NotFoundView";
 //        }
 //    }
-    @PostMapping("/{id}/new")
-    public String createPostForTopic(@PathVariable int id, @Valid @ModelAttribute("postDto") PostDto postDto, BindingResult bindingResult, Model model) {
+    @PostMapping("/new/{id}")
+    public String createPostForTopic(@PathVariable int id, @Valid @ModelAttribute("post") PostDto postDto, BindingResult bindingResult, Model model, HttpSession session) {
         if (bindingResult.hasErrors()) {
             return "post_details";
         }
@@ -67,7 +67,11 @@ public class PostMvcController {
     }
 
     @GetMapping("/edit/{id}")
-    public String editPostPage(@PathVariable int id, Model model){
+    public String editPostPage(@PathVariable int id, Model model, HttpSession session){
+        String username = (String) session.getAttribute("currentUser");
+        if (username == null) {
+            return "redirect:/auth/login"; // Redirect to the login page
+        }
         try {
             Post post = postService.get(id);
             model.addAttribute("post", post);
