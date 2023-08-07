@@ -21,6 +21,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
@@ -117,19 +118,25 @@ public class UserMvcController {
     }
 
     @PostMapping("/delete")
-    public String deleteUser(@RequestParam("id") int id, HttpSession session) {
+    public String deleteUser(@RequestParam("password") String password, HttpSession session) {
         String username = (String) session.getAttribute("currentUser");
         if (username != null) {
             try {
                 User authenticatedUser = userService.getUserByUsername(username);
-                userService.deleteUser(authenticatedUser, id);
 
+                // Verify the provided password against the user's actual password
+                authenticationHelper.verifyAuthentication(authenticatedUser.getUsername(), password);
+
+                userService.deleteUser(authenticatedUser,authenticatedUser.getId());
+                if(userService.getUserByUsername(username)==null) {
+                    session.invalidate();
+                }
                 // Redirect to the home page after successful deletion
                 return "redirect:/";
-            } catch (EntityNotFoundException e) {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
             } catch (AuthenticationFailureException e) {
                 throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+            } catch (EntityNotFoundException e) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
             }
         } else {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not logged in");
