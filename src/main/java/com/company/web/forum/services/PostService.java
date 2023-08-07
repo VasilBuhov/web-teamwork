@@ -14,8 +14,6 @@ public interface PostService {
 
     Post get(String creatorUsername);
 
-    Post replaceSmileys(Post post);
-
     void update(Post post, User user);
 
     void updateLike(Post post, User user);

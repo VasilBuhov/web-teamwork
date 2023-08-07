@@ -2,6 +2,7 @@ package com.company.web.forum.repositories;
 
 
 import com.company.web.forum.exceptions.EntityNotFoundException;
+import com.company.web.forum.helpers.ParseSmileys;
 import com.company.web.forum.models.FilterTopicOptions;
 import com.company.web.forum.models.Topic;
 import com.company.web.forum.models.User;

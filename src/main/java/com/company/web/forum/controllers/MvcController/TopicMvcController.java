@@ -4,6 +4,7 @@ import com.company.web.forum.exceptions.AuthorizationException;
 import com.company.web.forum.exceptions.EntityDuplicateException;
 import com.company.web.forum.exceptions.EntityNotFoundException;
 import com.company.web.forum.helpers.AuthenticationHelper;
+import com.company.web.forum.helpers.ParseSmileys;
 import com.company.web.forum.helpers.TopicMapper;
 import com.company.web.forum.models.*;
 import com.company.web.forum.services.TagService;
@@ -15,10 +16,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/topics")
@@ -56,10 +58,14 @@ public class TopicMvcController {
             String currentUrl = String.format("localhost:8080/topics/%d", id);
             FilterTopicOptions filterTopicOptions = new FilterTopicOptions();
             Topic topic = topicService.get(id);
+            List<Post> postList = new ArrayList<>(topic.getPosts());
+            for (Post post : postList) {
+                post.setContent(ParseSmileys.replaceSmileys(post.getContent()));
+            }
             model.addAttribute("topic", topic);
-            model.addAttribute("posts", topic.getPosts());
+            model.addAttribute("posts", postList);
             model.addAttribute("tags", topic.getTags());
-            model.addAttribute("toptags", tagService.getTopTags());
+            model.addAttribute("topТags", tagService.getTopTags());
             model.addAttribute("allTopics", topicService.get(filterTopicOptions));
             model.addAttribute("countUsers", userService.getUsersCount());
             model.addAttribute("currentUrl", currentUrl);

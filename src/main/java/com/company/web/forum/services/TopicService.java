@@ -11,10 +11,7 @@ public interface TopicService {
 
     List<Topic> getTopicsByUser(User user);
 
-    Topic replaceSmileys(Topic topic);
-
     List<Topic> get10(String order, String sortBy);
-
 
     Topic get(int id);
 

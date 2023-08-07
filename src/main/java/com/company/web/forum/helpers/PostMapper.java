@@ -3,8 +3,6 @@ package com.company.web.forum.helpers;
 
 import com.company.web.forum.models.Post;
 import com.company.web.forum.models.PostDto;
-import com.company.web.forum.models.Topic;
-import com.company.web.forum.models.TopicDto;
 import com.company.web.forum.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
