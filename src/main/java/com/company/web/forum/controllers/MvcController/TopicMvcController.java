@@ -102,7 +102,7 @@ public class TopicMvcController {
             Topic newTopic = topicMapper.createTopicDto(topicDto);
             User user = userService.getUserByUsername(username);
             topicService.create(newTopic, user);
-            return "redirect:/";
+            return "redirect:/topics/" + newTopic.getId();
         } catch (EntityDuplicateException e) {
             model.addAttribute("alreadyExists", e.getMessage());
         }
