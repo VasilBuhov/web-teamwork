@@ -35,6 +35,7 @@ public class HomeMvcController {
         model.addAttribute("allTopics", topicService.get(filterTopicOptions));
         model.addAttribute("countUsers", userService.getUsersCount());
         model.addAttribute("topТags", tagService.getTopTags());
+        model.addAttribute("topUsers", userService.getAllUsers());
         return "index";
     }
 

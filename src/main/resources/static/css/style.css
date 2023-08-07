@@ -2359,3 +2359,26 @@ h5:hover {
 .ques-type302b {
     text-align: left;
 }
+.user-profile {
+    display: flex;
+    align-items: center;
+}
+
+.user-avatar {
+    width: 100px;
+    height: 100px;
+    margin-right: 20px;
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-details-row {
+    margin-bottom: 10px;
+}
+
+.user-details-row .label {
+    font-weight: bold;
+}
