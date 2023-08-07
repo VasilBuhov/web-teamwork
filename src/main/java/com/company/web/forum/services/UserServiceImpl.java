@@ -27,6 +27,10 @@ public class UserServiceImpl implements UserService {
     public List<User> getAllUsers() {
         return userRepository.getAllUsers();
     }
+    @Override
+    public List<User> getTopThreeUsers() {
+        return userRepository.getTopThreeUsers();
+    }
 
     public long getUsersCount() {
         return userRepository.getUsersCount();

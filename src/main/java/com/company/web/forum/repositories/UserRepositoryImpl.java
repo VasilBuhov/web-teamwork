@@ -11,6 +11,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Repository
@@ -34,6 +35,23 @@ public class UserRepositoryImpl implements UserRepository {
             return session.createQuery(cq).list();
         } catch (Exception e) {
             // Handle exceptions  // I should think a bit more here
+            return new ArrayList<>();
+        }
+    }
+
+    @Override
+    public List<User> getTopThreeUsers() {
+        List<String> desiredUsernames = Arrays.asList("Leda.Yovkova", "Nina.Poneva", "Yanislav.Dimitrov"); // Add the desired usernames here
+
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<User> cq = cb.createQuery(User.class);
+            Root<User> root = cq.from(User.class);
+            cq.select(root);
+            cq.where(root.get("username").in(desiredUsernames));
+            cq.orderBy(cb.asc(root.get("username")));
+            return session.createQuery(cq).setMaxResults(3).getResultList();
+        } catch (Exception e) {
             return new ArrayList<>();
         }
     }
