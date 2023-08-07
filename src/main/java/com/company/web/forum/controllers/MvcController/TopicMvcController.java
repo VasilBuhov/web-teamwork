@@ -47,7 +47,7 @@ public class TopicMvcController {
     }
 
     @GetMapping("/{id}")
-    public String showSingleTopic(@PathVariable int id, Model model,HttpSession session) {
+    public String showSingleTopic(@PathVariable int id, Model model, HttpSession session) {
         String username = (String) session.getAttribute("currentUser");
         if (username == null) {
             return "redirect:/auth/login"; // Redirect to the login page
@@ -77,28 +77,31 @@ public class TopicMvcController {
     }
 
     @GetMapping("/new")
-    public String showNewTopicPage(Model model,HttpSession session){
+    public String showNewTopicPage(Model model, HttpSession session) {
         String username = (String) session.getAttribute("currentUser");
         if (username == null) {
-            return "redirect:/auth/login"; // Redirect to the login page
+            return "redirect:/auth/login";
         }
 
-
-            model.addAttribute("topic", new TopicDto());
+        model.addAttribute("topic", new TopicDto());
         return "ask_question";
     }
 
     @PostMapping("/new")
-    public String createTopic(@Valid @RequestHeader HttpHeaders httpHeaders, @ModelAttribute("topic") TopicDto topicDto, BindingResult errors, Model model) {
-        if(errors.hasErrors()){
+    public String createTopic(@Valid @ModelAttribute("topic") TopicDto topicDto, BindingResult errors, Model model, HttpSession session) {
+        String username = (String) session.getAttribute("currentUser");
+        if (username == null) {
+            return "redirect:/auth/login";
+        }
+        if (errors.hasErrors()) {
             model.addAttribute("errorMessage", "Please fill in all required fields.");
             return "ask_question";
         }
         try {
-            User authenticatedUser = authenticationHelper.tryGetUser(httpHeaders);
             Topic newTopic = topicMapper.createTopicDto(topicDto);
-            topicService.create(newTopic, authenticatedUser);
-            return "redirect:/" ;
+            User user = userService.getUserByUsername(username);
+            topicService.create(newTopic, user);
+            return "redirect:/";
         } catch (EntityDuplicateException e) {
             model.addAttribute("alreadyExists", e.getMessage());
         }
@@ -107,7 +110,7 @@ public class TopicMvcController {
     }
 
     @GetMapping("/edit/{id}")
-    public String editTopicPage(@PathVariable int id, Model model ,HttpSession session){
+    public String editTopicPage(@PathVariable int id, Model model, HttpSession session) {
         String username = (String) session.getAttribute("currentUser");
         if (username == null) {
             return "redirect:/auth/login"; // Redirect to the login page
@@ -119,32 +122,32 @@ public class TopicMvcController {
             model.addAttribute("tags", tagService.getTopicTags(id));
             return "edit_topic";
         } catch (EntityNotFoundException e) {
-        model.addAttribute("error", e.getMessage());
-        return "NotFoundView";
-    }
+            model.addAttribute("error", e.getMessage());
+            return "NotFoundView";
+        }
     }
 
     @PostMapping("/edit/{id}")
     public String editTopic(@PathVariable int id, @Valid @ModelAttribute("post") TopicDto topicDto, BindingResult errors, Model model, HttpSession session) {
-        if(errors.hasErrors()){
+        if (errors.hasErrors()) {
             model.addAttribute("errorMessage", "Please fill in all required fields.");
             return "edit_topic";
         }
 
-            try {
-                Topic topic = topicMapper.updateTopicDto(topicDto, id);
-                String username = (String) session.getAttribute("currentUser");
-                User user = userService.getUserByUsername(username);
-                topicService.update(topic, user);
-                return "redirect:/topics/" + id ;
-            } catch (EntityNotFoundException e) {
-                model.addAttribute("error", e.getMessage());
-                return "NotFoundView";
+        try {
+            Topic topic = topicMapper.updateTopicDto(topicDto, id);
+            String username = (String) session.getAttribute("currentUser");
+            User user = userService.getUserByUsername(username);
+            topicService.update(topic, user);
+            return "redirect:/topics/" + id;
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("error", e.getMessage());
+            return "NotFoundView";
 
-            } catch (AuthorizationException e){
-                model.addAttribute("error", e.getMessage());
-                return "UnauthorizedView";
-            }
+        } catch (AuthorizationException e) {
+            model.addAttribute("error", e.getMessage());
+            return "UnauthorizedView";
+        }
     }
 
 }

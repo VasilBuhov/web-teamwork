@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Sex life & problems forum new post</title> <!-- Add the <title> element here -->
+    <title>Sex-life Problems forum new post</title> <!-- Add the <title> element here -->
     <meta name="description"
           content="The Ask is a bootstrap design help desk, support forum website template coded and designed with bootstrap Design, Bootstrap, HTML5 and CSS. Ask ideal for wiki sites, knowledge base sites, support forum sites">
     <meta name="keywords"
@@ -28,10 +28,10 @@
 <div th:replace="fragments/navbar :: navbar"></div>
 <section class="header-descriptin329">
     <div class="container">
-        <h3>Ask Question</h3>
+        <h3>Create Topic</h3>
         <ol class="breadcrumb breadcrumb839">
             <li><a href="#" th:href="@{/}">Home</a></li>
-            <li class="active">Ask Question</li>
+            <li class="active">Create Topic</li>
         </ol>
     </div>
 </section>
@@ -40,20 +40,96 @@
         <div class="row">
             <div class="col-md-9">
                 <div class="ask-question-input-part032">
-                    <h4>Ask Question</h4>
+                    <h4>Create Topic</h4>
                     <hr>
-                    <form>
+                    <form action="#" name="topic" th:action="@{/topics/new}" method="post" th:object="${topic}">
                         <div class="question-title39">
-                            <span class="form-description433">Question-Title* </span>
+                            <span class="form-description433">Topic-Title* </span>
                             <label>
-                                <input type="text" name="fname" class="question-tile32" placeholder="Write Your Question Title">
+                                <input type="text" name="title" class="question-tile32" th:field="*{title}">
                             </label>
+                        </div>
+                        <div class="question-title39">
+                            <span class="form-description433">Insert smileys </span>
+                            <div class="emoticon-container">
+                                <img src="/assets/img/emoticons/icon_applause.gif" id="insertApplause"
+                                     alt="Insert applause">
+                                <img src="/assets/img/emoticons/icon_betruebt.gif" id="insertBet" alt="Insert Bet">
+                                <img src="/assets/img/emoticons/icon_biggrin.gif" id="insertBig" alt="Insert Big">
+                                <img src="/assets/img/emoticons/icon_blink.gif" id="insertBlink" alt="Insert Blink">
+                                <img src="/assets/img/emoticons/icon_bow.gif" id="insertBow" alt="Insert Bow">
+                                <img src="/assets/img/emoticons/icon_cheers.gif" id="insertCheers" alt="Insert Cheers">
+                                <img src="/assets/img/emoticons/icon_clapping.gif" id="insertClapping"
+                                     alt="Insert Clapping">
+                                <img src="/assets/img/emoticons/icon_confused.gif" id="insertConfused"
+                                     alt="Insert Confused">
+                                <img src="/assets/img/emoticons/icon_cry.gif" id="insertCry" alt="Insert Cry">
+                                <img src="/assets/img/emoticons/icon_dance2.gif" id="insertDance2" alt="Insert Dance 2">
+                                <img src="/assets/img/emoticons/icon_dance3.gif" id="insertDance3" alt="Insert Dance 3">
+                                <img src="/assets/img/emoticons/icon_daumen.gif" id="insertDaumen" alt="Insert Daumen">
+                                <img src="/assets/img/emoticons/icon_down.gif" id="insertDown" alt="Insert Down">
+                                <img src="/assets/img/emoticons/icon_drinking.gif" id="insertDrinking"
+                                     alt="Insert Drinking">
+                                <img src="/assets/img/emoticons/icon_duckundweg.gif" id="insertDuck" alt="Insert Wink">
+                                <img src="/assets/img/emoticons/icon_dudu.gif" id="insertDudu" alt="Insert Wink">
+                                <img src="/assets/img/emoticons/icon_faint.gif" id="insertFaint" alt="Insert Faint">
+                                <img src="/assets/img/emoticons/icon_gaehn.gif" id="insertGae" alt="Insert Gae">
+                                <img src="/assets/img/emoticons/icon_hehehe.gif" id="insertHehehe" alt="Insert Hehehe">
+                                <img src="/assets/img/emoticons/icon_help.gif" id="insertHelp" alt="Insert Help">
+                                <img src="/assets/img/emoticons/icon_hihi.gif" id="insertHihi" alt="Insert Hihi">
+                                <img src="/assets/img/emoticons/icon_kaffee.gif" id="insertKaffee" alt="Insert Kaffee">
+                                <img src="/assets/img/emoticons/icon_kiss.gif" id="insertKiss" alt="Insert Kiss">
+                                <img src="/assets/img/emoticons/icon_kissed.gif" id="insertKissed" alt="Insert Kissed">
+                                <img src="/assets/img/emoticons/icon_kop.gif" id="insertKop" alt="Insert Kop">
+                                <img src="/assets/img/emoticons/icon_lol.gif" id="insertLol" alt="Insert Lol">
+                                <img src="/assets/img/emoticons/icon_mad.gif" id="insertMad" alt="Insert Mad">
+                                <img src="/assets/img/emoticons/icon_mmh.gif" id="insertMmh" alt="Insert Mmh">
+                                <img src="/assets/img/emoticons/icon_mml.gif" id="insertMml" alt="Insert Mml">
+                                <img src="/assets/img/emoticons/icon_muahah.gif" id="insertMuahaha"
+                                     alt="Insert Muahaha">
+                                <img src="/assets/img/emoticons/icon_music.gif" id="insertMusic" alt="Insert Music">
+                                <img src="/assets/img/emoticons/icon_ohhno.gif" id="insertOhhno" alt="Insert Ohhno">
+                                <img src="/assets/img/emoticons/icon_oops.gif" id="insertOops" alt="Insert Oops">
+                                <img src="/assets/img/emoticons/icon_pat.gif" id="insertPat" alt="Insert Pat">
+                                <img src="/assets/img/emoticons/icon_pff.gif" id="insertPff" alt="Insert Pff">
+                                <img src="/assets/img/emoticons/icon_pop.gif" id="insertPop" alt="Insert Pop">
+                                <img src="/assets/img/emoticons/icon_psst.gif" id="insertPsst" alt="Insert Psst">
+                                <img src="/assets/img/emoticons/icon_rofl.gif" id="insertRofl" alt="Insert Rofl">
+                                <img src="/assets/img/emoticons/icon_sad.gif" id="insertSad" alt="Insert Sad">
+                                <img src="/assets/img/emoticons/icon_sauer.gif" id="insertSauer" alt="Insert Sauer">
+                                <img src="/assets/img/emoticons/icon_slap.gif" id="insertSlap" alt="Insert Slap">
+                                <img src="/assets/img/emoticons/icon_sleeping.gif" id="insertSleeping"
+                                     alt="Insert Sleeping">
+                                <img src="/assets/img/emoticons/icon_slide.gif" id="insertSlide" alt="Insert Slide">
+                                <img src="/assets/img/emoticons/icon_smile.gif" id="insertSmile" alt="Insert Smile">
+                                <img src="/assets/img/emoticons/icon_spam.gif" id="insertSpam" alt="Insert Spam">
+                                <img src="/assets/img/emoticons/icon_stretcher.gif" id="insertStrecher"
+                                     alt="Insert Strecher">
+                                <img src="/assets/img/emoticons/icon_surprised.gif" id="insertSurprised"
+                                     alt="Insert Surprised">
+                                <img src="/assets/img/emoticons/icon_thanks.gif" id="insertThanks" alt="Insert Thanks">
+                                <img src="/assets/img/emoticons/icon_tongue.gif" id="insertTongue" alt="Insert Tongue">
+                                <img src="/assets/img/emoticons/icon_totlach.gif" id="insertTotlach"
+                                     alt="Insert Totlach">
+                                <img src="/assets/img/emoticons/icon_uvdns.gif" id="insertUvdns" alt="Insert Uvdns">
+                                <img src="/assets/img/emoticons/icon_v.gif" id="insertV" alt="Insert V">
+                                <img src="/assets/img/emoticons/icon_wandschlag.gif" id="insertWand" alt="Insert Wand">
+                                <img src="/assets/img/emoticons/icon_winkie.gif" id="insertWinkie" alt="Insert Winkie">
+                                <img src="/assets/img/emoticons/icon_yahoo.gif" id="insertYahoo" alt="Insert Yahoo">
+                                <img src="/assets/img/emoticons/icon_yes.gif" id="insertYes" alt="Insert Yes">
+                                <img src="/assets/img/emoticons/icon_yippy.gif" id="insertYippy" alt="Insert Yippy">
+                                <img src="/assets/img/emoticons/music_guitar.gif" id="insertGuitar" alt="Insert Guitar">
+
+                                <img src="/assets/img/emoticons/icon_wink.gif" id="insertWink" alt="Insert Wink">
+
+                            </div>
                         </div>
                         <div class="details2-239">
                             <div class="col-md-12 nopadding">
                                 <span class="form-description433">Content* </span>
                                 <label for="content"></label>
-                                <textarea id="content" class="question-textarea"></textarea>
+                                <textarea id="content" class="question-textarea" th:field="*{content}">
+                                </textarea>
                             </div>
                         </div>
                         <div class="details2-239">
