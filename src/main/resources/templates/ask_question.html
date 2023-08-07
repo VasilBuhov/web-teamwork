@@ -48,6 +48,9 @@
                             <label>
                                 <input type="text" name="title" class="question-tile32" th:field="*{title}">
                             </label>
+                            <div th:if="${#fields.hasErrors('title')}" class="alert alert-danger" role="alert">
+                                <p th:errors="*{title}"></p>
+                            </div>
                         </div>
                         <div class="question-title39">
                             <span class="form-description433">Insert smileys </span>
@@ -130,6 +133,9 @@
                                 <label for="content"></label>
                                 <textarea id="content" class="question-textarea" th:field="*{content}">
                                 </textarea>
+                                <div th:if="${#fields.hasErrors('content')}" class="alert alert-danger" role="alert">
+                                    <p th:errors="*{content}"></p>
+                                </div>
                             </div>
                         </div>
                         <div class="details2-239">
