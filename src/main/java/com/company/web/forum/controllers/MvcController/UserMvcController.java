@@ -172,7 +172,7 @@ public class UserMvcController {
         }
     }
     @GetMapping("/topics-posts/{id}")
-    public String getUserProfile(@PathVariable int id, Model model) {
+    public String getUserTopicAndPosts(@PathVariable int id, Model model) {
         try {
             User user = userService.getUserById(id);
             model.addAttribute("user", user);
