@@ -69,6 +69,7 @@ public class TopicMvcController {
             model.addAttribute("topТags", tagService.getTopTags());
             model.addAttribute("allTopics", topicService.get(filterTopicOptions));
             model.addAttribute("countUsers", userService.getUsersCount());
+            model.addAttribute("topUsers", userService.getTopThreeUsers());
             model.addAttribute("currentUrl", currentUrl);
             Post post = new Post();
             model.addAttribute("post", post);
