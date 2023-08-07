@@ -9,66 +9,19 @@
 <div th:fragment="topusers">
     <div class="highest-part302">
         <h4>Top users</h4>
-
-        <div class="pints-wrapper">
+        <div class="pints-wrapper" th:each="user : ${topUsers}">
             <div class="left-user3898">
-                <a href="#"><img src="/assets/img/images.png" alt="Image"></a>
+                <a href="#" th:href="@{/users/{id}(id=${user.getId()})}"><img th:src="${user.getAvatar()}"
+                                                                              alt="User Avatar"></a>
                 <div class="imag-overlay39"><a href="#"><i class="fa fa-plus" aria-hidden="true"></i></a>
                 </div>
             </div>
             <span class="points-details938">
-<a href="#"><h5>Ahmed Hasan</h5></a>
-<a href="#" class="designetion439">Pundit</a>
-<p>206 points</p>
-</span></div>
-        <hr>
-        <div class="pints-wrapper">
-            <div class="left-user3898">
-                <a href="#"><img src="/assets/img/images.png" alt="Image"></a>
-                <div class="imag-overlay39"><a href="#"><i class="fa fa-plus" aria-hidden="true"></i></a>
-                </div>
-            </div>
-            <span class="points-details938">
-<a href="#"><h5>Ahmed Hasan</h5></a>
-<a href="#" class="designetion439">Pundit</a>
-<p>206 points</p>
-</span></div>
-        <hr>
-        <div class="pints-wrapper">
-            <div class="left-user3898">
-                <a href="#"><img src="/assets/img/images.png" alt="Image"></a>
-                <div class="imag-overlay39"><a href="#"><i class="fa fa-plus" aria-hidden="true"></i></a>
-                </div>
-            </div>
-            <span class="points-details938">
-<a href="#"><h5>Ahmed Hasan</h5></a>
-<a href="#" class="designetion439">Pundit</a>
-<p>206 points</p>
-</span></div>
-        <hr>
-        <div class="pints-wrapper">
-            <div class="left-user3898">
-                <a href="#"><img src="/assets/img/images.png" alt="Image"></a>
-                <div class="imag-overlay39"><a href="#"><i class="fa fa-plus" aria-hidden="true"></i></a>
-                </div>
-            </div>
-            <span class="points-details938">
-<a href="#"><h5>Ahmed Hasan</h5></a>
-<a href="#" class="designetion439">Pundit</a>
-<p>206 points</p>
-</span></div>
-        <hr>
-        <div class="pints-wrapper">
-            <div class="left-user3898">
-                <a href="#"><img src="/assets/img/images.png" alt="Image"></a>
-                <div class="imag-overlay39"><a href="#"><i class="fa fa-plus" aria-hidden="true"></i></a>
-                </div>
-            </div>
-            <span class="points-details938">
-<a href="#"><h5>Ahmed Hasan</h5></a>
-<a href="#" class="designetion439">Pundit</a>
-<p>206 points</p>
-</span></div>
+                  <h5 th:text="${user.getUsername()}"></h5>
+                  <p th:text="${user.getId()} + ' points'"></p>
+            </span>
+            <hr>
+        </div>
     </div>
 </div>
 
