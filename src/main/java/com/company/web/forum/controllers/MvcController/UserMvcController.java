@@ -167,7 +167,7 @@ public class UserMvcController {
             return "redirect:/auth/login"; // Redirect to the login page if not logged in
         }
     }
-    @GetMapping("/profile/{id}")
+    @GetMapping("/topics-posts/{id}")
     public String getUserProfile(@PathVariable int id, Model model) {
         try {
             // Get the user by ID
@@ -196,7 +196,7 @@ public class UserMvcController {
             model.addAttribute("users", users);
             return "admin_panel"; // View for the admin panel
         } else {
-            return "redirect:/"; // Redirect to home view if not an admin
+            return "UnauthorizedView"; // Redirect to home view if not an admin
         }
     }
     @PostMapping("/{id}/block")
