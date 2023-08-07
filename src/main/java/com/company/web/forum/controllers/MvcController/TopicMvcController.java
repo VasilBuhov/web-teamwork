@@ -70,6 +70,8 @@ public class TopicMvcController {
             model.addAttribute("allTopics", topicService.get(filterTopicOptions));
             model.addAttribute("countUsers", userService.getUsersCount());
             model.addAttribute("currentUrl", currentUrl);
+            Post post = new Post();
+            model.addAttribute("post", post);
             return "post_details";
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
@@ -116,6 +118,7 @@ public class TopicMvcController {
         if (username == null) {
             return "redirect:/auth/login"; // Redirect to the login page
         }
+
         try {
             Topic topic = topicService.get(id);
             model.addAttribute("topic", topic);

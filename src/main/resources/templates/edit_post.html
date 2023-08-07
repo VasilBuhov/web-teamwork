@@ -45,15 +45,10 @@
     <div class="row">
       <div class="col-md-9">
         <div class="ask-question-input-part032">
-          <h4>Edit Topic </h4>
+          <h4>Edit Post </h4>
           <hr>
           <form name="topic" th:action="@{/posts/edit/{id}(id=${post.getId()})}" method="post" th:object="${post}">
-            <div class="question-title39">
-              <span class="form-description433">Topic-Title* </span>
-<!--              <label>-->
-<!--                <input type="text" name="title" class="question-tile32" th:field="*{title}" th:value="${topic.getTitle()}">-->
-<!--              </label>-->
-            </div>
+
             <div class="question-title39">
               <span class="form-description433">Insert smileys </span>
               <div class="emoticon-container">
