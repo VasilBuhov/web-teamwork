@@ -61,7 +61,6 @@ public class TopicRepositoryImpl implements TopicRepository {
             Query<Topic> query = session.createQuery(queryString, Topic.class);
             query.setProperties(params);
 
-            //query.setMaxResults(10);
 
             return query.list();
         }
@@ -83,6 +82,7 @@ public class TopicRepositoryImpl implements TopicRepository {
             return topic;
         }
     }
+
     @Override
     public List<Topic> getTopicsByUser(User user) {
         try (Session session = sessionFactory.openSession()) {

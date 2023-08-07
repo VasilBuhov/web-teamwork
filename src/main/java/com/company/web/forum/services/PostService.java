@@ -11,9 +11,13 @@ public interface PostService {
     List<Post> get(FilterPostOptions filterPostOptions);
 
     Post get(int id);
+
     Post get(String creatorUsername);
 
-     void update(Post post, User user);
+    Post replaceSmileys(Post post);
+
+    void update(Post post, User user);
+
     void updateLike(Post post, User user);
 
     List<Post> getPostsByUser(User user);

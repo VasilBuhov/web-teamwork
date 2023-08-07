@@ -43,11 +43,13 @@
                 <div class="ask-question-input-part032">
                     <h4>Edit Topic Question</h4>
                     <hr>
-                    <form name="topic" th:action="@{/topics/edit/{id}(id=${topic.getId()})}" method="post" th:object="${topic}">
+                    <form name="topic" th:action="@{/topics/edit/{id}(id=${topic.getId()})}" method="post"
+                          th:object="${topic}">
                         <div class="question-title39">
                             <span class="form-description433">Question-Title* </span>
                             <label>
-                                <input type="text" name="title" class="question-tile32" th:field="*{title}" th:value="${topic.getTitle()}">
+                                <input type="text" name="title" class="question-tile32" th:field="*{title}"
+                                       th:value="${topic.getTitle()}">
                             </label>
                         </div>
                         <div class="question-title39">
@@ -130,7 +132,8 @@
                             <div class="col-md-12 nopadding">
                                 <span class="form-description433">Content* </span>
                                 <label for="content"></label>
-                                <textarea id="content" class="question-textarea" th:field="*{content}" th:text="${topic.getContent()}">
+                                <textarea id="content" class="question-textarea" th:field="*{content}"
+                                          th:text="${topic.getContent()}">
                                 </textarea>
 
                             </div>
@@ -139,7 +142,8 @@
                         <div class="question-title39">
                             <span class="form-description433">Tags </span>
                             <label>
-                                <input type="text" name="tags" class="question-tile32" th:field="*{tags}" th:value="${topic.getTags()}">
+                                <input type="text" name="tags" class="question-tile32" th:field="*{tags}"
+                                       th:value="${topic.getTags()}">
                             </label>
                         </div>
                         <div class="publish-button2389">

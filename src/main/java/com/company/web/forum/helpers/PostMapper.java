@@ -35,6 +35,11 @@ public class PostMapper {
         post.setContent(dto.getContent());
         return post;
     }
+    public Post updatePostDto(PostDto dto, int id) {
+        Post post = postService.get(id);
+        post.setContent(dto.getContent());
+        return post;
+    }
 
     public PostDto toDto(Post post) {
         PostDto postDto = new PostDto();
