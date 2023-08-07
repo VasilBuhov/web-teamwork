@@ -15,12 +15,5 @@ public class ForumApplication {
     public static void main(String[] args) {
         SpringApplication.run(ForumApplication.class, args);
     }
-    public Docket swaggerConfiguration() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .select()
-                .paths(PathSelectors.ant("/api/**"))
-                .apis(RequestHandlerSelectors.basePackage("io.javabrains"))
-                .build();
-    }
 
 }
