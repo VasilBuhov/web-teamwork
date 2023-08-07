@@ -48,14 +48,22 @@ public class UserMvcController {
     }
 
     @GetMapping
-    public String showAllUsers(Model model) {
+    public String showAllUsers(Model model,HttpSession session) {
+        String username = (String) session.getAttribute("currentUser");
+        if (username == null) {
+            return "redirect:/auth/login";
+        }
         List<User> users = userService.getAllUsers();
         model.addAttribute("users", users);
         return "users";
     }
 
     @GetMapping("/{id}")
-    public String showSingleUser(@PathVariable int id, Model model) {
+    public String showSingleUser(@PathVariable int id, Model model,HttpSession session) {
+        String username = (String) session.getAttribute("currentUser");
+        if (username == null) {
+            return "redirect:/auth/login";
+        }
         try {
             User user = userService.getUserById(id);
             model.addAttribute("user", user);
