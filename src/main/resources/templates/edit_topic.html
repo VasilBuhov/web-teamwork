@@ -126,6 +126,12 @@
                                 <img src="/assets/img/emoticons/icon_wink.gif" id="insertWink" alt="Insert Wink">
 
                             </div>
+                            <div>
+                                <img src="/assets/img/icon_bold.jpg" id="boldText" alt="Bold Text" th:width="20px" th:height="20px">
+                                <img src="/assets/img/icon_underline.jpg" id="underlineText" alt="Underline Text" th:width="20px" th:height="20px">
+                                <img src="/assets/img/icon_italic.jpg" id="italicText" alt="Italic Text" th:width="20px" th:height="20px">
+                                <img src="/assets/img/icon_add_image.jpg" id="addImage" alt="Add Image" th:width="20px" th:height="20px">
+                            </div>
                         </div>
 
                         <div class="details2-239">
@@ -574,7 +580,6 @@
             content.value = text.substring(0, cursorPosition) + ' :guitar: ' + text.substring(cursorPosition);
         })
 
-
         winkButton.addEventListener('click', function () {
             var cursorPosition = content.selectionStart;
             var text = content.value;
@@ -585,6 +590,9 @@
             var cursorPosition = content.selectionStart;
             var text = content.value;
             content.value = text.substring(0, cursorPosition) + ' :help: ' + text.substring(cursorPosition);
+
+        //!!!!!!
+
         });
     });
 </script>
