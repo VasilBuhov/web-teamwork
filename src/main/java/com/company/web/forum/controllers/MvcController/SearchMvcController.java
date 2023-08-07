@@ -36,6 +36,7 @@ public class SearchMvcController {
         model.addAttribute("allTopics", topicService.get(noFilterTopicOptions));
         model.addAttribute("countUsers", userService.getUsersCount());
         model.addAttribute("topTags", tagService.getTopTags());
+        model.addAttribute("topUsers", userService.getTopThreeUsers());
         return "SearchBarView";
     }
 }

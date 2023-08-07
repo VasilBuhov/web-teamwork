@@ -164,12 +164,429 @@
 <script src="/js/editor.js" th:href="@{/js/editor.js}"></script>
 
 
+<!--<script>-->
+<!--    $(document).ready(function () {-->
+<!--        $("#content").Editor();-->
+<!--    });-->
+<!--</script>-->
 <script>
-    $(document).ready(function () {
-        $("#content").Editor();
+    document.addEventListener('DOMContentLoaded', function () {
+        const applauseButton = document.getElementById('insertApplause'),
+            betButton = document.getElementById('insertBet'),
+            bigButton = document.getElementById('insertBig'),
+            bowButton = document.getElementById('insertBow'),
+            blinkButton = document.getElementById('insertBlink'),
+            cheersButton = document.getElementById('insertCheers'),
+            clappingButton = document.getElementById('insertClapping'),
+            confusedButton = document.getElementById('insertConfused'),
+            cryButton = document.getElementById('insertCry'),
+            dance2Button = document.getElementById('insertDance2'),
+            dance3Button = document.getElementById('insertDance3'),
+            daumenButton = document.getElementById('insertDaumen'),
+            downButton = document.getElementById('insertDown'),
+            drinkingButton = document.getElementById('insertDrinking'),
+            duckButton = document.getElementById('insertDuck'),
+            duduButton = document.getElementById('insertDudu'),
+            faintButton = document.getElementById('insertFaint'),
+            gaeButton = document.getElementById('insertGae'),
+            heheheButton = document.getElementById('insertHehehe'),
+            helpButton = document.getElementById('insertHelp'),
+            hihiButton = document.getElementById('insertHihi'),
+            kaffeeButton = document.getElementById('insertKaffee'),
+            kissButton = document.getElementById('insertKiss'),
+            kissedButton = document.getElementById('insertKissed'),
+            kopButton = document.getElementById('insertKop'),
+            lolButton = document.getElementById('insertLol'),
+            madButton = document.getElementById('insertMad'),
+            mmhButton = document.getElementById('insertMmh'),
+            mmlButton = document.getElementById('insertMml'),
+            muahahaButton = document.getElementById('insertMuahaha'),
+            musicButton = document.getElementById('insertMusic'),
+            ohhnoButton = document.getElementById('insertOhhno'),
+            oopsButton = document.getElementById('insertOops'),
+            patButton = document.getElementById('insertPat'),
+            pffButton = document.getElementById('insertPff'),
+            popButton = document.getElementById('insertPop'),
+            psstButton = document.getElementById('insertPsst'),
+            roflButton = document.getElementById('insertRofl'),
+            sadButton = document.getElementById('insertSad'),
+            slapButton = document.getElementById('insertSlap'),
+            sleepingButton = document.getElementById('insertSleeping'),
+            slideButton = document.getElementById('insertSlide'),
+            smileButton = document.getElementById('insertSmile'),
+            spamButton = document.getElementById('insertSpam'),
+            strecherButton = document.getElementById('insertStrecher'),
+            surprisedButton = document.getElementById('insertSurprised'),
+            thanksButton = document.getElementById('insertThanks'),
+            tongueButton = document.getElementById('insertTongue'),
+            totButton = document.getElementById('insertTotlach'),
+            uvdnsButton = document.getElementById('insertUvdns'),
+            vButton = document.getElementById('insertV'),
+            winkieButton = document.getElementById('insertWinkie'),
+            yahooButton = document.getElementById('insertYahoo'),
+            yesButton = document.getElementById('insertYes'),
+            yippyButton = document.getElementById('insertYippy'),
+            guitarButton = document.getElementById('insertGuitar'),
+            winkButton = document.getElementById('insertWink');
+        var content = document.getElementById('content');
+
+        applauseButton.addEventListener('click', function () {
+                const cursorPosition = content.selectionStart;
+                const text = content.value;
+                content.value = text.substring(0, cursorPosition) + ' :applause: ' + text.substring(cursorPosition);
+            }
+        )
+
+        betButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :bet: ' + text.substring(cursorPosition);
+        })
+
+        bigButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :big: ' + text.substring(cursorPosition);
+        })
+
+        bigButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :big: ' + text.substring(cursorPosition);
+        })
+
+        bowButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :bow: ' + text.substring(cursorPosition);
+        })
+
+        blinkButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :blink: ' + text.substring(cursorPosition);
+        })
+
+        cheersButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :cheers: ' + text.substring(cursorPosition);
+        })
+
+        clappingButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :clap: ' + text.substring(cursorPosition);
+        })
+
+        confusedButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :confused: ' + text.substring(cursorPosition);
+        })
+
+        cryButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :cry: ' + text.substring(cursorPosition);
+        })
+
+        dance2Button.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :dance: ' + text.substring(cursorPosition);
+        })
+
+        dance3Button.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :megadance: ' + text.substring(cursorPosition);
+        })
+
+        daumenButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :dau: ' + text.substring(cursorPosition);
+        })
+
+        downButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :down: ' + text.substring(cursorPosition);
+        })
+
+        drinkingButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :drinking: ' + text.substring(cursorPosition);
+        })
+
+        duckButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :duck: ' + text.substring(cursorPosition);
+        })
+
+        duduButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :dudu: ' + text.substring(cursorPosition);
+        })
+
+        faintButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :faint: ' + text.substring(cursorPosition);
+        })
+
+        gaeButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :gaehn: ' + text.substring(cursorPosition);
+        })
+
+        heheheButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :hehehe: ' + text.substring(cursorPosition);
+        })
+
+        helpButton.addEventListener('click', function () {
+            var cursorPosition = content.selectionStart;
+            var text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :help: ' + text.substring(cursorPosition);
+        })
+
+        hihiButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :hihi: ' + text.substring(cursorPosition);
+        })
+
+        kaffeeButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :kaffee: ' + text.substring(cursorPosition);
+        })
+
+        kissButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :kiss: ' + text.substring(cursorPosition);
+        })
+
+        kissedButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :kissed: ' + text.substring(cursorPosition);
+        })
+
+        kopButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :kop: ' + text.substring(cursorPosition);
+        })
+
+        lolButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :lol: ' + text.substring(cursorPosition);
+        })
+
+        madButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :mad: ' + text.substring(cursorPosition);
+        })
+
+        mmhButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :mmh: ' + text.substring(cursorPosition);
+        })
+
+        mmlButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :mml: ' + text.substring(cursorPosition);
+        })
+
+        muahahaButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :muahah: ' + text.substring(cursorPosition);
+        })
+
+        musicButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :music: ' + text.substring(cursorPosition);
+        })
+
+        ohhnoButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :ohhno: ' + text.substring(cursorPosition);
+        })
+
+        oopsButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :opos: ' + text.substring(cursorPosition);
+        })
+
+        patButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :pat: ' + text.substring(cursorPosition);
+        })
+
+        pffButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :pff: ' + text.substring(cursorPosition);
+        })
+
+        popButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :pop: ' + text.substring(cursorPosition);
+        })
+
+        psstButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :psst: ' + text.substring(cursorPosition);
+        })
+
+        roflButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :rofl: ' + text.substring(cursorPosition);
+        })
+
+        sadButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :sad: ' + text.substring(cursorPosition);
+        })
+
+        slapButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :slap: ' + text.substring(cursorPosition);
+        })
+
+        sleepingButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :sleeping: ' + text.substring(cursorPosition);
+        })
+
+        slideButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :slide: ' + text.substring(cursorPosition);
+        })
+
+        smileButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :smile: ' + text.substring(cursorPosition);
+        })
+
+        spamButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :spam: ' + text.substring(cursorPosition);
+        })
+
+        strecherButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :stretcher: ' + text.substring(cursorPosition);
+        })
+
+        surprisedButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :surprised: ' + text.substring(cursorPosition);
+        })
+
+        thanksButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :thanks: ' + text.substring(cursorPosition);
+        })
+
+        tongueButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :tongue: ' + text.substring(cursorPosition);
+        })
+
+        totButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :lach: ' + text.substring(cursorPosition);
+        })
+
+        uvdnsButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :dns: ' + text.substring(cursorPosition);
+        })
+
+        vButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :v: ' + text.substring(cursorPosition);
+        })
+
+        winkieButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :winkie: ' + text.substring(cursorPosition);
+        })
+
+        yahooButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :yahoo: ' + text.substring(cursorPosition);
+        })
+
+        yesButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :yes: ' + text.substring(cursorPosition);
+        })
+
+        yippyButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :yippy: ' + text.substring(cursorPosition);
+        })
+
+        guitarButton.addEventListener('click', function () {
+            const cursorPosition = content.selectionStart;
+            const text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :guitar: ' + text.substring(cursorPosition);
+        })
+
+
+        winkButton.addEventListener('click', function () {
+            var cursorPosition = content.selectionStart;
+            var text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :wink: ' + text.substring(cursorPosition);
+        })
+
+        helpButton.addEventListener('click', function () {
+            var cursorPosition = content.selectionStart;
+            var text = content.value;
+            content.value = text.substring(0, cursorPosition) + ' :help: ' + text.substring(cursorPosition);
+        });
     });
 </script>
-
 </body>
 
 </html>
