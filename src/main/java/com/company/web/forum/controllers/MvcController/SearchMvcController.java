@@ -28,7 +28,6 @@ public class SearchMvcController {
     }
     @GetMapping
     public String searchByTopicName (@RequestParam("search") String title, Model model) {
-        System.out.println("String title:" + title);
         FilterTopicOptions filterTopicOptions = new FilterTopicOptions();
         Optional<String> byTitle = Optional.of(title);
         filterTopicOptions.setTitle(byTitle);
@@ -36,7 +35,7 @@ public class SearchMvcController {
         FilterTopicOptions noFilterTopicOptions = new FilterTopicOptions();
         model.addAttribute("allTopics", topicService.get(noFilterTopicOptions));
         model.addAttribute("countUsers", userService.getUsersCount());
-        model.addAttribute("toptags", tagService.getTopTags());
+        model.addAttribute("topTags", tagService.getTopTags());
         return "SearchBarView";
     }
 }
