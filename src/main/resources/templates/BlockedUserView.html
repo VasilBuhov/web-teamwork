@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Blocked User</title>
+    <link href="../static/css/bootstrap.css" rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}">
+    <link href="../static/css/style.css" rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link href="../static/css/animate.css" rel="stylesheet" type="text/css" th:href="@{/css/animate.css}">
+    <link href="../static/css/font-awesome.min.css" rel="stylesheet" type="text/css"
+          th:href="@{/css/font-awesome.min.css}">
+    <style>
+        /* Add your custom styles here */
+    </style>
+</head>
+<body>
+<!--======== Navbar =======-->
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<section class="main-content921 centered-width">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="blocked-user-container">
+                    <h2 class="text-center">Blocked User</h2>
+                    <p class="text-center">You are a blocked user and cannot perform any actions.</p>
+                    <!-- Add any additional content or messages here -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Add your scripts or other content here -->
+<!--    footer -->
+<div th:replace="fragments/footer :: footer"></div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="../static/js/jquery-3.1.1.min.js" th:href="@{/js/jquery-3.1.1.min.js}"></script>
+<script src="../static/js/bootstrap.min.js" th:href="@{/js/bootstrap.min.js}"></script>
+</body>
+</html>
