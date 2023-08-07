@@ -12,7 +12,6 @@
 <body>
 <div th:replace="fragments/navbar :: navbar"></div>
 
-
 <section class="main-content921 centered-width">
     <div class="container">
         <div class="row">
@@ -20,56 +19,70 @@
                 <div class="ask-question-input-part032">
                     <h4>Edit profile details</h4>
                     <hr>
-                        <h2 class="text-center">Edit User</h2>
-                        <form action="/users/profile" th:object="${user}" method="post">
-                            <label th:text="#{user.username}">User</label>
-                            <br/>
-                            <input type="text" th:field="*{username}">
-                            <!-- Display the validation errors for the username field -->
-                            <div th:if="${#fields.hasErrors('username')}" class="alert alert-danger" role="alert">
-                                <p th:errors="*{username}"></p>
-                            </div>
-                            <br><br/>
+                    <h2 class="text-center">Edit User</h2>
+                    <form action="/users/profile" th:object="${user}" method="post">
+                        <!-- Username -->
+                        <label th:text="#{user.username}">Username</label>
+                        <br/>
+                        <input type="text" th:field="*{username}">
+                        <div th:if="${#fields.hasErrors('username')}" class="alert alert-danger" role="alert">
+                            <p th:errors="*{username}"></p>
+                        </div>
+                        <br><br/>
 
-                            <label th:text="#{user.email}">User</label>
-                            <br/>
-                            <input type="text" th:field="*{email}">
-                            <!-- Display the validation errors for the email field -->
-                            <div th:if="${#fields.hasErrors('email')}" class="alert alert-danger" role="alert">
-                                <p th:errors="*{email}"></p>
-                            </div>
-                            <br><br/>
+                        <!-- Email -->
+                        <label th:text="#{user.email}">Email</label>
+                        <br/>
+                        <input type="text" th:field="*{email}">
+                        <div th:if="${#fields.hasErrors('email')}" class="alert alert-danger" role="alert">
+                            <p th:errors="*{email}"></p>
+                        </div>
+                        <br><br/>
 
-                            <label th:text="#{user.firstName}">User</label>
-                            <br/>
-                            <input type="text" th:field="*{firstName}">
-                            <br><br/>
+                        <!-- First Name -->
+                        <label th:text="#{user.firstName}">First Name</label>
+                        <br/>
+                        <input type="text" th:field="*{firstName}">
+                        <br><br/>
 
-                            <label th:text="#{user.lastName}">User</label>
-                            <br/>
-                            <input type="text" th:field="*{lastName}">
-                            <br><br/>
+                        <!-- Last Name -->
+                        <label th:text="#{user.lastName}">Last Name</label>
+                        <br/>
+                        <input type="text" th:field="*{lastName}">
+                        <br><br/>
 
-                            <label th:text="#{user.password}">User</label>
-                            <br/>
-                            <input type="password" th:field="*{password}">
-                            <br><br/>
+                        <!-- Password -->
+                        <label th:text="#{user.password}">Password</label>
+                        <br/>
+                        <input type="password" th:field="*{password}">
+                        <br><br/>
 
-                            <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
-                                <p th:text="${errorMessage}"></p>
-                            </div>
+                        <!-- Other Fields (Add as needed) -->
+                        <!-- Example:
+                        <label th:text="#{user.customField}">Custom Field</label>
+                        <br/>
+                        <input type="text" th:field="*{customField}">
+                        <br><br/>
+                        -->
 
-                            <input type="submit" value="Save" class="btn btn-primary">
-                        </form>
+                        <!-- Error Message -->
+                        <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+                            <p th:text="${errorMessage}"></p>
+                        </div>
+
+                        <!-- Save Button -->
+                        <input type="submit" value="Save" class="btn btn-primary">
+                    </form>
+
+                    <!-- Delete Profile Button -->
+                    <a href="/users/delete" class="btn btn-danger">Delete Profile</a>
                 </div>
             </div>
         </div>
     </div>
 </section>
-            <!--    footer -->
-            <div th:replace="fragments/footer :: footer"></div>
+<!-- ... Footer ... -->
 </body>
-
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="../static/js/jquery-3.1.1.min.js" th:href="@{/js/jquery-3.1.1.min.js}"></script>
