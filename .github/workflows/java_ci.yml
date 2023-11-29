@@ -24,3 +24,14 @@ jobs:
 
       - name: Run Tests
         run: ./gradlew test
+
+        deploy:
+          runs-on: ubuntu-latest
+
+          needs: test
+
+          steps:
+            - name: Set workflow status
+              if: always() # This ensures the step runs even if previous steps fail
+              run: echo "::set-output name=workflow-status::failure"
+
