@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
     public void createUser(User user) {
 
         User existingUser = userRepository.getUserByEmail(user.getEmail());
-        if (existingUser == null) {
+        if (existingUser != null) {
             throw new EntityDuplicateException("User", "email", user.getEmail());
         }
 
