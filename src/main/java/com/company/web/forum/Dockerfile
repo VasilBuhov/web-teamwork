@@ -1,15 +1,10 @@
-FROM ubuntu:latest
+FROM openjdk:11
 
-LABEL authors="TeDi"
+WORKDIR /usr/src/app
 
-RUN apt-get update && \
-    apt-get install -y openjdk-11-jdk
+COPY . .
 
-WORKDIR /app
-
-COPY ../../../../../../../.github/workflows .
-
+# Make the gradlew script executable
 RUN chmod +x ./gradlew
-RUN ./gradlew build
 
-ENTRYPOINT ["top", "-b"]
+RUN ./gradlew build
