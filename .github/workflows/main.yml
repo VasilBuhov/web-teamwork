@@ -9,19 +9,18 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    services:
-      - name: 'docker'
-        image: 'docker:20.10.9'
-        ports:
-          - 80:80
-          - 443:443
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
       - name: Build Docker Image
-        run: docker build -t my-docker-image .
+        run: |
+          docker build -t my-docker-image .
+
+      - name: Make Gradlew Executable
+        run: |
+          chmod +x ./gradlew
 
       - name: Run Tests with Docker
-        run: docker run my-docker-image ./gradlew test
+        run: |
+          docker run my-docker-image ./gradlew test
