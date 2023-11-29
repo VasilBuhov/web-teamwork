@@ -19,5 +19,8 @@ jobs:
           distribution: 'adopt'
           java-version: '11'
 
+      - name: Make Gradlew Executable
+        run: chmod +x ./gradlew
+
       - name: Run Tests
         run: ./gradlew test
