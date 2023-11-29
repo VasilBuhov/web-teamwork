@@ -54,6 +54,7 @@ public class UserServiceImpl implements UserService {
         existingUser = userRepository.getUserByUsername(user.getUsername());
         if (existingUser != null) {
             System.out.println("Something wrong");
+            System.out.println("Something wrong_2");
             throw new EntityDuplicateException("User", "username", user.getUsername());
         } if (user.getUsername()== null){
             throw new NullPointerException();
