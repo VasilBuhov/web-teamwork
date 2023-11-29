@@ -1,4 +1,4 @@
-name: Main CI
+name: Java CI
 
 on:
   push:
@@ -10,17 +10,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Use Node.js 12
+      - name: Use Node.js 16
         uses: actions/setup-node@v4
         with:
-          node-version: 12
+          node-version: 16
 
       - name: Checkout Repository
         uses: actions/checkout@v2
 
       - name: Build Docker Image
         run: |
-          docker build -t my-docker-image .
+          docker build -t my-docker-image -f src/main/java/com/company/web/forum/Dockerfile .
 
       - name: Make Gradlew Executable
         run: |
