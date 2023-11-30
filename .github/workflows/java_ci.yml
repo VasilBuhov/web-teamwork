@@ -26,7 +26,7 @@ jobs:
       - name: Run Tests
         run: ./gradlew test
         with:
-          filename: site.zip
+          filename: firstRelease.zip
       - name: Create Release
         uses: actions/create-release@v1
         env:
@@ -34,3 +34,12 @@ jobs:
         with:
           tag_name: ${{ github.run_number }}
           release_name: Release ${{ github.run_number }}
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create-first-release.outputs.upload.url}}
+          asset_path: ./firstRelease.zip
+          asset_name: site-v%{{ github.run_number }}.zip
+          asset_content_type: application/zip
