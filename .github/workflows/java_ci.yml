@@ -25,8 +25,7 @@ jobs:
 
       - name: Run Tests
         run: ./gradlew test
-        env:
-          RELEASE_FILENAME: firstRelease.zip
+
       - name: Create Release
         uses: actions/create-release@v1
         env:
