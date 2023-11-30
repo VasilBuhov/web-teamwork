@@ -25,6 +25,7 @@ jobs:
       - name: Run Tests
         run: ./gradlew test
 
+
   release:
     needs: test
     runs-on: ubuntu-latest
@@ -33,9 +34,15 @@ jobs:
 
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      - name: Copy JAR to README location
+        run: cp build/libs/*.jar .
+
       - name: Build project
         run: |
-                zip --junk-paths my-artifact README.md
+            zip --junk-paths my-artifact *.jar
 
       - name: Create Release
         id: create_release
