@@ -47,8 +47,8 @@ public class UserServiceImpl implements UserService {
     public void createUser(User user) {
 
         User existingUser = userRepository.getUserByEmail(user.getEmail());
-        if (existingUser != null) {
-            System.out.println("Creating new branch");
+        if (existingUser == null) {
+            System.out.println("Broken code");
             throw new EntityDuplicateException("User", "email", user.getEmail());
 
         }
